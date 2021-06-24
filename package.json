@@ -1,0 +1,36 @@
+{
+  "name": "backdrop-server",
+  "private": true,
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development nodemon --exec babel-node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thinkholic/backdrop-server.git"
+  },
+  "author": "thinkholic",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thinkholic/backdrop-server/issues"
+  },
+  "homepage": "https://github.com/thinkholic/backdrop-server#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.18",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.0",
+    "cross-env": "^7.0.3",
+    "@babel/cli": "^7.13.0",
+    "@babel/core": "^7.13.1",
+    "@babel/node": "^7.13.0",
+    "@babel/preset-env": "^7.13.5",
+    "nodemon": "^2.0.7"
+  }
+}
