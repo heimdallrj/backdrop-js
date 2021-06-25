@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { proxy } from 'utils/handler';
+import { response } from 'utils/http';
 
 const router = express.Router();
 
@@ -14,26 +15,31 @@ fs.readdir(path.join(__dirname, '../resources'), (err, resources) => {
       path.join(__dirname, `../resources/${fp}`),
       'utf-8'
     );
+    const { name, type, methods, status, ...restConfig } = JSON.parse(config);
+    const route = `/${name}`;
+    let handler = () => {};
 
-    const { name, type, methods, ...restConfig } = JSON.parse(config);
+    if (status === 'published') {
+      if (!type || type === 'default') {
+        methods.forEach((methodKey) => {
+          const method = methodKey.toLowerCase();
+          handler = (req, res) => response.success(res, `${method} ${name}`); // TODO Return actual response
+          router[method](route, handler);
+        });
+      }
 
-    if (!type || type === 'default') {
-      methods.forEach((methodKey) => {
-        const method = methodKey.toLowerCase();
-        router[method](`/${name}`, (req, res) => res.send(`${method} ${name}`));
-      });
-    }
+      if (type === 'proxy') {
+        handler = proxy.bind(null, restConfig);
+        router.get(route, handler);
+      }
 
-    if (type === 'proxy') {
-      router.get(`/${name}`, proxy.bind(null, restConfig));
-    }
-
-    if (type === 'static') {
-      // TODO
+      if (type === 'static') {
+        // TODO
+      }
     }
   });
 });
 
-router.get('/', (req, res) => res.send('hello world'));
+router.get('/', (req, res) => response.success(res));
 
 export default router;

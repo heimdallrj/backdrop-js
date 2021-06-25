@@ -1,9 +1,8 @@
 import fetch from 'node-fetch';
+import { response } from 'utils/http';
 
 export const proxy = ({ endpoint }, req, res) => {
   fetch(endpoint)
-    .then((response) => response.json())
-    .then((data) => {
-      res.json(data);
-    });
+    .then((resp) => resp.json())
+    .then((data) => response.success(res, data));
 };

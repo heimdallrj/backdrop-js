@@ -1,7 +1,7 @@
 {
   "namespace": "api",
   "name": "comments",
-  "methods": ["POST", "GET"],
+  "methods": ["post", "get"],
   "type": "default",
   "attributes": [
     {
@@ -39,5 +39,5 @@
   ],
   "created": "",
   "modified": "",
-  "status": ""
+  "status": "published"
 }
