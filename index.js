@@ -8,6 +8,7 @@ import rateLimit from "express-rate-limit";
 import mongoSanitize from "express-mongo-sanitize";
 import hpp from "hpp";
 
+import logger from "./utils/logger";
 import apiRoutes from "./routes/api";
 import coreRoutes from "./routes/core";
 
@@ -37,12 +38,12 @@ const serve = async () => {
 
   app.use(express.static(path.join(path.join(__dirname, "public"))));
 
-  app.get("/*", function (req, res) {
+  app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
   });
 
   app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`);
+    logger.log(`Server is running on ${PORT}`);
   });
 };
 
