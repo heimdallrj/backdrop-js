@@ -5,6 +5,7 @@
   "scripts": {
     "start:dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/bin/www.js",
     "start": "cross-env NODE_ENV=production node ./dist/bin/www.js",
+    "debug": "cross-env NODE_ENV=development nodemon --inspect --exec babel-node ./src/bin/www.js",
     "prebuild": "rm -rf dist",
     "build": "babel ./src --out-dir dist --copy-files",
     "lint": "eslint 'src/**/*.js'",
