@@ -1,3 +1,16 @@
 {
-  "presets": [["@babel/preset-env", { "targets": { "node": "current" } }]]
+  "presets": [["@babel/preset-env", { "targets": { "node": "current" } }]],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "routes": "./src/routes",
+          "resources": "./src/resources",
+          "utils": "./src/utils",
+          "config": "./src/config"
+        }
+      }
+    ]
+  ]
 }
