@@ -4,16 +4,17 @@ import path from "path";
 
 const router = express.Router();
 
-fs.readdir(path.join(__dirname, "../resources"), (err, list) => {
+fs.readdir(path.join(__dirname, "../resources"), (err, resources) => {
   if (err) return;
 
-  list.forEach((fp) => {
-    const resourceConfig = fs.readFileSync(
-      path.join(__dirname, `../resources/${fp}`),
+  resources.forEach((configFp) => {
+    const config = fs.readFileSync(
+      path.join(__dirname, `../resources/${configFp}`),
       "utf-8"
     );
 
-    const { name, methods } = JSON.parse(resourceConfig);
+    const { name, methods } = JSON.parse(config);
+    // Resource Types: default, static, proxy
 
     methods.forEach((methodKey) => {
       const method = methodKey.toLowerCase();

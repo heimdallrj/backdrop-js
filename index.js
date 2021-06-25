@@ -11,6 +11,8 @@ import hpp from "hpp";
 import apiRoutes from "./routes/api";
 import coreRoutes from "./routes/core";
 
+import { PORT } from "./config";
+
 const app = express();
 
 app.use(cors());
@@ -39,8 +41,8 @@ const serve = async () => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
   });
 
-  app.listen(3000, () => {
-    console.log(`Server is running on 3000`);
+  app.listen(PORT, () => {
+    console.log(`Server is running on ${PORT}`);
   });
 };
 
