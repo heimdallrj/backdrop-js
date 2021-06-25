@@ -20,10 +20,15 @@
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-mongo-sanitize": "^2.1.0",
+    "express-rate-limit": "^5.2.6",
     "fs": "^0.0.1-security",
+    "helmet": "^4.6.0",
+    "hpp": "^0.2.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.18",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "xss-clean": "^0.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.0",
