@@ -12,6 +12,12 @@
     "lint:fix": "yarn lint -- --fix",
     "format": "prettier --write 'src/**/*.js'"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "etc/*",
+      "dist/*"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/thinkholic/backdrop-server.git"
@@ -37,6 +43,7 @@
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.1",
     "regenerator-runtime": "^0.13.7",
+    "simple-json-db": "^1.2.3",
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {

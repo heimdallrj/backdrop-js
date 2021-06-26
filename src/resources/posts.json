@@ -1,8 +1,0 @@
-{
-  "namespace": "api",
-  "name": "posts",
-  "type": "proxy",
-  "methods": ["get"],
-  "endpoint": "https://jsonplaceholder.typicode.com/posts",
-  "status": "published"
-}

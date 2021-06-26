@@ -4295,6 +4295,11 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha512-VUJ49FC8U1OxwZLxIbTTrDvLnf/6TDgxZcK8wxR8zs13xpx7xbG60ndBlhNrFi2EMuFRoeDoJO7wthSLq42EjA==
 
+simple-json-db@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/simple-json-db/-/simple-json-db-1.2.3.tgz#ea7256bbbb1205b4af079f9bed2611e33401bce7"
+  integrity sha512-eL8u7YkcHidSaUvmolPooTPjxvMYd+IglSaxjnf13Tg1KQXcpoXlLOa38n4LillfQhgJuCgmUbCYERPl5fmY+w==
+
 slash@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-2.0.0.tgz#de552851a1759df3a8f206535442f5ec4ddeab44"
