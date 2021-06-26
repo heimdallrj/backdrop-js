@@ -70,10 +70,10 @@ const insert = function (cursor, doc) {
     this.storage = JSON.parse(
       readFileSync(`${this.root}/${cursor}.json`, charset)
     );
-    const _doc = { ...doc, _id: uniqid() };
-    this.storage.push(_doc);
+    const doc2 = { ...doc, _id: uniqid() };
+    this.storage.push(doc2);
     this.save();
-    return _doc;
+    return doc2;
   } catch (err) {
     logger.error(err);
     return null;
@@ -115,15 +115,15 @@ const updateOneById = function (cursor, id, doc, upsert = false) {
       readFileSync(`${this.root}/${cursor}.json`, charset)
     );
     const docSingle = this.storage.find(({ _id }) => _id === id);
-    let _doc = { ...docSingle, ...doc };
+    let docTobeUpdated = { ...docSingle, ...doc };
     if (upsert) {
-      _doc = { _id: docSingle._id, ...doc };
+      docTobeUpdated = { _id: id, ...doc };
     }
     const storage = this.storage.filter(({ _id }) => _id !== id);
-    storage.push(_doc);
+    storage.push(docTobeUpdated);
     this.storage = storage;
     this.save();
-    return _doc;
+    return docTobeUpdated;
   } catch (err) {
     logger.error(err);
     return null;

@@ -1,6 +1,6 @@
 import express from 'express';
 import { response } from 'utils/http';
-import { db } from 'utils/database/jsondb';
+import JsonDB, { db } from 'utils/database/jsondb';
 
 const router = express.Router();
 
@@ -20,8 +20,12 @@ router.get('/resource/:id', (req, res) => {
 
 router.post('/resource', (req, res) => {
   // TODO Validate request body
-  const resource = req.body;
-  db.resources.insert(resource);
+  // TODO Create a collection
+  const doc = req.body;
+  const resource = db.resources.insert(doc);
+  if (resource && !doc.type === 'proxy') {
+    JsonDB.createCollection(`_${doc.name}`);
+  }
   response.success(res, resource);
 });
 
