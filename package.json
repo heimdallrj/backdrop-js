@@ -1,7 +1,7 @@
 {
-  "name": "backdrop-server",
+  "name": "backdrop-server-nodejs",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.0.1",
   "scripts": {
     "start:dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/bin/www.js",
     "start": "cross-env NODE_ENV=production node ./dist/bin/www.js",
