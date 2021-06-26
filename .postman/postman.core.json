@@ -1,0 +1,160 @@
+{
+	"info": {
+		"_postman_id": "0313e7d8-871b-4ac0-ab31-09c430298580",
+		"name": "Backdrop - Core",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET resource",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/core/resource",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"core",
+						"resource"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET resource/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/core/resource/sktwi1me7kqe4owvn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"core",
+						"resource",
+						"sktwi1me7kqe4owvn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST resource",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"namespace\": \"api\",\n    \"name\": \"posts\",\n    \"type\": \"proxy\",\n    \"methods\": [\n    \"get\"\n    ],\n    \"endpoint\": \"https://jsonplaceholder.typicode.com/posts\",\n    \"status\": \"published\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/core/resource",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"core",
+						"resource"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE resource",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/core/resource/sktwi1me7kqe4owvn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"core",
+						"resource",
+						"sktwi1me7kqe4owvn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT resource",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"namespace\": \"api\",\n    \"name\": \"posts\",\n    \"type\": \"proxy\",\n    \"methods\": [\"get\", \"post\"],\n    \"endpoint\": \"https://jsonplaceholder.typicode.com/posts\",\n    \"status\": \"published\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/core/resource/sktwi1me7kqe4owvn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"core",
+						"resource",
+						"sktwi1me7kqe4owvn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH resource",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"status\": \"draft\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/core/resource/sktwi1me7kqe4owvn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"core",
+						"resource",
+						"sktwi1me7kqe4owvn"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

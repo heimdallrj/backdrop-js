@@ -14,20 +14,19 @@
   },
   "nodemonConfig": {
     "ignore": [
-      "etc/*",
       "dist/*"
     ]
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thinkholic/backdrop-server.git"
+    "url": "git+https://github.com/thinkholic/backdrop-server-nodejs.git"
   },
   "author": "thinkholic",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/thinkholic/backdrop-server/issues"
+    "url": "https://github.com/thinkholic/backdrop-server-nodejs/issues"
   },
-  "homepage": "https://github.com/thinkholic/backdrop-server#readme",
+  "homepage": "https://github.com/thinkholic/backdrop-server-nodejs#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "core-js": "^3.15.1",
