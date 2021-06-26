@@ -1,12 +1,12 @@
 import express from 'express';
 
-import * as jsonDb from 'utils/database/jsonDb';
 import { proxy } from 'utils/handler';
 import { response } from 'utils/http';
+import { db } from 'utils/database/jsondb';
 
 const router = express.Router();
 
-const resources = jsonDb.get('resources');
+const resources = db.resources.find();
 
 resources.forEach((resource) => {
   const { name, type, methods, status, ...restConfig } = resource;

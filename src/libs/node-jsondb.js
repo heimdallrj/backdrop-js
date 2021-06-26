@@ -7,6 +7,7 @@ import {
   writeFileSync,
   readFileSync,
 } from 'fs';
+import uniqid from 'uniqid';
 
 const logger = console;
 const charset = 'utf8';
@@ -64,16 +65,18 @@ const syncStorage = function () {
 // Handlers
 const insert = function (cursor, doc) {
   try {
+    // TODO Validate
     this.cursor = cursor;
     this.storage = JSON.parse(
       readFileSync(`${this.root}/${cursor}.json`, charset)
     );
-    this.storage.push(doc);
+    const _doc = { ...doc, _id: uniqid() };
+    this.storage.push(_doc);
     this.save();
-    return true;
+    return _doc;
   } catch (err) {
     logger.error(err);
-    return false;
+    return null;
   }
 };
 
@@ -87,7 +90,7 @@ const find = function (cursor) {
     return this.storage;
   } catch (err) {
     logger.error(err);
-    return false;
+    return null;
   }
 };
 
@@ -101,26 +104,29 @@ const findOneById = function (cursor, id) {
     return doc || null;
   } catch (err) {
     logger.error(err);
-    return false;
+    return null;
   }
 };
 
-const updateOneById = function (cursor, id, doc) {
+const updateOneById = function (cursor, id, doc, upsert = false) {
   try {
     this.cursor = cursor;
     this.storage = JSON.parse(
       readFileSync(`${this.root}/${cursor}.json`, charset)
     );
     const docSingle = this.storage.find(({ _id }) => _id === id);
+    let _doc = { ...docSingle, ...doc };
+    if (upsert) {
+      _doc = { _id: docSingle._id, ...doc };
+    }
     const storage = this.storage.filter(({ _id }) => _id !== id);
-    const docTobeUpdated = { ...docSingle, ...doc };
-    storage.push(docTobeUpdated);
+    storage.push(_doc);
     this.storage = storage;
     this.save();
-    return docTobeUpdated;
+    return _doc;
   } catch (err) {
     logger.error(err);
-    return false;
+    return null;
   }
 };
 

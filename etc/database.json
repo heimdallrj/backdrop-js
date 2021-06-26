@@ -5,7 +5,21 @@
       "namespace": "api",
       "name": "posts",
       "type": "proxy",
-      "methods": ["get", "post"],
+      "methods": [
+        "get",
+        "post"
+      ],
+      "endpoint": "https://jsonplaceholder.typicode.com/posts",
+      "status": "published"
+    },
+    {
+      "namespace": "api",
+      "name": "posts",
+      "type": "proxy",
+      "methods": [
+        "get",
+        "post"
+      ],
       "endpoint": "https://jsonplaceholder.typicode.com/posts",
       "status": "published"
     }
