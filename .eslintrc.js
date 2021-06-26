@@ -10,6 +10,7 @@ module.exports = {
   },
   rules: {
     'import/prefer-default-export': 'off',
+    'func-names': 'off',
     'prettier/prettier': 'error',
   },
   settings: {
