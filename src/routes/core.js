@@ -42,7 +42,7 @@ router.get('/resource', (req, res) => {
 
 router.get('/resource/:id', (req, res) => {
   const { id } = req.params;
-  const resourceSingle = db.resources.findOneById(id);
+  const resourceSingle = db.resources.findOne({ _id: id });
   response.success(res, resourceSingle);
 });
 
@@ -59,16 +59,16 @@ router.post('/resource', (req, res) => {
 router.put('/resource/:id', (req, res) => {
   // TODO Validate request body
   const { id } = req.params;
-  const resource = req.body;
-  const doc = db.resources.updateOneById(id, resource, true);
+  const newDoc = req.body;
+  const doc = db.resources.updateOne({ _id: id }, newDoc);
   response.success(res, doc);
 });
 
 router.patch('/resource/:id', (req, res) => {
   // TODO Validate request body
   const { id } = req.params;
-  const resource = req.body;
-  const doc = db.resources.updateOneById(id, resource);
+  const newDoc = req.body;
+  const doc = db.resources.updateOne({ _id: id }, newDoc);
   response.success(res, doc);
 });
 

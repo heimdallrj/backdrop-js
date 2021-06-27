@@ -70,10 +70,15 @@ const insert = function (cursor, doc) {
     this.storage = JSON.parse(
       readFileSync(`${this.root}/${cursor}.json`, charset)
     );
-    const doc2 = { ...doc, _id: uniqid() };
-    this.storage.push(doc2);
+    const newDoc = {
+      ...doc,
+      _id: uniqid(),
+      createdAt: new Date(),
+      lastUpdatedAt: new Date(),
+    };
+    this.storage.push(newDoc);
     this.save();
-    return doc2;
+    return newDoc;
   } catch (err) {
     logger.error(err);
     return null;
@@ -151,7 +156,7 @@ const updateOne = function (cursor, filter, newDoc) {
       });
       return include;
     });
-    this.storage.push(newDoc);
+    this.storage.push({ ...newDoc, lastUpdatedAt: new Date() });
     this.save();
     return newDoc;
   } catch (err) {
@@ -159,54 +164,6 @@ const updateOne = function (cursor, filter, newDoc) {
     return null;
   }
 };
-
-const findOneById = function (cursor, id) {
-  try {
-    this.cursor = cursor;
-    this.storage = JSON.parse(
-      readFileSync(`${this.root}/${cursor}.json`, charset)
-    );
-    const doc = this.storage.find(({ _id }) => _id === id);
-    return doc || null;
-  } catch (err) {
-    logger.error(err);
-    return null;
-  }
-};
-
-const updateOneById = function (cursor, id, doc, upsert = false) {
-  try {
-    this.cursor = cursor;
-    this.storage = JSON.parse(
-      readFileSync(`${this.root}/${cursor}.json`, charset)
-    );
-    const docSingle = this.storage.find(({ _id }) => _id === id);
-    let docTobeUpdated = { ...docSingle, ...doc };
-    if (upsert) {
-      docTobeUpdated = { _id: id, ...doc };
-    }
-    const storage = this.storage.filter(({ _id }) => _id !== id);
-    storage.push(docTobeUpdated);
-    this.storage = storage;
-    this.save();
-    return docTobeUpdated;
-  } catch (err) {
-    logger.error(err);
-    return null;
-  }
-};
-
-// const keys = Object.keys(query);
-//       // TODO Improve
-//       filtered = this.storage.filter((doc) => {
-//         let include = true;
-//         keys.forEach((key) => {
-//           if (doc[key] !== query[key]) {
-//             include = false;
-//           }
-//         });
-//         return include;
-//       });
 
 const remove = function (cursor, query) {
   try {
@@ -247,12 +204,7 @@ export default function JsonDB() {
     this.collections[collName].insertMany = () => {}; // TODO
     this.collections[collName].find = find.bind(this, collName);
     this.collections[collName].findOne = findOne.bind(this, collName);
-    this.collections[collName].findOneById = findOneById.bind(this, collName);
     this.collections[collName].update = () => {}; // TODO
-    this.collections[collName].updateOneById = updateOneById.bind(
-      this,
-      collName
-    );
     this.collections[collName].findOneAndUpdate = () => {}; // TODO
     this.collections[collName].updateOne = updateOne.bind(this, collName);
     this.collections[collName].updateMany = () => {}; // TODO
