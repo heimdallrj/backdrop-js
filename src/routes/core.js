@@ -1,9 +1,12 @@
 import express from 'express';
+import fileUpload from 'express-fileupload';
+import forEach from 'lodash/forEach';
+import keysIn from 'lodash/keysIn';
 
 import { response } from 'utils/http';
 import JsonDB, { db } from 'utils/database/jsondb';
 
-import { BASE_URL, APP_NAME, APP_DESC } from 'config';
+import { BASE_URL, APP_NAME, APP_DESC, MEDIA_DIR, MEDIA_PATH } from 'config';
 
 const router = express.Router();
 
@@ -27,6 +30,12 @@ router.get('/', (req, res) =>
         methods: ['get', 'put', 'patch', 'delete'],
         _links: {
           self: `${BASE_URL}/${namespace}/resource/:id`,
+        },
+      },
+      '/media': {
+        methods: ['post'],
+        _links: {
+          self: `${BASE_URL}/${namespace}/media`,
         },
       },
     },
@@ -76,5 +85,57 @@ router.delete('/resource/:id', (req, res) => {
   const { id } = req.params;
   response.success(res, db.resources.remove(id));
 });
+
+router.post(
+  '/media',
+  fileUpload({
+    createParentPath: true,
+    limits: {
+      fileSize: 2 * 1024 * 1024 * 1024, // 2MB max file(s) size
+    },
+  }),
+  async (req, res) => {
+    try {
+      if (!req.files) {
+        response.bad(res);
+      } else {
+        const { files } = req.files;
+        const isSingleFile = !Array.isArray(files);
+
+        if (isSingleFile) {
+          files.mv(`${MEDIA_PATH}/${files.name}`);
+          response.success(res, [
+            {
+              name: files.name,
+              size: files.size,
+              mimetype: files.mimetype,
+              md5: files.md5,
+              url: `${BASE_URL}/${MEDIA_DIR}/${files.name}`,
+            },
+          ]);
+        } else {
+          const payload = [];
+
+          forEach(keysIn(files), (key) => {
+            const file = files[key];
+            file.mv(`${MEDIA_PATH}/${file.name}`);
+
+            payload.push({
+              name: file.name,
+              size: file.size,
+              mimetype: file.mimetype,
+              md5: file.md5,
+              url: `${BASE_URL}/${MEDIA_DIR}/${file.name}`,
+            });
+          });
+
+          response.success(res, payload);
+        }
+      }
+    } catch (err) {
+      response.internalError(res);
+    }
+  }
+);
 
 export default router;

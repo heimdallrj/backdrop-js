@@ -16,6 +16,8 @@ import { PORT } from 'config';
 
 const app = express();
 
+app.use('/media', express.static('./media'));
+
 app.use(cors());
 app.use(helmet());
 app.use(xssClean());
