@@ -2,11 +2,19 @@ import express from 'express';
 import fileUpload from 'express-fileupload';
 import forEach from 'lodash/forEach';
 import keysIn from 'lodash/keysIn';
+import { readdirSync } from 'fs';
 
 import { response } from 'utils/http';
 import JsonDB, { db } from 'utils/database/jsondb';
 
-import { BASE_URL, APP_NAME, APP_DESC, MEDIA_DIR, MEDIA_PATH } from 'config';
+import {
+  BASE_URL,
+  APP_NAME,
+  APP_DESC,
+  MEDIA_DIR,
+  MEDIA_PATH,
+  filesToBeIgnored,
+} from 'config';
 
 const router = express.Router();
 
@@ -137,5 +145,16 @@ router.post(
     }
   }
 );
+
+router.get('/media', (req, res) => {
+  try {
+    const files = readdirSync(MEDIA_PATH)
+      .filter((f) => !filesToBeIgnored.includes(f))
+      .map((f) => `${BASE_URL}/${MEDIA_DIR}/${f}`);
+    response.success(res, files);
+  } catch (err) {
+    response.internalError(res);
+  }
+});
 
 export default router;
