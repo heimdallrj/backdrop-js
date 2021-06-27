@@ -1,68 +1,171 @@
 import express from 'express';
 
+import { db } from 'utils/database/jsondb';
 import { proxy } from 'utils/handler';
 import { response } from 'utils/http';
-import { db } from 'utils/database/jsondb';
-import * as handlers from 'handlers';
+
+import { BASE_URL, APP_NAME, APP_DESC } from 'config';
+
+const namespace = 'api';
 
 const router = express.Router();
 
-const resources = db.resources.find();
+router.get('/:resource/:id', (req, res) => {
+  // TODO Validate with schema
+  // TODO Move below logic to a middleware
+  const { resource: name, id: _id } = req.params;
+  const resourceDoc = db.resources.findOne({
+    name,
+    namespace,
+    status: 'published',
+  });
+  if (!resourceDoc) return response.notFound(res);
 
-resources.forEach((resource) => {
-  const { name, type, methods, status, ...restConfig } = resource;
-  const resourceRoute = `/${name}`;
-  let handler = () => {};
+  const collName = `_${resourceDoc.name}`;
+  const doc = db[collName].findOne({ _id });
+  if (!doc) return response.notFound(res);
 
-  if (status === 'published') {
-    if (!type || type === 'default') {
-      methods.forEach((m) => {
-        const method = m.toLowerCase();
-
-        if (method === 'get') {
-          router.get(resourceRoute, handlers.get.bind(this, resource));
-
-          router.get(
-            `${resourceRoute}/:id`,
-            handlers.getById.bind(this, resource)
-          );
-        }
-
-        if (method === 'post') {
-          router.post(resourceRoute, handlers.post.bind(this, resource));
-        }
-
-        if (method === 'put') {
-          router.put(`${resourceRoute}/:id`, handlers.put.bind(this, resource));
-        }
-
-        if (method === 'patch') {
-          router.patch(
-            `${resourceRoute}/:id`,
-            handlers.patch.bind(this, resource)
-          );
-        }
-
-        if (method === 'delete') {
-          router.delete(
-            `${resourceRoute}/:id`,
-            handlers.delete.bind(this, resource)
-          );
-        }
-      });
-    }
-
-    if (type === 'proxy') {
-      handler = proxy.bind(null, restConfig);
-      router.get(resourceRoute, handler);
-    }
-
-    if (type === 'static') {
-      // TODO
-    }
-  }
+  return response.ok(res, doc);
 });
 
-router.get('/', (req, res) => response.success(res));
+router.get('/:resource/', (req, res) => {
+  // TODO Validate with schema
+  // TODO Move below logic to a middleware
+  const { resource: name } = req.params;
+  const resourceDoc = db.resources.findOne({
+    name,
+    namespace,
+    status: 'published',
+  });
+  if (!resourceDoc) return response.notFound(res);
+
+  if (resourceDoc.type === 'proxy') {
+    return proxy(resourceDoc, req, res);
+  }
+
+  const collName = `_${resourceDoc.name}`;
+  const docs = db[collName].find();
+  return response.ok(res, docs);
+});
+
+router.post('/:resource', (req, res) => {
+  // TODO: Validate with schema
+  // TODO Move below logic to a middleware
+  const { resource: name } = req.params;
+  const resourceDoc = db.resources.findOne({
+    name,
+    namespace,
+    status: 'published',
+  });
+  if (!resourceDoc) return response.notFound(res);
+
+  const newDoc = req.body;
+  const collName = `_${resourceDoc.name}`;
+  const doc = db[collName].insert(newDoc);
+  return res.json(doc);
+});
+
+router.put('/:resource/:id', (req, res) => {
+  // TODO: Validate with schema
+  // TODO Move below logic to a middleware
+  const { resource: name, id: _id } = req.params;
+  const resourceDoc = db.resources.findOne({
+    name,
+    namespace,
+    status: 'published',
+  });
+  if (!resourceDoc) return response.notFound(res);
+
+  const collName = `_${resourceDoc.name}`;
+  const doc = db[collName].findOne({ _id });
+  if (!doc) return response.notFound(res);
+
+  const newDoc = {
+    ...req.body,
+    _id,
+  };
+
+  const updatedDoc = db[collName].updateOne({ _id }, newDoc);
+  if (!updatedDoc) return response.internalError(res);
+  return response.ok(res, updatedDoc);
+});
+
+router.patch('/:resource/:id', (req, res) => {
+  // TODO: Validate with schema
+  // TODO Move below logic to a middleware
+  const { resource: name, id: _id } = req.params;
+  const resourceDoc = db.resources.findOne({
+    name,
+    namespace,
+    status: 'published',
+  });
+  if (!resourceDoc) return response.notFound(res);
+
+  const collName = `_${resourceDoc.name}`;
+  const doc = db[collName].findOne({ _id });
+  if (!doc) return response.notFound(res);
+
+  const newDoc = {
+    ...doc,
+    ...req.body,
+    _id,
+  };
+
+  const updatedDoc = db[collName].updateOne({ _id }, newDoc);
+  if (!updatedDoc) return response.internalError(res);
+  return response.ok(res, updatedDoc);
+});
+
+router.delete('/:resource/:id', (req, res) => {
+  // TODO: Validate with schema
+  // TODO Move below logic to a middleware
+  const { resource: name, id: _id } = req.params;
+  const resourceDoc = db.resources.findOne({
+    name,
+    namespace,
+    status: 'published',
+  });
+  if (!resourceDoc) return response.notFound(res);
+
+  const collName = `_${resourceDoc.name}`;
+  const success = db[collName].remove({ _id });
+  if (!success) return response.internalError(res);
+  return response.ok(res);
+});
+
+router.get('/', (req, res) => {
+  const docs = db.resources.find({
+    namespace,
+    status: 'published',
+  });
+  const routes = {};
+  docs.forEach(({ name, methods, type }) => {
+    routes[`/${name}`] = {
+      methods: methods.filter((m) => ['get', 'post'].includes(m)),
+      _links: {
+        self: `${BASE_URL}/${namespace}/${name}`,
+      },
+    };
+
+    if (type !== 'proxy') {
+      routes[`/${name}/:id`] = {
+        methods: methods.filter((m) =>
+          ['get', 'put', 'patch', 'delete'].includes(m)
+        ),
+        _links: {
+          self: `${BASE_URL}/${namespace}/${name}/:id`,
+        },
+      };
+    }
+  });
+  return res.json({
+    name: APP_NAME,
+    description: APP_DESC,
+    base_url: BASE_URL,
+    namespace,
+    routes,
+    _links: {},
+  });
+});
 
 export default router;

@@ -1,0 +1,33 @@
+{
+  "namespace": "api",
+  "name": "comments",
+  "type": "default",
+  "methods": ["get", "post", "patch", "delete"],
+  "status": "published",
+  "schema": {
+    "_id": {
+      "type": "string",
+      "unique": true,
+      "required": true,
+      "auto": true
+    },
+    "name": {
+      "type": "string",
+      "length": 24,
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "comment": {
+      "type": "text",
+      "required": true
+    },
+    "date": {
+      "type": "date",
+      "required": true,
+      "auto": true
+    }
+  }
+}

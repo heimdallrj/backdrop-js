@@ -80,14 +80,80 @@ const insert = function (cursor, doc) {
   }
 };
 
-const find = function (cursor) {
+const find = function (cursor, query = null) {
   try {
     this.cursor = cursor;
     this.storage = JSON.parse(
       readFileSync(`${this.root}/${cursor}.json`, charset)
     );
-    // TODO Impliment advance quering
-    return this.storage;
+    let filtered = this.storage;
+    if (query && typeof query === 'object') {
+      const keys = Object.keys(query);
+      // TODO Improve
+      filtered = this.storage.filter((doc) => {
+        let include = true;
+        keys.forEach((key) => {
+          if (doc[key] !== query[key]) {
+            include = false;
+          }
+        });
+        return include;
+      });
+    }
+    return filtered;
+  } catch (err) {
+    logger.error(err);
+    return null;
+  }
+};
+
+const findOne = function (cursor, query) {
+  try {
+    this.cursor = cursor;
+    this.storage = JSON.parse(
+      readFileSync(`${this.root}/${cursor}.json`, charset)
+    );
+    let filtered = null;
+    if (query && typeof query === 'object') {
+      const keys = Object.keys(query);
+      // TODO Improve
+      filtered = this.storage.filter((doc) => {
+        let include = true;
+        keys.forEach((key) => {
+          if (doc[key] !== query[key]) {
+            include = false;
+          }
+        });
+        return include;
+      });
+    }
+    return filtered[0] || null;
+  } catch (err) {
+    logger.error(err);
+    return null;
+  }
+};
+
+const updateOne = function (cursor, filter, newDoc) {
+  try {
+    this.cursor = cursor;
+    const storage = JSON.parse(
+      readFileSync(`${this.root}/${cursor}.json`, charset)
+    );
+
+    const keys = Object.keys(filter);
+    this.storage = storage.filter((doc) => {
+      let include = true;
+      keys.forEach((key) => {
+        if (doc[key] === filter[key]) {
+          include = false;
+        }
+      });
+      return include;
+    });
+    this.storage.push(newDoc);
+    this.save();
+    return newDoc;
   } catch (err) {
     logger.error(err);
     return null;
@@ -130,13 +196,35 @@ const updateOneById = function (cursor, id, doc, upsert = false) {
   }
 };
 
-const remove = function (cursor, id) {
+// const keys = Object.keys(query);
+//       // TODO Improve
+//       filtered = this.storage.filter((doc) => {
+//         let include = true;
+//         keys.forEach((key) => {
+//           if (doc[key] !== query[key]) {
+//             include = false;
+//           }
+//         });
+//         return include;
+//       });
+
+const remove = function (cursor, query) {
   try {
     this.cursor = cursor;
     this.storage = JSON.parse(
       readFileSync(`${this.root}/${cursor}.json`, charset)
     );
-    const storage = this.storage.filter(({ _id }) => _id !== id);
+    const keys = Object.keys(query);
+
+    const storage = this.storage.filter((doc) => {
+      let include = true;
+      keys.forEach((key) => {
+        if (doc[key] === query[key]) {
+          include = false;
+        }
+      });
+      return include;
+    });
     this.storage = storage;
     this.save();
     return true;
@@ -158,7 +246,7 @@ export default function JsonDB() {
     this.collections[collName].insert = insert.bind(this, collName);
     this.collections[collName].insertMany = () => {}; // TODO
     this.collections[collName].find = find.bind(this, collName);
-    this.collections[collName].findOne = () => {}; // TODO
+    this.collections[collName].findOne = findOne.bind(this, collName);
     this.collections[collName].findOneById = findOneById.bind(this, collName);
     this.collections[collName].update = () => {}; // TODO
     this.collections[collName].updateOneById = updateOneById.bind(
@@ -166,7 +254,7 @@ export default function JsonDB() {
       collName
     );
     this.collections[collName].findOneAndUpdate = () => {}; // TODO
-    this.collections[collName].updateOne = () => {}; // TODO
+    this.collections[collName].updateOne = updateOne.bind(this, collName);
     this.collections[collName].updateMany = () => {}; // TODO
     this.collections[collName].remove = remove.bind(this, collName);
   });

@@ -9,8 +9,7 @@
           "resources": "./src/resources",
           "utils": "./src/utils",
           "config": "./src/config",
-          "middlewares": "./src/middlewares",
-          "handlers": "./src/handlers"
+          "middlewares": "./src/middlewares"
         }
       }
     ]

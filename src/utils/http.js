@@ -43,7 +43,7 @@ export const httpStatus = {
 
 const http = {};
 Object.keys(httpStatus).forEach((code) => {
-  const key = httpStatus[code].toUpperCase().replace(' ', '_');
+  const key = httpStatus[code].toUpperCase().replaceAll(' ', '_');
   http[key] = code;
 });
 
@@ -51,10 +51,28 @@ http.messages = httpStatus;
 
 // response
 export const response = {};
-response.success = (res, data) =>
+response.success = (res, message) =>
   res.status(http.OK).json({
     code: http.OK,
-    message: data || http.messages[http.OK],
+    message: message || http.messages[http.OK],
+  });
+
+response.ok = (res, message) =>
+  res.status(http.OK).json({
+    code: http.OK,
+    message: message || http.messages[http.OK],
+  });
+
+response.notFound = (res, message) =>
+  res.status(http.NOT_FOUND).json({
+    code: http.NOT_FOUND,
+    message: message || http.messages[http.NOT_FOUND],
+  });
+
+response.internalError = (res, message) =>
+  res.status(http.INTERNAL_SERVER_ERROR).json({
+    code: http.INTERNAL_SERVER_ERROR,
+    message: message || http.messages[http.INTERNAL_SERVER_ERROR],
   });
 
 export default http;

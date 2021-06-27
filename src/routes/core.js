@@ -1,10 +1,38 @@
 import express from 'express';
+
 import { response } from 'utils/http';
 import JsonDB, { db } from 'utils/database/jsondb';
 
+import { BASE_URL, APP_NAME, APP_DESC } from 'config';
+
 const router = express.Router();
 
-router.get('/', (req, res) => response.success(res));
+const namespace = 'core';
+
+router.get('/', (req, res) =>
+  res.json({
+    name: APP_NAME,
+    description: APP_DESC,
+    base_url: BASE_URL,
+    namespace,
+    routes: {
+      // TODO Auto generate routes
+      '/resource': {
+        methods: ['get', 'post'],
+        _links: {
+          self: `${BASE_URL}/${namespace}/resource`,
+        },
+      },
+      '/resource/:id': {
+        methods: ['get', 'put', 'patch', 'delete'],
+        _links: {
+          self: `${BASE_URL}/${namespace}/resource/:id`,
+        },
+      },
+    },
+    _links: {},
+  })
+);
 
 // resource
 router.get('/resource', (req, res) => {
@@ -20,13 +48,12 @@ router.get('/resource/:id', (req, res) => {
 
 router.post('/resource', (req, res) => {
   // TODO Validate request body
-  // TODO Create a collection
-  const doc = req.body;
-  const resource = db.resources.insert(doc);
-  if (resource && !doc.type === 'proxy') {
+  const resource = req.body;
+  const doc = db.resources.insert(resource);
+  if (doc && doc.type === 'default') {
     JsonDB.createCollection(`_${doc.name}`);
   }
-  response.success(res, resource);
+  response.success(res, doc);
 });
 
 router.put('/resource/:id', (req, res) => {
