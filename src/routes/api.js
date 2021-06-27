@@ -1,5 +1,7 @@
 import express from 'express';
 
+import { validateResource, validateSchema } from 'middlewares';
+
 import { db } from 'utils/database/jsondb';
 import { proxy } from 'utils/handler';
 import { response } from 'utils/http';
@@ -10,73 +12,42 @@ const namespace = 'api';
 
 const router = express.Router();
 
-router.get('/:resource/:id', (req, res) => {
-  // TODO Validate with schema
-  // TODO Move below logic to a middleware
-  const { resource: name, id: _id } = req.params;
-  const resourceDoc = db.resources.findOne({
-    name,
-    namespace,
-    status: 'published',
-  });
-  if (!resourceDoc) return response.notFound(res);
+router.get('/:resource/:id', validateResource, (req, res) => {
+  const { resourceConfig } = req;
+  const collName = `_${resourceConfig.name}`;
 
-  const collName = `_${resourceDoc.name}`;
-  const doc = db[collName].findOne({ _id });
+  const doc = db[collName].findOne({ _id: req.params.id });
   if (!doc) return response.notFound(res);
 
   return response.ok(res, doc);
 });
 
-router.get('/:resource/', (req, res) => {
-  // TODO Validate with schema
-  // TODO Move below logic to a middleware
-  const { resource: name } = req.params;
-  const resourceDoc = db.resources.findOne({
-    name,
-    namespace,
-    status: 'published',
-  });
-  if (!resourceDoc) return response.notFound(res);
+router.get('/:resource/', validateResource, (req, res) => {
+  const { resourceConfig } = req;
 
-  if (resourceDoc.type === 'proxy') {
-    return proxy(resourceDoc, req, res);
+  if (resourceConfig.type === 'proxy') {
+    return proxy(resourceConfig, req, res);
   }
 
-  const collName = `_${resourceDoc.name}`;
+  const collName = `_${resourceConfig.name}`;
   const docs = db[collName].find();
   return response.ok(res, docs);
 });
 
-router.post('/:resource', (req, res) => {
-  // TODO: Validate with schema
-  // TODO Move below logic to a middleware
-  const { resource: name } = req.params;
-  const resourceDoc = db.resources.findOne({
-    name,
-    namespace,
-    status: 'published',
-  });
-  if (!resourceDoc) return response.notFound(res);
-
+router.post('/:resource', [validateResource, validateSchema], (req, res) => {
+  const { resourceConfig } = req;
   const newDoc = req.body;
-  const collName = `_${resourceDoc.name}`;
+  const collName = `_${resourceConfig.name}`;
+
   const doc = db[collName].insert(newDoc);
   return res.json(doc);
 });
 
-router.put('/:resource/:id', (req, res) => {
-  // TODO: Validate with schema
-  // TODO Move below logic to a middleware
-  const { resource: name, id: _id } = req.params;
-  const resourceDoc = db.resources.findOne({
-    name,
-    namespace,
-    status: 'published',
-  });
-  if (!resourceDoc) return response.notFound(res);
+router.put('/:resource/:id', [validateResource, validateSchema], (req, res) => {
+  const { resourceConfig } = req;
+  const collName = `_${resourceConfig.name}`;
+  const { id: _id } = req.params;
 
-  const collName = `_${resourceDoc.name}`;
   const doc = db[collName].findOne({ _id });
   if (!doc) return response.notFound(res);
 
@@ -90,44 +61,34 @@ router.put('/:resource/:id', (req, res) => {
   return response.ok(res, updatedDoc);
 });
 
-router.patch('/:resource/:id', (req, res) => {
-  // TODO: Validate with schema
-  // TODO Move below logic to a middleware
-  const { resource: name, id: _id } = req.params;
-  const resourceDoc = db.resources.findOne({
-    name,
-    namespace,
-    status: 'published',
-  });
-  if (!resourceDoc) return response.notFound(res);
+router.patch(
+  '/:resource/:id',
+  [validateResource, validateSchema],
+  (req, res) => {
+    const { resourceConfig } = req;
+    const { id: _id } = req.params;
+    const collName = `_${resourceConfig.name}`;
 
-  const collName = `_${resourceDoc.name}`;
-  const doc = db[collName].findOne({ _id });
-  if (!doc) return response.notFound(res);
+    const doc = db[collName].findOne({ _id });
+    if (!doc) return response.notFound(res);
 
-  const newDoc = {
-    ...doc,
-    ...req.body,
-    _id,
-  };
+    const newDoc = {
+      ...doc,
+      ...req.body,
+      _id,
+    };
 
-  const updatedDoc = db[collName].updateOne({ _id }, newDoc);
-  if (!updatedDoc) return response.internalError(res);
-  return response.ok(res, updatedDoc);
-});
+    const updatedDoc = db[collName].updateOne({ _id }, newDoc);
+    if (!updatedDoc) return response.internalError(res);
+    return response.ok(res, updatedDoc);
+  }
+);
 
-router.delete('/:resource/:id', (req, res) => {
-  // TODO: Validate with schema
-  // TODO Move below logic to a middleware
-  const { resource: name, id: _id } = req.params;
-  const resourceDoc = db.resources.findOne({
-    name,
-    namespace,
-    status: 'published',
-  });
-  if (!resourceDoc) return response.notFound(res);
+router.delete('/:resource/:id', validateResource, (req, res) => {
+  const { resourceConfig } = req;
+  const { id: _id } = req.params;
+  const collName = `_${resourceConfig.name}`;
 
-  const collName = `_${resourceDoc.name}`;
   const success = db[collName].remove({ _id });
   if (!success) return response.internalError(res);
   return response.ok(res);

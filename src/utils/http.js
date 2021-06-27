@@ -75,4 +75,10 @@ response.internalError = (res, message) =>
     message: message || http.messages[http.INTERNAL_SERVER_ERROR],
   });
 
+response.bad = (res, message) =>
+  res.status(http.BAD_REQUEST).json({
+    code: http.BAD_REQUEST,
+    message: message || http.messages[http.BAD_REQUEST],
+  });
+
 export default http;
