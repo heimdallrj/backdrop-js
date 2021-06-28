@@ -12,7 +12,7 @@ import logger from 'utils/logger';
 import apiRoutes from 'routes/api';
 import coreRoutes from 'routes/core';
 
-import { PORT } from 'config';
+import { port } from 'config';
 
 const app = express();
 
@@ -44,8 +44,8 @@ const serve = async () => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
   });
 
-  app.listen(PORT, () => {
-    logger.log(`Server is running on ${PORT}`);
+  app.listen(port, () => {
+    logger.log(`Server is running on ${port}`);
   });
 };
 

@@ -53,7 +53,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"namespace\": \"api\",\n    \"name\": \"posts\",\n    \"type\": \"proxy\",\n    \"methods\": [\n    \"get\"\n    ],\n    \"endpoint\": \"https://jsonplaceholder.typicode.com/posts\",\n    \"status\": \"published\"\n}",
+					"raw": "{\n  \"namespace\": \"api\",\n  \"name\": \"posts\",\n  \"type\": \"default\",\n  \"methods\": [\"get\", \"post\", \"patch\", \"delete\"],\n  \"status\": \"published\",\n  \"schema\": {\n    \"_id\": {\n      \"type\": \"string\",\n      \"unique\": true,\n      \"required\": true,\n      \"auto\": true\n    },\n    \"title\": {\n      \"type\": \"string\",\n      \"length\": 255,\n      \"required\": true\n    },\n    \"text\": {\n      \"type\": \"text\",\n      \"required\": true\n    },\n    \"date\": {\n      \"type\": \"date\",\n      \"required\": true,\n      \"auto\": true\n    }\n  }\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -151,6 +151,69 @@
 						"core",
 						"resource",
 						"sktwi1me7kqe4owvn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST media",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3001/core/media",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"core",
+						"media"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET media",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3001/core/media",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"core",
+						"media"
 					]
 				}
 			},

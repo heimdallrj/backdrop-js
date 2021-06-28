@@ -1,7 +1,7 @@
 {
   "namespace": "api",
   "private": false,
-  "name": "posts",
+  "name": "offers",
   "type": "default",
   "methods": ["get", "post", "patch", "delete"],
   "status": "published",
@@ -17,17 +17,25 @@
       "length": 255,
       "required": true
     },
-    "text": {
+    "description": {
       "type": "string",
       "required": true
     },
     "featuredImageUrl": {
       "type": "string"
     },
-    "date": {
+    "offerCreated": {
       "type": "date",
       "required": true
+    },
+    "offerEnds": {
+      "type": "date",
+      "required": true
+    },
+    "category": "$categories",
+    "tags": {
+      "type": "array"
     }
   },
-  "aggregate": ["$comments.postId"]
+  "aggregate": ["$categories.offerId", "$$user"]
 }

@@ -1,5 +1,6 @@
 {
   "namespace": "api",
+  "private": false,
   "name": "jsonp-posts",
   "type": "proxy",
   "methods": ["get"],

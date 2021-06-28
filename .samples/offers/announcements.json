@@ -1,7 +1,7 @@
 {
   "namespace": "api",
   "private": false,
-  "name": "posts",
+  "name": "announcements",
   "type": "default",
   "methods": ["get", "post", "patch", "delete"],
   "status": "published",
@@ -12,22 +12,18 @@
       "required": true,
       "auto": true
     },
-    "title": {
+    "type": {
+      "type": "string",
+      "options": ["system"]
+    },
+    "subject": {
       "type": "string",
       "length": 255,
       "required": true
     },
-    "text": {
+    "message": {
       "type": "string",
       "required": true
-    },
-    "featuredImageUrl": {
-      "type": "string"
-    },
-    "date": {
-      "type": "date",
-      "required": true
     }
-  },
-  "aggregate": ["$comments.postId"]
+  }
 }

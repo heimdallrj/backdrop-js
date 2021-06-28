@@ -4,63 +4,27 @@ import forEach from 'lodash/forEach';
 import keysIn from 'lodash/keysIn';
 import { readdirSync } from 'fs';
 
+import * as handlers from 'handlers';
+
 import { response } from 'utils/http';
 import JsonDB, { db } from 'utils/database/jsondb';
 
-import {
-  BASE_URL,
-  APP_NAME,
-  APP_DESC,
-  MEDIA_DIR,
-  MEDIA_PATH,
-  filesToBeIgnored,
-} from 'config';
+import { baseUrl, mediaDir, mediaPath, filesToBeIgnored } from 'config';
 
 const router = express.Router();
 
-const namespace = 'core';
-
-router.get('/', (req, res) =>
-  res.json({
-    name: APP_NAME,
-    description: APP_DESC,
-    base_url: BASE_URL,
-    namespace,
-    routes: {
-      // TODO Auto generate routes
-      '/resource': {
-        methods: ['get', 'post'],
-        _links: {
-          self: `${BASE_URL}/${namespace}/resource`,
-        },
-      },
-      '/resource/:id': {
-        methods: ['get', 'put', 'patch', 'delete'],
-        _links: {
-          self: `${BASE_URL}/${namespace}/resource/:id`,
-        },
-      },
-      '/media': {
-        methods: ['post'],
-        _links: {
-          self: `${BASE_URL}/${namespace}/media`,
-        },
-      },
-    },
-    _links: {},
-  })
-);
+router.get('/', handlers.core);
 
 // resource
 router.get('/resource', (req, res) => {
   const resources = db.resources.find({});
-  response.success(res, resources);
+  response.ok(res, resources);
 });
 
 router.get('/resource/:id', (req, res) => {
   const { id } = req.params;
   const resourceSingle = db.resources.findOne({ _id: id });
-  response.success(res, resourceSingle);
+  response.ok(res, resourceSingle);
 });
 
 router.post('/resource', (req, res) => {
@@ -70,7 +34,7 @@ router.post('/resource', (req, res) => {
   if (doc && doc.type === 'default') {
     JsonDB.createCollection(`_${doc.name}`);
   }
-  response.success(res, doc);
+  response.ok(res, doc);
 });
 
 router.put('/resource/:id', (req, res) => {
@@ -78,7 +42,7 @@ router.put('/resource/:id', (req, res) => {
   const { id } = req.params;
   const newDoc = req.body;
   const doc = db.resources.updateOne({ _id: id }, newDoc);
-  response.success(res, doc);
+  response.ok(res, doc);
 });
 
 router.patch('/resource/:id', (req, res) => {
@@ -86,14 +50,15 @@ router.patch('/resource/:id', (req, res) => {
   const { id } = req.params;
   const newDoc = req.body;
   const doc = db.resources.updateOne({ _id: id }, newDoc);
-  response.success(res, doc);
+  response.ok(res, doc);
 });
 
 router.delete('/resource/:id', (req, res) => {
   const { id } = req.params;
-  response.success(res, db.resources.remove(id));
+  response.ok(res, db.resources.remove(id));
 });
 
+// media
 router.post(
   '/media',
   fileUpload({
@@ -111,14 +76,14 @@ router.post(
         const isSingleFile = !Array.isArray(files);
 
         if (isSingleFile) {
-          files.mv(`${MEDIA_PATH}/${files.name}`);
-          response.success(res, [
+          files.mv(`${mediaPath}/${files.name}`);
+          response.ok(res, [
             {
               name: files.name,
               size: files.size,
               mimetype: files.mimetype,
               md5: files.md5,
-              url: `${BASE_URL}/${MEDIA_DIR}/${files.name}`,
+              url: `${baseUrl}/${mediaDir}/${files.name}`,
             },
           ]);
         } else {
@@ -126,18 +91,18 @@ router.post(
 
           forEach(keysIn(files), (key) => {
             const file = files[key];
-            file.mv(`${MEDIA_PATH}/${file.name}`);
+            file.mv(`${mediaPath}/${file.name}`);
 
             payload.push({
               name: file.name,
               size: file.size,
               mimetype: file.mimetype,
               md5: file.md5,
-              url: `${BASE_URL}/${MEDIA_DIR}/${file.name}`,
+              url: `${baseUrl}/${mediaDir}/${file.name}`,
             });
           });
 
-          response.success(res, payload);
+          response.ok(res, payload);
         }
       }
     } catch (err) {
@@ -148,13 +113,85 @@ router.post(
 
 router.get('/media', (req, res) => {
   try {
-    const files = readdirSync(MEDIA_PATH)
+    const files = readdirSync(mediaPath)
       .filter((f) => !filesToBeIgnored.includes(f))
-      .map((f) => `${BASE_URL}/${MEDIA_DIR}/${f}`);
-    response.success(res, files);
+      .map((f) => `${baseUrl}/${mediaDir}/${f}`);
+    response.ok(res, files);
   } catch (err) {
     response.internalError(res);
   }
+});
+
+// users
+router.get('/users', (req, res) => {
+  try {
+    const users = db.users.find({});
+    response.ok(res, users);
+  } catch (err) {
+    response.internalError(res);
+  }
+});
+
+router.get('/users/:id', (req, res) => {
+  const { id } = req.params;
+  const userSingle = db.users.findOne({ _id: id });
+  response.ok(res, userSingle);
+});
+
+router.post('/users', (req, res) => {
+  // TODO Validate request body
+  const user = req.body;
+  const doc = db.users.insert(user);
+  response.ok(res, doc);
+});
+
+router.patch('/users/:id', (req, res) => {
+  // TODO Validate request body
+  const { id } = req.params;
+  const newDoc = req.body;
+  const doc = db.users.updateOne({ _id: id }, newDoc);
+  response.ok(res, doc);
+});
+
+router.delete('/users/:id', (req, res) => {
+  const { id } = req.params;
+  response.ok(res, db.users.remove(id));
+});
+
+// config
+router.get('/config', (req, res) => {
+  try {
+    const config = db.config.find({});
+    response.ok(res, config);
+  } catch (err) {
+    response.internalError(res);
+  }
+});
+
+router.get('/users/:id', (req, res) => {
+  const { id } = req.params;
+  const configSingle = db.config.findOne({ _id: id });
+  response.ok(res, configSingle);
+});
+
+router.post('/users', (req, res) => {
+  // TODO Validate request body
+  const config = req.body;
+  const doc = db.config.insert(config);
+  response.ok(res, doc);
+});
+
+router.patch('/users/:id', (req, res) => {
+  // TODO Validate request body
+  const { id } = req.params;
+  const newDoc = req.body;
+  const doc = db.config.updateOne({ _id: id }, newDoc);
+  response.ok(res, doc);
+});
+
+router.delete('/users/:id', (req, res) => {
+  const { id } = req.params;
+  response.ok(res, db.config.remove(id));
 });
 
 export default router;

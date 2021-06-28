@@ -18,6 +18,19 @@ const ensureDbSync = function () {
   mkdirSync(this.root);
 };
 
+const init = function () {
+  try {
+    [`${this.root}/users.json`, `${this.root}/config.json`].forEach(
+      (collPath) => {
+        if (existsSync(collPath)) return;
+        writeFileSync(collPath, '[]', charset);
+      }
+    );
+  } catch (err) {
+    logger.error(err);
+  }
+};
+
 const createCollection = function (collName) {
   try {
     writeFileSync(`${this.root}/${collName}.json`, '[]', charset);
@@ -194,6 +207,7 @@ const remove = function (cursor, query) {
 export default function JsonDB() {
   this.root = path.join(__dirname, '..', '..', '.jsondb');
   ensureDbSync.apply(this);
+  init.apply(this);
 
   this.collections = {};
   const collections = getCollections.call(this);

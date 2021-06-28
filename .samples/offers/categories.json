@@ -1,7 +1,7 @@
 {
   "namespace": "api",
   "private": false,
-  "name": "posts",
+  "name": "categories",
   "type": "default",
   "methods": ["get", "post", "patch", "delete"],
   "status": "published",
@@ -12,22 +12,13 @@
       "required": true,
       "auto": true
     },
-    "title": {
+    "name": {
       "type": "string",
       "length": 255,
       "required": true
     },
-    "text": {
-      "type": "string",
-      "required": true
-    },
     "featuredImageUrl": {
       "type": "string"
-    },
-    "date": {
-      "type": "date",
-      "required": true
     }
-  },
-  "aggregate": ["$comments.postId"]
+  }
 }

@@ -1,15 +1,16 @@
 import path from 'path';
 
-export const BASE_URL = 'http://localhost:3001';
-export const PORT = process.env.PORT || 3001;
-export const APP_NAME = 'Backdrop';
-export const APP_DESC = 'Minimalistic API Artisan';
-export const MEDIA_DIR = 'media';
-export const MEDIA_PATH = path.join(__dirname, '..', MEDIA_DIR);
+require('dotenv').config();
+
+export const baseUrl = process.env.BASE_URL;
+export const port = process.env.PORT || 3001;
+export const appName = process.env.APP_NAME;
+export const appDesc = process.env.APP_DESC;
+export const mediaDir = process.env.MEDIA_DIR;
+export const mediaPath = path.join(__dirname, '..', mediaDir);
 
 export const filesToBeIgnored = ['.DS_Store'];
+export const reservedResourceNames = ['config', 'resources', 'users'];
 
-export const DB = {
-  connection: 'jsondb',
-  config: null,
-};
+export const dbConnection = process.env.DB_CONNECTION;
+export const dbConfig = null;

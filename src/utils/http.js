@@ -51,11 +51,6 @@ http.messages = httpStatus;
 
 // response
 export const response = {};
-response.success = (res, message) =>
-  res.status(http.OK).json({
-    code: http.OK,
-    message: message || http.messages[http.OK],
-  });
 
 response.ok = (res, message) =>
   res.status(http.OK).json({

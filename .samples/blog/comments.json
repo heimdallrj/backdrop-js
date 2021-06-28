@@ -1,5 +1,6 @@
 {
   "namespace": "api",
+  "private": true,
   "name": "comments",
   "type": "default",
   "methods": ["get", "post", "patch", "delete"],
@@ -11,6 +12,10 @@
       "required": true,
       "auto": true
     },
+    "postId": {
+      "type": "string",
+      "required": true
+    },
     "name": {
       "type": "string",
       "length": 24,
@@ -19,6 +24,9 @@
     "email": {
       "type": "email",
       "required": true
+    },
+    "avatarUrl": {
+      "type": "email"
     },
     "comment": {
       "type": "string",
