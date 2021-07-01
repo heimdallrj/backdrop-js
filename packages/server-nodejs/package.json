@@ -1,0 +1,67 @@
+{
+  "name": "backdrop-server-nodejs",
+  "version": "0.0.1",
+  "scripts": {
+    "start:dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/bin/www.js",
+    "start": "cross-env NODE_ENV=production node ./dist/bin/www.js",
+    "debug": "cross-env NODE_ENV=debug nodemon --inspect --exec babel-node ./src/bin/www.js",
+    "prebuild": "rm -rf dist",
+    "build": "babel ./src --out-dir dist --copy-files",
+    "lint": "eslint 'src/**/*.js'",
+    "lint:fix": "yarn lint -- --fix",
+    "format": "prettier --write 'src/**/*.js'"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "dist/*"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thinkholic/backdrop-server-nodejs.git"
+  },
+  "author": "thinkholic",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thinkholic/backdrop-server-nodejs/issues"
+  },
+  "homepage": "https://github.com/thinkholic/backdrop-server-nodejs#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "core-js": "^3.15.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "express-mongo-sanitize": "^2.1.0",
+    "express-rate-limit": "^5.2.6",
+    "fs": "^0.0.1-security",
+    "helmet": "^4.6.0",
+    "hpp": "^0.2.3",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^5.11.18",
+    "morgan": "^1.10.0",
+    "node-fetch": "^2.6.1",
+    "regenerator-runtime": "^0.13.7",
+    "uniqid": "^5.3.0",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.0",
+    "@babel/core": "^7.13.1",
+    "@babel/node": "^7.13.0",
+    "@babel/preset-env": "^7.13.5",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "concurrently": "^6.0.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.29.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-babel-module": "^5.3.1",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-prettier": "^3.4.0",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.3.1"
+  }
+}
