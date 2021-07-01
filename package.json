@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "backdrop",
+  "name": "backdrop-js",
   "workspaces": [
     "packages/*"
   ],

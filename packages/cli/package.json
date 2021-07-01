@@ -1,7 +1,7 @@
 {
   "name": "@backdrop/cli",
   "version": "0.0.1",
-  "description": "Backdrop CLI",
+  "description": "Backdrop-JS CLI",
   "bin": {
     "backdrop": "./bin/index.js"
   },
@@ -14,11 +14,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/thinkholic/backdrop.git",
-    "directory": "cli"
+    "url": "https://github.com/thinkholic/backdrop-js.git",
+    "directory": "packages/cli"
   },
   "bugs": {
-    "url": "https://github.com/thinkholic/backdrop/issues"
+    "url": "https://github.com/thinkholic/backdrop-js/issues"
   },
   "license": "MIT",
   "dependencies": {

@@ -18,14 +18,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thinkholic/backdrop-server-nodejs.git"
+    "url": "git+https://github.com/thinkholic/backdrop-js.git",
+    "directory": "packages/server-nodejs"
   },
   "author": "thinkholic",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/thinkholic/backdrop-server-nodejs/issues"
+    "url": "https://github.com/thinkholic/backdrop-js/issues"
   },
-  "homepage": "https://github.com/thinkholic/backdrop-server-nodejs#readme",
+  "homepage": "https://github.com/thinkholic/backdrop-js#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "core-js": "^3.15.1",
