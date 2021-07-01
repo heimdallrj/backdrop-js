@@ -20,6 +20,7 @@
   "bugs": {
     "url": "https://github.com/thinkholic/backdrop-js/issues"
   },
+  "author": "thinkholic",
   "license": "MIT",
   "dependencies": {
     "commander": "^7.2.0",
