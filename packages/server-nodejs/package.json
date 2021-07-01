@@ -1,5 +1,5 @@
 {
-  "name": "backdrop-server-nodejs",
+  "name": "@backdrop/server-nodejs",
   "version": "0.0.1",
   "scripts": {
     "start:dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/bin/www.js",
