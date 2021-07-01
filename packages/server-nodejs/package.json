@@ -44,6 +44,7 @@
     "mongoose": "^5.11.18",
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.1",
+    "@backdrop/node-jsondb": "^0.0.1",
     "regenerator-runtime": "^0.13.7",
     "uniqid": "^5.3.0",
     "xss-clean": "^0.1.1"

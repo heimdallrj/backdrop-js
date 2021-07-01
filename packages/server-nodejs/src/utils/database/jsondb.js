@@ -1,6 +1,31 @@
-import JsonDB from '../../libs/node-jsondb';
+import JsonDB from '@backdrop/node-jsondb';
 
-const jsonDb = new JsonDB();
+import { jsonDbPath, baseUrl, appName, appDesc } from 'config';
 
-export const db = jsonDb.collections;
-export default jsonDb;
+const JsonDb = new JsonDB(jsonDbPath, {
+  initialData: [
+    {
+      coll: `users`,
+      data: [],
+    },
+    {
+      coll: `config`,
+      data: [
+        {
+          type: 'app',
+          baseUrl,
+          appName,
+          appDesc,
+          defaultDBConn: 'jsondb',
+        },
+      ],
+    },
+    {
+      coll: 'resources',
+      data: [],
+    }
+  ],
+});
+
+export const db = JsonDb.collections;
+export default JsonDb;

@@ -14,3 +14,4 @@ export const reservedResourceNames = ['config', 'resources', 'users'];
 
 export const dbConnection = process.env.DB_CONNECTION;
 export const dbConfig = null;
+export const jsonDbPath = path.join(__dirname, '..');
