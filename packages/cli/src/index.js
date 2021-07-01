@@ -7,7 +7,7 @@ program.version(pkg.version);
 // program: initialize
 program
   .command("init <namespace>")
-  .description("Initialize the project.")
+  .description("Initialize the project")
   .action((namespace, options) => actions.init(namespace, options));
 
 // program: [anything else]
