@@ -6,14 +6,14 @@
   ],
   "scripts": {
     "setup": "yarn",
-    "start": "concurrently 'yarn start:wtach:node-jsondb' 'yarn start:wtach:cli' 'yarn start:server' 'yarn start:frontend'",
+    "start": "concurrently 'yarn start:wtach:jsondb' 'yarn start:wtach:cli' 'yarn start:server' 'yarn start:frontend'",
     "start:server": "cd packages/server-nodejs && yarn start:dev",
     "start:frontend": "cd packages/frontend && yarn start",
-    "start:wtach:node-jsondb": "cd packages/node-jsondb && yarn start:watch",
+    "start:wtach:jsondb": "cd packages/node-jsondb && yarn start:watch",
     "start:wtach:cli": "cd packages/cli && yarn start:watch",
     "build:server": "cd packages/server-nodejs && yarn build",
     "build:frontend": "cd packages/frontend && yarn build",
-    "build:node-jsondb": "cd packages/node-jsondb && yarn build"
+    "build:jsondb": "cd packages/node-jsondb && yarn build"
   },
   "dependencies": {
     "concurrently": "^6.2.0"
