@@ -5,10 +5,10 @@ import { store } from '../app/store';
 
 export default function Providers({ children }) {
   return (
-    <ReduxProvider store={store}>
-      <ThemeProvider>
+    <ThemeProvider>
+      <ReduxProvider store={store}>
         {children}
-      </ThemeProvider>
-    </ReduxProvider>
+      </ReduxProvider>
+    </ThemeProvider>
   );
 }
