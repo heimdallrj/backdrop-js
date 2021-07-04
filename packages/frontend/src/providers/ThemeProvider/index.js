@@ -9,7 +9,7 @@ export default function ThemeProvider({ children }) {
     <StyledProvider
       theme={{}}
     >
-      <Container class="container">
+      <Container className="container">
         {children}
       </Container>
     </StyledProvider>

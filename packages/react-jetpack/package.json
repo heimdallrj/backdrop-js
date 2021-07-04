@@ -4,6 +4,7 @@
   "description": "An opinionated, but loosely coupled toolkit for efficient React.js development",
   "main": "dist/index.js",
   "scripts": {
+    "start:watch": "rollup -c --watch",
     "build": "rollup -c"
   },
   "repository": {

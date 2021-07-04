@@ -36,21 +36,21 @@ export default function Resources() {
         <table className="table-auto">
           <thead>
             <tr>
-              <th class="px-4 py-2">#</th>
-              <th class="px-4 py-2">namespace</th>
-              <th class="px-4 py-2">name</th>
-              <th class="px-4 py-2">type</th>
-              <th class="px-4 py-2">status</th>
+              <th className="px-4 py-2">#</th>
+              <th className="px-4 py-2">namespace</th>
+              <th className="px-4 py-2">name</th>
+              <th className="px-4 py-2">type</th>
+              <th className="px-4 py-2">status</th>
             </tr>
           </thead>
           <tbody>
             {resources.map(({ _id, namespace, name, type, status }, index) => (
               <tr onClick={onClickResourceHandler.bind(null, _id)} key={_id}>
-                <td class="border px-4 py-2">{index + 1}</td>
-                <td class="border px-4 py-2">{namespace}</td>
-                <td class="border px-4 py-2">{name}</td>
-                <td class="border px-4 py-2">{type}</td>
-                <td class="border px-4 py-2">{status}</td>
+                <td className="border px-4 py-2">{index + 1}</td>
+                <td className="border px-4 py-2">{namespace}</td>
+                <td className="border px-4 py-2">{name}</td>
+                <td className="border px-4 py-2">{type}</td>
+                <td className="border px-4 py-2">{status}</td>
               </tr>
             ))}
           </tbody>
