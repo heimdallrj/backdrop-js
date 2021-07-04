@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import {
-  Link
+  Link,
+  useHistory
 } from "react-router-dom";
 
 import { fetchAll as apiFetchAllResources } from 'api/resources';
 
 export default function Resources() {
+  const history = useHistory();
+
   const [resources, setResources] = useState([]);
 
   const fetchAllResources = async () => {
@@ -17,6 +20,10 @@ export default function Resources() {
     fetchAllResources();
   }, []);
 
+  const onClickResourceHandler = (id) => {
+    history.push(`/resources/${id}`);
+  }
+
   return (
     <div>
       <p>Resources</p>
@@ -26,16 +33,24 @@ export default function Resources() {
       </Link>
 
       <div>
-        <table>
-          <tbody>
+        <table className="table-auto">
+          <thead>
             <tr>
-              <th>#</th>
-              <th>-</th>
+              <th class="px-4 py-2">#</th>
+              <th class="px-4 py-2">namespace</th>
+              <th class="px-4 py-2">name</th>
+              <th class="px-4 py-2">type</th>
+              <th class="px-4 py-2">status</th>
             </tr>
-            {resources.map((resource, index) => (
-              <tr key={resource._id}>
-                <td><Link to={`/resources/${resource._id}`}>{index + 1}</Link></td>
-                <td><pre>{JSON.stringify(resource, null, 2)}</pre></td>
+          </thead>
+          <tbody>
+            {resources.map(({ _id, namespace, name, type, status }, index) => (
+              <tr onClick={onClickResourceHandler.bind(null, _id)} key={_id}>
+                <td class="border px-4 py-2">{index + 1}</td>
+                <td class="border px-4 py-2">{namespace}</td>
+                <td class="border px-4 py-2">{name}</td>
+                <td class="border px-4 py-2">{type}</td>
+                <td class="border px-4 py-2">{status}</td>
               </tr>
             ))}
           </tbody>

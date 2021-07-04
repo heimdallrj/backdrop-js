@@ -16,21 +16,10 @@ export default function Media() {
 
   return (
     <div>
-      <p>Media</p>
+      <p>Media Library</p>
 
       <div>
-        <table>
-          <tbody>
-            <tr>
-              <th>#</th>
-            </tr>
-            {media.map((m, index) => (
-              <tr key={String(index)}>
-                <td><pre>{JSON.stringify(m, null, 2)}</pre></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {<pre>{JSON.stringify(media, null, 2)}</pre>}
       </div>
     </div>
   );

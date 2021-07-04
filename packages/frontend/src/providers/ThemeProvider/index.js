@@ -1,15 +1,17 @@
-import { ThemeProvider as StyledProvider } from 'styled-components';
+import styled, { ThemeProvider as StyledProvider } from 'styled-components';
 
 import './theme.css';
+
+const Container = styled.div``;
 
 export default function ThemeProvider({ children }) {
   return (
     <StyledProvider
       theme={{}}
     >
-      <div class="container">
+      <Container class="container">
         {children}
-      </div>
+      </Container>
     </StyledProvider>
   );
 }

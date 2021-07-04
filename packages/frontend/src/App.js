@@ -15,9 +15,20 @@ import Media from 'screens/Media';
 
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: row;
 `;
-const Nav = styled.nav``;
-const Main = styled.section``;
+
+const Nav = styled.div`
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+`;
+
+const Main = styled.div`
+  height: 100vh;
+  flex: 14;
+  padding: 5px;
+`;
 
 function App() {
   return (
@@ -36,7 +47,6 @@ function App() {
             </li>
           </ul>
         </Nav>
-
         <Main>
           <Switch>
             <Route exact path="/">
