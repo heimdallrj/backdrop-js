@@ -1,4 +1,4 @@
-import JsonDB from '@backdrop/node-jsondb';
+import JsonDB from '@jetlab/jsondb';
 
 import { jsonDbPath, baseUrl, appName, appDesc } from 'config';
 
