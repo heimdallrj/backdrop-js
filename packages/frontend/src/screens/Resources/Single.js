@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  useParams
-} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { fetch as apiFetchResource } from 'api/resources';
 
@@ -15,7 +13,7 @@ export default function ResourceSingle() {
     const resp = await apiFetchResource(id);
     setResource(resp);
     setLoading(false);
-  }
+  };
 
   useEffect(() => {
     if (id) {
@@ -24,14 +22,12 @@ export default function ResourceSingle() {
   }, [id]);
 
   if (loading) {
-    return (<p>loading...</p>);
+    return <p>loading...</p>;
   }
 
   return (
     <div>
-      <pre>
-        {JSON.stringify(resource, null, 2)}
-      </pre>
+      <pre>{JSON.stringify(resource, null, 2)}</pre>
     </div>
   );
 }

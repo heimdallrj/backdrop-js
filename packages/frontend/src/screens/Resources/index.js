@@ -1,10 +1,24 @@
 import { useEffect, useState } from 'react';
-import {
-  Link,
-  useHistory
-} from "react-router-dom";
+import { Link, useHistory } from 'react-router-dom';
 
 import { fetchAll as apiFetchAllResources } from 'api/resources';
+
+import {
+  Wrapper,
+  Heading,
+  Button,
+  TableWrap,
+  Table,
+  TableHead,
+  Row,
+  ColHead,
+  TableBody,
+  Col,
+  DocIcon,
+  DeleteIcon,
+  ActionWrap,
+  Status,
+} from './styled';
 
 export default function Resources() {
   const history = useHistory();
@@ -14,7 +28,7 @@ export default function Resources() {
   const fetchAllResources = async () => {
     const resp = await apiFetchAllResources();
     setResources(resp);
-  }
+  };
 
   useEffect(() => {
     fetchAllResources();
@@ -22,40 +36,57 @@ export default function Resources() {
 
   const onClickResourceHandler = (id) => {
     history.push(`/resources/${id}`);
-  }
+  };
 
   return (
-    <div>
-      <p>Resources</p>
+    <Wrapper>
+      <Heading>Resources</Heading>
 
       <Link to={`/resources/create`}>
-        <button>Create a new resource</button>
+        <Button>Create a new resource</Button>
       </Link>
 
-      <div>
-        <table className="table-auto">
-          <thead>
-            <tr>
-              <th className="px-4 py-2">#</th>
-              <th className="px-4 py-2">namespace</th>
-              <th className="px-4 py-2">name</th>
-              <th className="px-4 py-2">type</th>
-              <th className="px-4 py-2">status</th>
-            </tr>
-          </thead>
-          <tbody>
+      <TableWrap>
+        <Table>
+          <TableHead>
+            <Row>
+              <ColHead scope="col">ID</ColHead>
+              <ColHead scope="col">namespace</ColHead>
+              <ColHead scope="col" className="text-left" width="200px">
+                name
+              </ColHead>
+              <ColHead scope="col" className="text-left">
+                type
+              </ColHead>
+              <ColHead scope="col" className="text-left">
+                status
+              </ColHead>
+              <ColHead scope="col">
+                <span class="sr-only">Action</span>
+              </ColHead>
+            </Row>
+          </TableHead>
+          <TableBody>
             {resources.map(({ _id, namespace, name, type, status }, index) => (
-              <tr onClick={onClickResourceHandler.bind(null, _id)} key={_id}>
-                <td className="border px-4 py-2">{index + 1}</td>
-                <td className="border px-4 py-2">{namespace}</td>
-                <td className="border px-4 py-2">{name}</td>
-                <td className="border px-4 py-2">{type}</td>
-                <td className="border px-4 py-2">{status}</td>
-              </tr>
+              <Row key={_id}>
+                <Col className="text-center">{index + 1}</Col>
+                <Col className="text-center">{namespace}</Col>
+                <Col>{name}</Col>
+                <Col>{type}</Col>
+                <Col>
+                  <Status>{status}</Status>
+                </Col>
+                <Col>
+                  <ActionWrap>
+                    <DocIcon onClick={onClickResourceHandler.bind(null, _id)} />{' '}
+                    <DeleteIcon />
+                  </ActionWrap>
+                </Col>
+              </Row>
             ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+          </TableBody>
+        </Table>
+      </TableWrap>
+    </Wrapper>
   );
 }

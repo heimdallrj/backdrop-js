@@ -6,9 +6,7 @@ import { store } from '../app/store';
 export default function Providers({ children }) {
   return (
     <ThemeProvider>
-      <ReduxProvider store={store}>
-        {children}
-      </ReduxProvider>
+      <ReduxProvider store={store}>{children}</ReduxProvider>
     </ThemeProvider>
   );
 }

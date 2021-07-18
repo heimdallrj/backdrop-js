@@ -2,15 +2,15 @@ import { get, post } from 'utils/http';
 
 const namespace = 'core';
 
-export const create = (files, cb = () => { }) => {
+export const create = (files, cb = () => {}) => {
   const formData = new FormData();
 
   // Enable for multiple files
-  formData.append("files", files[0]);
+  formData.append('files', files[0]);
 
-  return post("/core/media", formData, {
+  return post('/core/media', formData, {
     headers: {
-      "Content-Type": "multipart/form-data",
+      'Content-Type': 'multipart/form-data',
     },
     cb,
   });

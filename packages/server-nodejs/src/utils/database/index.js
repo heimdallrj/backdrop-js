@@ -1,4 +1,4 @@
-import JsonDB from 'node-jsondb';
+import JsonDB from '@jetlab/jsondb';
 
 import { jsonDbPath } from 'config';
 import logger from 'utils/logger';

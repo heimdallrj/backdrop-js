@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Home from 'screens/Home';
@@ -13,40 +8,26 @@ import ResourceSingle from 'screens/Resources/Single';
 import CreateResource from 'screens/Resources/Create';
 import Media from 'screens/Media';
 
+import Nav from 'components/Nav';
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-`;
-
-const Nav = styled.div`
-  flex: 1;
-  padding: 5px;
-  border: 1px solid #ccc;
+  margin: 0;
+  padding: 0;
 `;
 
 const Main = styled.div`
   height: 100vh;
   flex: 14;
-  padding: 5px;
+  padding: 15px;
 `;
 
 function App() {
   return (
     <Router>
       <Wrapper>
-        <Nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/resources">Resources</Link>
-            </li>
-            <li>
-              <Link to="/media">Media</Link>
-            </li>
-          </ul>
-        </Nav>
+        <Nav />
         <Main>
           <Switch>
             <Route exact path="/">

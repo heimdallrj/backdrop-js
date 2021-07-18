@@ -23,7 +23,7 @@ const JsonDb = new JsonDB(jsonDbPath, {
     {
       coll: 'resources',
       data: [],
-    }
+    },
   ],
 });
 

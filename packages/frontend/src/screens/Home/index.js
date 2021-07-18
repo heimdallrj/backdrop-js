@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 
 import { fetchAll as apiFetchAllResources } from 'api/resources';
 
-const Wrapper = styled.div`
-  display: flex;
-`;
+import { Wrapper, Widget } from './styled';
 
 export default function Home() {
   const [resources, setResources] = useState([]);
@@ -13,7 +10,7 @@ export default function Home() {
   const fetchAllResources = async () => {
     const resp = await apiFetchAllResources();
     setResources(resp);
-  }
+  };
 
   useEffect(() => {
     fetchAllResources();
@@ -21,10 +18,10 @@ export default function Home() {
 
   return (
     <Wrapper>
-      <div style={{ border: '1px solid #ccc', textAlign: 'center', padding: '5px' }}>
-        <p>{resources.length}</p>
+      <Widget>
         <p>Resources</p>
-      </div>
+        <p>{resources.length}</p>
+      </Widget>
     </Wrapper>
   );
 }
