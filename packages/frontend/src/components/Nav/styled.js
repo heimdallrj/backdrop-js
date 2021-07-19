@@ -5,6 +5,7 @@ import HomeIconSource from 'assets/icons/Home/Solid';
 import ResourceIconSource from 'assets/icons/Resource/Solid';
 import MediaIconSource from 'assets/icons/Media/Solid';
 import SettingsIconSource from 'assets/icons/Settings/Solid';
+import UsersIconSource from 'assets/icons/Users/Solid';
 
 export const Wrapper = styled.div`
   flex: 1;
@@ -36,6 +37,12 @@ export const MediaIcon = styled(MediaIconSource)`
 `;
 
 export const SettingsIcon = styled(SettingsIconSource)`
+  color: red;
+  width: 24px;
+  align-self: center;
+`;
+
+export const UsersIcon = styled(UsersIconSource)`
   color: red;
   width: 24px;
   align-self: center;

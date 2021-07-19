@@ -7,6 +7,8 @@ import Resources from 'screens/Resources';
 import ResourceSingle from 'screens/Resources/Single';
 import CreateResource from 'screens/Resources/Create';
 import Media from 'screens/Media';
+import MediaUpload from 'screens/Media/Upload';
+import Users from 'screens/Users';
 
 import Nav from 'components/Nav';
 
@@ -44,6 +46,12 @@ function App() {
             </Route>
             <Route exact path="/media">
               <Media />
+            </Route>
+            <Route exact path="/media/upload">
+              <MediaUpload />
+            </Route>
+            <Route exact path="/users">
+              <Users />
             </Route>
           </Switch>
         </Main>

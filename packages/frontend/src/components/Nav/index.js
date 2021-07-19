@@ -5,6 +5,7 @@ import {
   HomeIcon,
   ResourceIcon,
   MediaIcon,
+  UsersIcon,
   SettingsIcon,
   Menu,
   MenuItem,
@@ -27,6 +28,11 @@ export default function Nav() {
         <MenuItem>
           <Link to="/media">
             <MediaIcon />
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <Link to="/users">
+            <UsersIcon />
           </Link>
         </MenuItem>
         <MenuItem>

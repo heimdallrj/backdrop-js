@@ -1,67 +1,36 @@
 import { useEffect, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { Link } from 'react-router-dom';
 
-import {
-  fetchAll as apiFetchAllMedia,
-  create as apiCreateMedia,
-} from 'api/media';
+import { fetchAll as apiFetchAllMedia } from 'api/media';
+
+import { Wrapper, Heading, Button, List, ListItem } from './styled';
+
+// TODO: Require to chnage from API
+const MediaItem = (file) => {
+  return <ListItem key={file}>{file}</ListItem>;
+};
 
 export default function Media() {
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
-
-  const [media, setMedia] = useState([]);
-  // eslint-disable-next-line no-unused-vars
-  const [uploding, setUploading] = useState(null);
+  const [files, setFiles] = useState([]);
 
   const fetchAllMedia = async () => {
     const resp = await apiFetchAllMedia();
-    setMedia(resp);
-  };
-
-  const createMedia = async () => {
-    setUploading(true);
-    apiCreateMedia(acceptedFiles, (err, resp) => {
-      fetchAllMedia();
-      setUploading(false);
-    });
-  };
-
-  const handleUpload = () => {
-    createMedia(files);
+    setFiles(resp);
   };
 
   useEffect(() => {
     fetchAllMedia();
   }, []);
 
-  const files = acceptedFiles.map((file) => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
-
   return (
-    <div>
-      <p>Media Library</p>
+    <Wrapper>
+      <Heading>Media Library</Heading>
 
-      <section className="container">
-        <div {...getRootProps({ className: 'dropzone' })}>
-          <input {...getInputProps()} />
-          <p>Drag 'n' drop some files here, or click to select files</p>
-        </div>
-        <aside>
-          <h4>Files</h4>
-          <ul>{files}</ul>
-        </aside>
+      <Link to={`/media/upload`}>
+        <Button>Upload new media</Button>
+      </Link>
 
-        {files && files.length > 0 && (
-          <button onClick={handleUpload} type="button">
-            Upload
-          </button>
-        )}
-      </section>
-
-      <div>{<pre>{JSON.stringify(media, null, 2)}</pre>}</div>
-    </div>
+      <List>{files.map(MediaItem)}</List>
+    </Wrapper>
   );
 }
