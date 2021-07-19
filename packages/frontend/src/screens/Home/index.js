@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { fetchAll as apiFetchAllResources } from 'api/resources';
 
+import Layout from 'components/Layout';
+
 import { Wrapper, Widget } from './styled';
 
 export default function Home() {
@@ -17,11 +19,13 @@ export default function Home() {
   }, []);
 
   return (
-    <Wrapper>
-      <Widget>
-        <p>Resources</p>
-        <p>{resources.length}</p>
-      </Widget>
-    </Wrapper>
+    <Layout>
+      <Wrapper>
+        <Widget>
+          <p>Resources</p>
+          <p>{resources.length}</p>
+        </Widget>
+      </Wrapper>
+    </Layout>
   );
 }

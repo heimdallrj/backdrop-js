@@ -4,6 +4,8 @@ import './reset.css';
 import './theme.css';
 
 const Container = styled.div`
+  width: 100%;
+  height: 100vh;
   margin: 0;
   padding: 0;
 `;
@@ -11,7 +13,7 @@ const Container = styled.div`
 export default function ThemeProvider({ children }) {
   return (
     <StyledProvider theme={{}}>
-      <Container className="container">{children}</Container>
+      <Container>{children}</Container>
     </StyledProvider>
   );
 }

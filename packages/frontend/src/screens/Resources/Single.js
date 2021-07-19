@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 
 import { fetch as apiFetchResource } from 'api/resources';
 
+import Layout from 'components/Layout';
+
 export default function ResourceSingle() {
   const { id } = useParams();
 
@@ -26,8 +28,8 @@ export default function ResourceSingle() {
   }
 
   return (
-    <div>
+    <Layout>
       <pre>{JSON.stringify(resource, null, 2)}</pre>
-    </div>
+    </Layout>
   );
 }

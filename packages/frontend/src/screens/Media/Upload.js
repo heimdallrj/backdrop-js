@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 
 import { create as apiCreateMedia } from 'api/media';
 
+import Layout from 'components/Layout';
+
 import {
   Wrapper,
   Heading,
@@ -40,32 +42,34 @@ export default function Media() {
   ));
 
   return (
-    <Wrapper>
-      <Heading>Media Library</Heading>
+    <Layout>
+      <Wrapper>
+        <Heading>Media Library</Heading>
 
-      <Library>
-        <DropZone {...getRootProps({ className: 'dropzone' })}>
-          <input {...getInputProps()} />
-          <p>Drag 'n' drop some files here, or click to select files</p>
-        </DropZone>
+        <Library>
+          <DropZone {...getRootProps({ className: 'dropzone' })}>
+            <input {...getInputProps()} />
+            <p>Drag 'n' drop some files here, or click to select files</p>
+          </DropZone>
 
-        {files && files.length > 0 && (
-          <FileList>
-            <h5>Files</h5>
-            <ul>{files}</ul>
-          </FileList>
-        )}
+          {files && files.length > 0 && (
+            <FileList>
+              <h5>Files</h5>
+              <ul>{files}</ul>
+            </FileList>
+          )}
 
-        {files && files.length > 0 && (
-          <UploadButton
-            onClick={handleUpload}
-            type="button"
-            className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-          >
-            {uploding ? <span>Uploading..</span> : <span>Upload</span>}
-          </UploadButton>
-        )}
-      </Library>
-    </Wrapper>
+          {files && files.length > 0 && (
+            <UploadButton
+              onClick={handleUpload}
+              type="button"
+              className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+            >
+              {uploding ? <span>Uploading..</span> : <span>Upload</span>}
+            </UploadButton>
+          )}
+        </Library>
+      </Wrapper>
+    </Layout>
   );
 }

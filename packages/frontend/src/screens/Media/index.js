@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { fetchAll as apiFetchAllMedia } from 'api/media';
 
+import Layout from 'components/Layout';
+
 import { Wrapper, Heading, Button, List, ListItem } from './styled';
 
 // TODO: Require to chnage from API
@@ -23,14 +25,16 @@ export default function Media() {
   }, []);
 
   return (
-    <Wrapper>
-      <Heading>Media Library</Heading>
+    <Layout>
+      <Wrapper>
+        <Heading>Media Library</Heading>
 
-      <Link to={`/media/upload`}>
-        <Button>Upload new media</Button>
-      </Link>
+        <Link to={`/media/upload`}>
+          <Button>Upload new media</Button>
+        </Link>
 
-      <List>{files.map(MediaItem)}</List>
-    </Wrapper>
+        <List>{files.map(MediaItem)}</List>
+      </Wrapper>
+    </Layout>
   );
 }

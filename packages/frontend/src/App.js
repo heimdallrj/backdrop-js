@@ -1,16 +1,19 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
+import ProtectedRoute from 'components/ProtectedRoute';
+
+import Login from 'screens/Login';
+import Register from 'screens/Register';
 import Home from 'screens/Home';
 import Resources from 'screens/Resources';
 import ResourceSingle from 'screens/Resources/Single';
 import CreateResource from 'screens/Resources/Create';
 import Media from 'screens/Media';
 import MediaUpload from 'screens/Media/Upload';
+import Settings from 'screens/Settings';
 import Users from 'screens/Users';
-
-import Nav from 'components/Nav';
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,42 +22,33 @@ const Wrapper = styled.div`
   padding: 0;
 `;
 
-const Main = styled.div`
-  height: 100vh;
-  flex: 14;
-  padding: 15px;
-`;
-
 function App() {
   return (
     <Router>
       <Wrapper>
-        <Nav />
-        <Main>
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/resources">
-              <Resources />
-            </Route>
-            <Route exact path="/resources/create">
-              <CreateResource />
-            </Route>
-            <Route exact path="/resources/:id">
-              <ResourceSingle />
-            </Route>
-            <Route exact path="/media">
-              <Media />
-            </Route>
-            <Route exact path="/media/upload">
-              <MediaUpload />
-            </Route>
-            <Route exact path="/users">
-              <Users />
-            </Route>
-          </Switch>
-        </Main>
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
+
+        <ProtectedRoute exact path="/" component={Home} />
+
+        <ProtectedRoute exact path="/resources" component={Resources} />
+        <ProtectedRoute
+          exact
+          path="/resources/create"
+          component={CreateResource}
+        />
+        <ProtectedRoute
+          exact
+          path="/resources/ext/:id"
+          component={ResourceSingle}
+        />
+
+        <ProtectedRoute exact path="/media" component={Media} />
+        <ProtectedRoute exact path="/media/upload" component={MediaUpload} />
+
+        <ProtectedRoute exact path="/settings" component={Settings} />
+
+        <ProtectedRoute exact path="/users" component={Users} />
       </Wrapper>
     </Router>
   );
