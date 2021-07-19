@@ -26,6 +26,27 @@
 			"response": []
 		},
 		{
+			"name": "GET users/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/core/users/sktwiczzkraowvp0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"core",
+						"users",
+						"sktwiczzkraowvp0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GET resource/:id",
 			"request": {
 				"method": "GET",
@@ -41,6 +62,55 @@
 						"core",
 						"resource",
 						"sktwi1me7kqe4owvn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST users",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"screenName\": \"John\",\n    \"email\": \"johndoe@example.com\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/core/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"core",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/core/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"core",
+						"users"
 					]
 				}
 			},
