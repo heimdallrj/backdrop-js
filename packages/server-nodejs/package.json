@@ -30,7 +30,7 @@
   "dependencies": {
     "@jetlab/jsondb": "^0.0.1",
     "axios": "^0.21.1",
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "core-js": "^3.15.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",

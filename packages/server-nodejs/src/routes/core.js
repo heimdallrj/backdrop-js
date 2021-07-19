@@ -5,6 +5,7 @@ import keysIn from 'lodash/keysIn';
 import { readdirSync } from 'fs';
 
 import * as handlers from 'handlers';
+import * as usersHandlers from 'handlers/core/users';
 
 import { response } from 'utils/http';
 import JsonDB, { db } from 'utils/database/jsondb';
@@ -122,42 +123,6 @@ router.get('/media', (req, res) => {
   }
 });
 
-// users
-router.get('/users', (req, res) => {
-  try {
-    const users = db.users.find({});
-    response.ok(res, users);
-  } catch (err) {
-    response.internalError(res);
-  }
-});
-
-router.get('/users/:id', (req, res) => {
-  const { id } = req.params;
-  const userSingle = db.users.findOne({ _id: id });
-  response.ok(res, userSingle);
-});
-
-router.post('/users', (req, res) => {
-  // TODO Validate request body
-  const user = req.body;
-  const doc = db.users.insert(user);
-  response.ok(res, doc);
-});
-
-router.patch('/users/:id', (req, res) => {
-  // TODO Validate request body
-  const { id } = req.params;
-  const newDoc = req.body;
-  const doc = db.users.updateOne({ _id: id }, newDoc);
-  response.ok(res, doc);
-});
-
-router.delete('/users/:id', (req, res) => {
-  const { id } = req.params;
-  response.ok(res, db.users.remove(id));
-});
-
 // config
 router.get('/config', (req, res) => {
   try {
@@ -168,30 +133,11 @@ router.get('/config', (req, res) => {
   }
 });
 
-router.get('/users/:id', (req, res) => {
-  const { id } = req.params;
-  const configSingle = db.config.findOne({ _id: id });
-  response.ok(res, configSingle);
-});
-
-router.post('/users', (req, res) => {
-  // TODO Validate request body
-  const config = req.body;
-  const doc = db.config.insert(config);
-  response.ok(res, doc);
-});
-
-router.patch('/users/:id', (req, res) => {
-  // TODO Validate request body
-  const { id } = req.params;
-  const newDoc = req.body;
-  const doc = db.config.updateOne({ _id: id }, newDoc);
-  response.ok(res, doc);
-});
-
-router.delete('/users/:id', (req, res) => {
-  const { id } = req.params;
-  response.ok(res, db.config.remove(id));
-});
+// users
+router.get('/users', usersHandlers.get);
+router.get('/users/:id', usersHandlers.getSingle);
+router.post('/users', usersHandlers.post);
+router.patch('/users/:id', usersHandlers.patch);
+router.delete('/users/:id', usersHandlers.delete);
 
 export default router;
