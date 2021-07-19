@@ -11,6 +11,7 @@ import hpp from 'hpp';
 import logger from 'utils/logger';
 import apiRoutes from 'routes/api';
 import coreRoutes from 'routes/core';
+import oauthRoutes from 'routes/oauth';
 
 import { port } from 'config';
 
@@ -37,6 +38,7 @@ app.use(morgan('dev'));
 const serve = async () => {
   app.use('/api', apiRoutes);
   app.use('/core', coreRoutes);
+  app.use('/oauth', oauthRoutes);
 
   app.use(express.static(path.join(path.join(__dirname, 'public'))));
 

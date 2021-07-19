@@ -15,3 +15,6 @@ export const reservedResourceNames = ['config', 'resources', 'users'];
 export const dbConnection = process.env.DB_CONNECTION;
 export const dbConfig = null;
 export const jsonDbPath = path.join(__dirname, '..');
+
+export const oAuthGitHubClientId = process.env.OAUTH_GITHUB_CLIENT_ID;
+export const oAuthGitHubClientSecret = process.env.OAUTH_GITHUB_CLIENT_SECRET;
