@@ -13,7 +13,8 @@
     "start:wtach:cli": "cd packages/cli && yarn start:watch",
     "build:server": "cd packages/server-nodejs && yarn build",
     "build:frontend": "cd packages/frontend && yarn build",
-    "build:jsondb": "cd packages/node-jsondb && yarn build"
+    "build:jsondb": "cd packages/node-jsondb && yarn build",
+    "build": "./scripts/build.sh"
   },
   "dependencies": {
     "concurrently": "^6.2.0"
