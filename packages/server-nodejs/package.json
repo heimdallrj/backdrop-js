@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "start:dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/bin/www.js",
+    "prestart": "yarn build",
     "start": "cross-env NODE_ENV=production node ./dist/bin/www.js",
     "debug": "cross-env NODE_ENV=debug nodemon --inspect --exec babel-node ./src/bin/www.js",
     "prebuild": "rm -rf dist",

@@ -14,6 +14,7 @@
     "build:server": "cd packages/server-nodejs && yarn build",
     "build:frontend": "cd packages/frontend && yarn build",
     "build:jsondb": "cd packages/node-jsondb && yarn build",
+    "prebuild": "yarn build:server && yarn build:frontend",
     "build": "./scripts/build.sh"
   },
   "dependencies": {
