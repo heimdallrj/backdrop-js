@@ -1,6 +1,7 @@
 import styled, { ThemeProvider as StyledProvider } from 'styled-components';
 
 import './reset.css';
+import 'react-sliding-side-panel/lib/index.css';
 import './theme.css';
 
 const Container = styled.div`

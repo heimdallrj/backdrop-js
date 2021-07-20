@@ -35,6 +35,7 @@ export const TableHead = styled.thead`
 
 export const Row = styled.tr`
   border-bottom: 1px solid #e2d8d8;
+  cursor: pointer;
 `;
 
 export const ColHead = styled.th`

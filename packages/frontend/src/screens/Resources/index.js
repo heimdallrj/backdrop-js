@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { fetchAll as apiFetchAllResources } from 'api/resources';
 
+import SidePane from 'components/SidePane';
 import Table from 'components/Table';
 
 import Layout from 'components/Layout';
@@ -11,7 +12,7 @@ import {
   Wrapper,
   Heading,
   Button,
-  DocIcon,
+  AddDocumentIcon,
   DeleteIcon,
   ActionWrap,
   Status,
@@ -22,15 +23,16 @@ const columns = [
   { label: 'namespace', align: 'center' },
   { label: 'name', width: '200px' },
   { label: 'type' },
-  { label: 'status', align: 'center' },
+  { label: 'status' },
   { label: 'actions', visibility: 'hidden' },
 ];
 
 export default function Resources() {
   const history = useHistory();
 
-  const [rows, setRows] = useState([]);
   const [resources, setResources] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [selectedResource, setSelectedResource] = useState(null);
 
   const fetchAllResources = async () => {
     const resp = await apiFetchAllResources();
@@ -41,6 +43,15 @@ export default function Resources() {
     history.push(`/resources/ext/${id}`);
   };
 
+  const onCloseSidePaneHandler = () => {
+    setSelectedResource(null);
+  };
+
+  const onClickRowHandler = ({ id }) => {
+    const resource = resources.find(({ _id }) => _id === id);
+    setSelectedResource(resource);
+  };
+
   useEffect(() => {
     fetchAllResources();
   }, []);
@@ -48,21 +59,26 @@ export default function Resources() {
   useEffect(() => {
     const rowsFiltered = resources.map(
       ({ _id, namespace, name, type, status }, index) => {
-        return [
-          { value: index + 1, align: 'center' },
-          { value: namespace, align: 'center' },
-          { value: name },
-          { value: type },
-          { value: <Status>{status}</Status>, align: 'center' },
-          {
-            value: (
-              <ActionWrap>
-                <DocIcon onClick={onClickResourceHandler.bind(null, _id)} />
-                <DeleteIcon onClick={() => {}} />
-              </ActionWrap>
-            ),
-          },
-        ];
+        return {
+          id: _id,
+          data: [
+            { value: index + 1, align: 'center' },
+            { value: namespace, align: 'center' },
+            { value: name },
+            { value: type },
+            { value: <Status>{status}</Status> },
+            {
+              value: (
+                <ActionWrap>
+                  <AddDocumentIcon
+                    onClick={onClickResourceHandler.bind(null, _id)}
+                  />
+                  <DeleteIcon onClick={() => {}} />
+                </ActionWrap>
+              ),
+            },
+          ],
+        };
       }
     );
     setRows(rowsFiltered);
@@ -78,8 +94,15 @@ export default function Resources() {
           <Button>Create a new resource</Button>
         </Link>
 
-        <Table columns={columns} rows={rows} />
+        <Table columns={columns} rows={rows} onClickRow={onClickRowHandler} />
       </Wrapper>
+
+      <SidePane
+        isOpen={!!selectedResource}
+        backdropClicked={onCloseSidePaneHandler}
+      >
+        <pre>{JSON.stringify(selectedResource, null, 2)}</pre>
+      </SidePane>
     </Layout>
   );
 }
