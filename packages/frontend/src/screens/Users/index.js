@@ -65,7 +65,7 @@ export default function Users() {
                   Status
                 </ColHead>
                 <ColHead scope="col">
-                  <span class="sr-only">Action</span>
+                  <span className="sr-only">Action</span>
                 </ColHead>
               </Row>
             </TableHead>

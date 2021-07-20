@@ -3,28 +3,33 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { fetchAll as apiFetchAllResources } from 'api/resources';
 
+import Table from 'components/Table';
+
 import Layout from 'components/Layout';
 
 import {
   Wrapper,
   Heading,
   Button,
-  TableWrap,
-  Table,
-  TableHead,
-  Row,
-  ColHead,
-  TableBody,
-  Col,
   DocIcon,
   DeleteIcon,
   ActionWrap,
   Status,
 } from './styled';
 
+const columns = [
+  { label: 'ID', align: 'center' },
+  { label: 'namespace', align: 'center' },
+  { label: 'name', width: '200px' },
+  { label: 'type' },
+  { label: 'status', align: 'center' },
+  { label: 'actions', visibility: 'hidden' },
+];
+
 export default function Resources() {
   const history = useHistory();
 
+  const [rows, setRows] = useState([]);
   const [resources, setResources] = useState([]);
 
   const fetchAllResources = async () => {
@@ -32,13 +37,37 @@ export default function Resources() {
     setResources(resp);
   };
 
+  const onClickResourceHandler = (id) => {
+    history.push(`/resources/ext/${id}`);
+  };
+
   useEffect(() => {
     fetchAllResources();
   }, []);
 
-  const onClickResourceHandler = (id) => {
-    history.push(`/resources/ext/${id}`);
-  };
+  useEffect(() => {
+    const rowsFiltered = resources.map(
+      ({ _id, namespace, name, type, status }, index) => {
+        return [
+          { value: index + 1, align: 'center' },
+          { value: namespace, align: 'center' },
+          { value: name },
+          { value: type },
+          { value: <Status>{status}</Status>, align: 'center' },
+          {
+            value: (
+              <ActionWrap>
+                <DocIcon onClick={onClickResourceHandler.bind(null, _id)} />
+                <DeleteIcon onClick={() => {}} />
+              </ActionWrap>
+            ),
+          },
+        ];
+      }
+    );
+    setRows(rowsFiltered);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resources]);
 
   return (
     <Layout>
@@ -49,51 +78,7 @@ export default function Resources() {
           <Button>Create a new resource</Button>
         </Link>
 
-        <TableWrap>
-          <Table>
-            <TableHead>
-              <Row>
-                <ColHead scope="col">ID</ColHead>
-                <ColHead scope="col">namespace</ColHead>
-                <ColHead scope="col" className="text-left" width="200px">
-                  name
-                </ColHead>
-                <ColHead scope="col" className="text-left">
-                  type
-                </ColHead>
-                <ColHead scope="col" className="text-left">
-                  status
-                </ColHead>
-                <ColHead scope="col">
-                  <span class="sr-only">Action</span>
-                </ColHead>
-              </Row>
-            </TableHead>
-            <TableBody>
-              {resources.map(
-                ({ _id, namespace, name, type, status }, index) => (
-                  <Row key={_id}>
-                    <Col className="text-center">{index + 1}</Col>
-                    <Col className="text-center">{namespace}</Col>
-                    <Col>{name}</Col>
-                    <Col>{type}</Col>
-                    <Col>
-                      <Status>{status}</Status>
-                    </Col>
-                    <Col>
-                      <ActionWrap>
-                        <DocIcon
-                          onClick={onClickResourceHandler.bind(null, _id)}
-                        />{' '}
-                        <DeleteIcon />
-                      </ActionWrap>
-                    </Col>
-                  </Row>
-                )
-              )}
-            </TableBody>
-          </Table>
-        </TableWrap>
+        <Table columns={columns} rows={rows} />
       </Wrapper>
     </Layout>
   );
