@@ -39,6 +39,8 @@ const methodsOptions = [
 
 const initialValues = {
   namespace: 'api',
+  private: false,
+  protected: false,
   name: '',
   type: 'default',
   methods: '',
@@ -114,8 +116,8 @@ export default function CreateResource() {
                     value={
                       typeOptions
                         ? typeOptions.find(
-                            (option) => option.value === values.type
-                          )
+                          (option) => option.value === values.type
+                        )
                         : ''
                     }
                     onChange={(option) => setFieldValue('type', option.value)}
@@ -163,8 +165,8 @@ export default function CreateResource() {
                     value={
                       statusOptions
                         ? statusOptions.find(
-                            (option) => option.value === values.status
-                          )
+                          (option) => option.value === values.status
+                        )
                         : ''
                     }
                     onChange={(option) => setFieldValue('status', option.value)}

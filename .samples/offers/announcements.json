@@ -1,6 +1,7 @@
 {
   "namespace": "api",
   "private": false,
+  "protected": false,
   "name": "announcements",
   "type": "default",
   "methods": ["get", "post", "patch", "delete"],

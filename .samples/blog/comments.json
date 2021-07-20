@@ -1,6 +1,7 @@
 {
   "namespace": "api",
   "private": true,
+  "protected": false,
   "name": "comments",
   "type": "default",
   "methods": ["get", "post", "patch", "delete"],
