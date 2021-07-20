@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import DocumentIconSource from 'assets/icons/Document/Outline';
 import DeleteIconSource from 'assets/icons/Delete/Outline';
+import AddDocumentIconSource from 'assets/icons/AddDocument/Outline';
 
 export const Wrapper = styled.section``;
 
@@ -60,6 +61,13 @@ export const Col = styled.td`
 `;
 
 export const DocIcon = styled(DocumentIconSource)`
+  color: gray;
+  width: 16px;
+  align-self: center;
+  cursor: pointer;
+`;
+
+export const AddDocumentIcon = styled(AddDocumentIconSource)`
   color: gray;
   width: 16px;
   align-self: center;

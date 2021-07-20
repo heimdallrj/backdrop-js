@@ -11,11 +11,11 @@ import * as serviceWorker from './serviceWorker';
 httpInit();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Providers>
-      <App />
-    </Providers>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Providers>
+    <App />
+  </Providers>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

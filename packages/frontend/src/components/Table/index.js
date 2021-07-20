@@ -35,7 +35,30 @@ import {
 //   ],
 // ];
 
-export default function TableComponent({ columns = [], rows = [] }) {
+// const rows1 = [{
+//   id: 1,
+//   data: [
+//     { value: 1, align: 'center' },
+//     { value: 'api', align: 'center' },
+//     { value: 'posts' },
+//     { value: 'default' },
+//     { value: 'published', align: 'center' },
+//     {
+//       value: (
+//         <ActionWrap>
+//           <DocIcon onClick={() => { }} />
+//           <DeleteIcon onClick={() => { }} />
+//         </ActionWrap>
+//       )
+//     }
+//   ],
+// }];
+
+export default function TableComponent({
+  columns = [],
+  rows = [],
+  onClickRow = () => {},
+}) {
   return (
     <TableWrap>
       <Table>
@@ -56,8 +79,8 @@ export default function TableComponent({ columns = [], rows = [] }) {
         </TableHead>
         <TableBody>
           {rows.map((row, i) => (
-            <Row key={String(i)}>
-              {row.map(({ value, align }, j) => (
+            <Row key={row.id} onClick={() => onClickRow(row)}>
+              {row.data.map(({ value, align }, j) => (
                 <Col key={String(j)} align={align}>
                   {value}
                 </Col>
