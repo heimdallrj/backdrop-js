@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import { fetchAll as apiFetchAllResources } from 'api/resources';
+import { 
+  fetchAll as apiFetchAllResources,
+  clear as apiDeleteResource
+} from 'api/resources';
 
 import SidePane from 'components/SidePane';
 import Table from 'components/Table';
@@ -39,6 +42,10 @@ export default function Resources() {
     setResources(resp);
   };
 
+  const deleteResource = async (id) =>{
+    await apiDeleteResource(id);
+  }
+
   const onClickResourceHandler = (id) => {
     history.push(`/resources/ext/${id}`);
   };
@@ -47,9 +54,17 @@ export default function Resources() {
     setSelectedResource(null);
   };
 
+  const onDeleteclick=(id) =>{
+    // eslint-disable-next-line no-restricted-globals
+    if(confirm('Do you want to delete this resource?'))
+    {
+      deleteResource(id)
+    }    
+  };
+
   const onClickRowHandler = ({ id }) => {
     const resource = resources.find(({ _id }) => _id === id);
-    setSelectedResource(resource);
+   setSelectedResource(resource);
   };
 
   useEffect(() => {
@@ -73,7 +88,7 @@ export default function Resources() {
                   <AddDocumentIcon
                     onClick={onClickResourceHandler.bind(null, _id)}
                   />
-                  <DeleteIcon onClick={() => {}} />
+                  <DeleteIcon onClick={onDeleteclick.bind(null,_id)} />
                 </ActionWrap>
               ),
             },
