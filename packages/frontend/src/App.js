@@ -6,6 +6,7 @@ import ProtectedRoute from 'components/ProtectedRoute';
 
 import Login from 'screens/Login';
 import Register from 'screens/Register';
+import Start from 'screens/Start';
 import Home from 'screens/Home';
 import Resources from 'screens/Resources';
 import ResourceSingle from 'screens/Resources/Single';
@@ -26,6 +27,7 @@ function App() {
   return (
     <Router>
       <Wrapper>
+        <Route exact path="/start" component={Start} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
 
