@@ -6,7 +6,7 @@ import { create as apiCreateResource } from 'api/resources';
 
 import Layout from 'components/Layout';
 
-import CustomSelect from 'components/CustomSelect';
+import CustomSelect from 'components/Select/CustomSelect';
 
 import {
   Wrapper,

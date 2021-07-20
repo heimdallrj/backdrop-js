@@ -102,6 +102,7 @@ export default function Resources() {
         backdropClicked={onCloseSidePaneHandler}
       >
         <pre>{JSON.stringify(selectedResource, null, 2)}</pre>
+        <p>TODO Edit resource form goes here.</p>
       </SidePane>
     </Layout>
   );
