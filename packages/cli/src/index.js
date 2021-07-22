@@ -6,7 +6,7 @@ program.version(pkg.version);
 
 // program: initialize
 program
-  .command("init <namespace>")
+  .command("server init <namespace>")
   .option('-i, --install', 'install dependencies')
   .description("Initialize the project")
   .action((namespace, options) => actions.init(namespace, options));
