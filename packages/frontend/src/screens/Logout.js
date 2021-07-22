@@ -5,8 +5,9 @@ import { logout as acLogout } from 'store/reducers/userSlice';
 
 export default function Logout() {
   const dispatch = useDispatch();
-  const logout = dispatch(acLogout());
+  const logout = () => dispatch(acLogout());
 
   logout();
+
   return <Redirect to="/login" />;
 }

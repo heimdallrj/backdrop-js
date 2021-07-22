@@ -19,6 +19,7 @@ import Media from 'screens/Media';
 import MediaUpload from 'screens/Media/Upload';
 import Settings from 'screens/Settings';
 import Users from 'screens/Users';
+import Logout from 'screens/Logout';
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,6 +49,7 @@ function App() {
       <Router>
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/logout" component={Logout} />
 
         <ProtectedRoute exact path="/" component={Home} />
 
