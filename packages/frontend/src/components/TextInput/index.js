@@ -33,6 +33,8 @@ export default function TextInput({
   autoComplete = 'off',
   type = 'text',
   masked,
+  errors,
+  touched,
   onChange,
   ...restProps
 }) {
