@@ -5,7 +5,8 @@ import keysIn from 'lodash/keysIn';
 import { readdirSync } from 'fs';
 
 import * as handlers from 'handlers';
-import * as usersHandlers from 'handlers/core/users';
+import * as usersHandler from 'handlers/core/users';
+import * as configHandler from 'handlers/core/config';
 
 import { response } from 'utils/http';
 import JsonDB, { db } from 'utils/database/jsondb';
@@ -124,20 +125,15 @@ router.get('/media', (req, res) => {
 });
 
 // config
-router.get('/config', (req, res) => {
-  try {
-    const config = db.config.find({});
-    response.ok(res, config);
-  } catch (err) {
-    response.internalError(res);
-  }
-});
+router.get('/config', configHandler.get);
+router.get('/config/init', configHandler.getInit);
+router.post('/config/init', configHandler.postInit);
 
 // users
-router.get('/users', usersHandlers.get);
-router.get('/users/:id', usersHandlers.getSingle);
-router.post('/users', usersHandlers.post);
-router.patch('/users/:id', usersHandlers.patch);
-router.delete('/users/:id', usersHandlers.delete);
+router.get('/users', usersHandler.get);
+router.get('/users/:id', usersHandler.getSingle);
+router.post('/users', usersHandler.post);
+router.patch('/users/:id', usersHandler.patch);
+router.delete('/users/:id', usersHandler.delete);
 
 export default router;

@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { fetchInitialConfig as acFetchInitialConfig } from 'store/reducers/configSlice';
+
+import { FullPageLoading as Loading } from 'components/Loading';
+import Bootstrap from 'components/Bootstrap';
 import ProtectedRoute from 'components/ProtectedRoute';
 
 import Login from 'screens/Login';
 import Register from 'screens/Register';
-import Start from 'screens/Start';
 import Home from 'screens/Home';
 import Resources from 'screens/Resources';
 import ResourceSingle from 'screens/Resources/Single';
@@ -24,10 +28,24 @@ const Wrapper = styled.div`
 `;
 
 function App() {
+  const { isLoading, bootstrap } = useSelector((state) => state.config);
+
+  const dispatch = useDispatch();
+
+  const fetchConfig = () => dispatch(acFetchInitialConfig());
+
+  useEffect(() => {
+    fetchConfig();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (isLoading) return <Loading />;
+
+  if (bootstrap) return <Bootstrap />;
+
   return (
-    <Router>
-      <Wrapper>
-        <Route exact path="/start" component={Start} />
+    <Wrapper>
+      <Router>
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
 
@@ -51,8 +69,8 @@ function App() {
         <ProtectedRoute exact path="/settings" component={Settings} />
 
         <ProtectedRoute exact path="/users" component={Users} />
-      </Wrapper>
-    </Router>
+      </Router>
+    </Wrapper>
   );
 }
 

@@ -48,7 +48,8 @@ Button.propTypes = {
   formTarget: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.oneOf(['button', 'reset', 'submit']),
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
+    .isRequired,
 };
 
 Button.defaultProps = {

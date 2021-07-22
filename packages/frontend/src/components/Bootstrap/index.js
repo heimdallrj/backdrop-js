@@ -1,8 +1,11 @@
+import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 
+import { updateInitialConfig as acUpdateInitialConfig } from 'store/reducers/configSlice';
+
+import Button from 'components/Button';
 import TextInput from 'components/TextInput';
 import Select from 'components/Select';
-import Button from 'components/Button';
 
 import { Form } from 'providers/ThemeProvider/styled';
 import {
@@ -27,7 +30,12 @@ const initialValues = {
   dbAdapter: 'JsonDB',
 };
 
-export default function Start() {
+export default function Bootstrap() {
+  const dispatch = useDispatch();
+
+  const updateInitialConfig = (config) =>
+    dispatch(acUpdateInitialConfig(config));
+
   return (
     <Wrapper>
       <Welcome>
@@ -51,6 +59,13 @@ export default function Start() {
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
+            updateInitialConfig({
+              baseUrl: 'http://localhost:5000',
+              appName: 'Backdrop',
+              appDesc: 'Minimalistic API Artisan',
+              defaultDBConn: 'jsondb',
+              ...initialValues,
+            });
             setSubmitting(false);
           }}
         >
