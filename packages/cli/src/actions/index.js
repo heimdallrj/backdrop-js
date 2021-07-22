@@ -1,37 +1,46 @@
 const fs = require("fs");
 const unzipper = require('unzipper');
-const { DownloaderHelper } = require('node-downloader-helper');
-const logger = require("../utils/logger");
-const fsExtra = require("../utils/fs");
 const path = require("path");
 const fse = require('fs-extra');
 const spawn = require('cross-spawn');
+const chalk = require('chalk');
+const { DownloaderHelper } = require('node-downloader-helper');
 
-const version = 'v1.0.0-alpha.0';
-const releaseZip = `https://github.com/thinkholic/backdrop-js/releases/download/${version}/backdrop-${version}.zip`;
+const logger = require("../utils/logger");
+const fsExtra = require("../utils/fs");
+const config = require('../config');
 
+const { version, releaseUrl } = config;
+
+// Utils
 const ensureDirSync = function (path) {
   if (fs.existsSync(path)) return;
   fs.mkdirSync(path);
 };
 
 function installDeps(appDir) {
+  logger.log();
+  logger.log('Installing dependencies. This might take a couple of minutes.');
+  logger.log();
+
   process.chdir(appDir);
   const child = spawn('npm', ['install'], { stdio: 'inherit' });
 };
 
+// init()
 function init(namespace, options) {
-  logger.log("Initializing...");
+  // Get the working directory and application path
+  const cwd = process.cwd();
+  const appDir = `${cwd}/${namespace}`;
+
+  logger.log(`Creating a new Backdrop Server in ${chalk.green(appDir)}.`);
+  logger.log('Downloading...');
 
   // Create temp directory
   const tmpDir = path.join(__dirname, '..', '..', '_tmp');
   const tmpExtractedDir = path.join(tmpDir, `backdrop-${version}`);
   const tmpZipFilePath = path.join(tmpDir, `backdrop-${version}.zip`);
   ensureDirSync(tmpDir);
-
-  // Get app path
-  const cwd = process.cwd();
-  const appDir = `${cwd}/${namespace}`;
 
   // Check if the latest version is exisist
   if (fsExtra.isFileExists(tmpZipFilePath)) {
@@ -42,7 +51,7 @@ function init(namespace, options) {
     }
   } else {
     // Download latest release to temp directory
-    const dl = new DownloaderHelper(releaseZip, tmpDir);
+    const dl = new DownloaderHelper(releaseUrl, tmpDir);
     dl.on('end', () => {
       fs.createReadStream(tmpZipFilePath)
         .pipe(unzipper.Extract({ path: tmpDir })
@@ -59,6 +68,7 @@ function init(namespace, options) {
   }
 }
 
+// error()
 function error() {
   logger.error("Invalid argument(s)");
 }
