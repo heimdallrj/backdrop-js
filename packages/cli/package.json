@@ -1,12 +1,12 @@
 {
-  "name": "@backdrop/cli",
+  "name": "@jetlab/cli",
   "version": "0.0.1",
   "description": "Backdrop-JS CLI",
   "bin": {
-    "backdrop": "./dist/bin/index.js"
+    "jetlab": "./dist/bin/index.js"
   },
   "scripts": {
-    "cli": "./bin/index.js",
+    "cli": "./src/bin/index.js",
     "start:watch": "babel src --watch --out-dir dist",
     "build": "babel src --out-dir dist"
   },
@@ -25,13 +25,17 @@
   "author": "thinkholic",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^4.1.1",
     "commander": "^7.2.0",
+    "cross-spawn": "^7.0.3",
     "fs": "^0.0.1-security",
     "fs-extra": "^10.0.0",
     "lodash": "^4.17.21",
     "mkdirp": "^1.0.4",
+    "node-downloader-helper": "^1.0.18",
     "nodegit": "^0.27.0",
     "shelljs": "^0.8.4",
+    "unzipper": "^0.10.11",
     "update-notifier": "^5.1.0"
   },
   "devDependencies": {
