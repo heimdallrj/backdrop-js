@@ -6,6 +6,7 @@ import { response } from 'utils/http';
 import { jwtSecret } from 'config';
 
 // bycrypt config
+// TODO !duplicate
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
 

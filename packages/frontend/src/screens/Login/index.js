@@ -6,6 +6,7 @@ import { login as acLogin } from 'store/reducers/userSlice';
 
 import Button from 'components/Button';
 import TextInput from 'components/TextInput';
+import Preloader from 'components/Preloader';
 
 import { Form } from 'providers/ThemeProvider/styled';
 import { Wrapper, FormFooter } from './styled';
@@ -40,7 +41,7 @@ export default function Login() {
         }}
         onSubmit={(values, { setSubmitting }) => {
           login(values, () => {
-            setSubmitting(false);
+            // setSubmitting(false);
             history.push(`/`);
           });
         }}
@@ -80,7 +81,14 @@ export default function Login() {
 
             <FormFooter>
               <Button type="submit" disabled={isSubmitting}>
-                Login
+                <div style={{ display: 'flex' }}>
+                  {isSubmitting && (
+                    <Preloader
+                      style={{ width: '20px', margin: '0 8px 0 0' }}
+                    />
+                  )}{' '}
+                  <p>Login</p>
+                </div>
               </Button>
             </FormFooter>
           </Form>

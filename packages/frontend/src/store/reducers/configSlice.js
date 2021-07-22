@@ -68,10 +68,13 @@ export const updateInitialConfig =
     try {
       const configCreated = await apiCreateInitialConfig(config);
       dispatch(initialConfigFetched(configCreated));
+      dispatch(setIsLoading(false));
+      cb(null, configCreated);
     } catch (err) {
       dispatch(setError(err));
+      dispatch(setIsLoading(false));
+      cb(err, null);
     }
-    dispatch(setIsLoading(false));
   };
 
 export default configSlice.reducer;
