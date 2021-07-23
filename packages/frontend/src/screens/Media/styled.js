@@ -2,10 +2,6 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.section``;
 
-export const Heading = styled.h5`
-  text-transform: uppercase;
-`;
-
 export const Button = styled.button`
   font-size: 0.8rem;
 `;
