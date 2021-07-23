@@ -6,7 +6,7 @@ export const ButtonExtended = styled(ButtonSource)`
   padding: 8px 20px;
   color: white;
   text-transform: uppercase;
-  font-size: 0.8em;
+  font-size: 0.7em;
   font-weight: bold;
 `;
 

@@ -2,10 +2,6 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.section``;
 
-export const Heading = styled.h5`
-  text-transform: uppercase;
-`;
-
 export const FormWrap = styled.div`
   margin: 15px 0 0;
 `;
@@ -35,4 +31,9 @@ export const Input = styled.input`
   width: 100%;
   appearance: none;
   display: block;
+`;
+
+export const FormFooter = styled.div`
+  text-align: left;
+  margin: 20px 0;
 `;
