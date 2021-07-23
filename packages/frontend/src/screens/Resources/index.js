@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
-import { clear as apiDeleteResource} from 'api/resources';
-import { fetchAll as acFetchAllResources } from 'store/reducers/resourceSlice';
+import { fetchAll as acFetchAllResources,
+  deleteResource as acDeleteResource
+} from 'store/reducers/resourceSlice';
 
 import SidePane from 'components/SidePane';
 import Table from 'components/Table';
@@ -40,10 +41,6 @@ export default function Resources() {
 
   const fetchAllResources = () => dispatch(acFetchAllResources());
 
-  const deleteResource = async (id) =>{
-    await apiDeleteResource(id);
-  }
-
   const onClickResourceHandler = (id) => {
     history.push(`/resources/ext/${id}`);
   };
@@ -56,7 +53,7 @@ export default function Resources() {
     // eslint-disable-next-line no-restricted-globals
     if(confirm('Do you want to delete this resource?'))
     {
-      deleteResource(id)
+      dispatch(acDeleteResource(id));
     }    
   };
 
