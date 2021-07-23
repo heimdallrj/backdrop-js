@@ -1,4 +1,4 @@
-# Monorepo (Backdrop-js)
+# Backdrop-js (Monorepo)
 
 ## Developer Guide
 

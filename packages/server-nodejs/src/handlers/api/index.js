@@ -4,7 +4,14 @@ import { baseUrl, appName, appDesc } from 'config';
 
 const namespace = 'api';
 
-export default function api(req, res) {
+export { default as get } from './get';
+export { default as getSingle } from './getSingle';
+export { default as post } from './post';
+export { default as put } from './put';
+export { default as patch } from './patch';
+export { default as delete } from './delete';
+
+export function api(req, res) {
   const docs = db.resources.find({
     namespace,
     private: false,

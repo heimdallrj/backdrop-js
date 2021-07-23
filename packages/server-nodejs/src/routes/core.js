@@ -2,59 +2,22 @@ import express from 'express';
 import fileUpload from 'express-fileupload';
 
 import * as handlers from 'handlers';
+import * as resourceHandler from 'handlers/core/resource';
 import * as usersHandler from 'handlers/core/users';
 import * as configHandler from 'handlers/core/config';
 import * as mediaHandler from 'handlers/core/media';
-
-import { response } from 'utils/http';
-import JsonDB, { db } from 'utils/database/jsondb';
 
 const router = express.Router();
 
 router.get('/', handlers.core);
 
 // resource
-router.get('/resource', (req, res) => {
-  const resources = db.resources.find({});
-  response.ok(res, resources);
-});
-
-router.get('/resource/:id', (req, res) => {
-  const { id } = req.params;
-  const resourceSingle = db.resources.findOne({ _id: id });
-  response.ok(res, resourceSingle);
-});
-
-router.post('/resource', (req, res) => {
-  // TODO Validate request body
-  const resource = req.body;
-  const doc = db.resources.insert(resource);
-  if (doc && doc.type === 'default') {
-    JsonDB.createCollection(`_${doc.name}`);
-  }
-  response.ok(res, doc);
-});
-
-router.put('/resource/:id', (req, res) => {
-  // TODO Validate request body
-  const { id } = req.params;
-  const newDoc = req.body;
-  const doc = db.resources.updateOne({ _id: id }, newDoc);
-  response.ok(res, doc);
-});
-
-router.patch('/resource/:id', (req, res) => {
-  // TODO Validate request body
-  const { id } = req.params;
-  const newDoc = req.body;
-  const doc = db.resources.updateOne({ _id: id }, newDoc);
-  response.ok(res, doc);
-});
-
-router.delete('/resource/:id', (req, res) => {
-  const { id } = req.params;
-  response.ok(res, db.resources.remove(id));
-});
+router.get('/resource', resourceHandler.get);
+router.get('/resource/:id', resourceHandler.getSingle);
+router.post('/resource', resourceHandler.post);
+router.put('/resource/:id', resourceHandler.put);
+router.patch('/resource/:id', resourceHandler.patch);
+router.delete('/resource/:id', resourceHandler.delete);
 
 // media
 router.get('/media', mediaHandler.get);
