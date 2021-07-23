@@ -62,13 +62,6 @@ export const login =
     }
   };
 
-export const register =
-  (user, cb = () => {}) =>
-  async (dispatch) => {
-    // dispatch(userLoggedOut());
-    cb();
-  };
-
 export const logout = () => async (dispatch) => {
   dispatch(userLoggedOut());
 };
