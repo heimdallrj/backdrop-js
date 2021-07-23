@@ -5,11 +5,15 @@ import { fetchAll as apiFetchAllMedia } from 'api/media';
 
 import Layout from 'components/Layout';
 
-import { Wrapper, Heading, Button, List, ListItem } from './styled';
+import { Wrapper, Heading, Button, List, ListItem, Image } from './styled';
 
 // TODO: Require to chnage from API
-const MediaItem = (file) => {
-  return <ListItem key={file}>{file}</ListItem>;
+const MediaItem = ({ url, name, type }) => {
+  return (
+    <ListItem key={name}>
+      <Image src={url} alt={name} />
+    </ListItem>
+  );
 };
 
 export default function Media() {
