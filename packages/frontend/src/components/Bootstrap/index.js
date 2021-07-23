@@ -25,11 +25,11 @@ const dbOptions = [{ value: 'JsonDB', label: 'JsonDB' }];
 
 const initialValues = {
   appName: 'Backdrop-js',
-  userName: 'admin',
   screenName: 'John Doe',
+  email: 'john@example.com',
+  userName: 'admin',
   password: 'pa$$word',
   password_re: 'pa$$word',
-  email: 'john@example.com',
   dbDriver: 'JsonDB',
 };
 
@@ -180,7 +180,7 @@ export default function Bootstrap() {
                       <Preloader
                         style={{ width: '20px', margin: '0 8px 0 0' }}
                       />
-                    )}{' '}
+                    )}
                     <p>Proceed</p>
                   </div>
                 </Button>

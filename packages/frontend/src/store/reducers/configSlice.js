@@ -11,11 +11,11 @@ const configSlice = createSlice({
     isLoading: true,
     config: null,
     bootstrap: null,
-    error: null,
+    errors: null,
   },
   reducers: {
     setIsLoading(state, { payload }) {
-      state.error = null;
+      state.errors = null;
       state.isLoading = payload;
     },
     initialConfigFetched(state, { payload }) {
@@ -33,12 +33,12 @@ const configSlice = createSlice({
       )
         bootstrap = true;
 
-      state.error = null;
+      state.errors = null;
       state.config = payload;
       state.bootstrap = bootstrap;
     },
     setError(state, { payload }) {
-      state.error = payload;
+      state.errors = payload;
     },
   },
 });

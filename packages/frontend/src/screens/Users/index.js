@@ -25,9 +25,18 @@ const columns = [
   { label: 'User Name', size: 20 },
   { label: 'e-mail', size: 20 },
   { label: 'user role', size: 17 },
-  { label: 'status', size: 10 },
+  { label: 'status', size: 10, align: 'center' },
   { label: 'actions', size: 5, visible: false },
 ];
+
+const USER_ROLES = {
+  0: 'administrator',
+};
+
+const USER_STATUS = {
+  0: 'inactive',
+  1: 'active',
+};
 
 export default function Users() {
   const history = useHistory();
@@ -46,20 +55,20 @@ export default function Users() {
 
   useEffect(() => {
     const rowsFiltered = users.map(
-      ({ _id, screenName, userName, email, userRole, status }, index) => {
+      ({ _id, screenName, userName, email, role, status }, index) => {
         return {
           id: _id,
           data: [
             {
-              value: <FlexIcons>{userRole === 0 && <KeyIcon />}</FlexIcons>,
+              value: <FlexIcons>{role === 0 && <KeyIcon />}</FlexIcons>,
               align: 'center',
             },
             { value: index + 1, align: 'center' },
             { value: screenName },
             { value: userName },
             { value: email },
-            { value: userRole },
-            { value: <Status>active</Status>, align: 'center' },
+            { value: USER_ROLES[role] },
+            { value: <Status>{USER_STATUS[status]}</Status>, align: 'center' },
             {
               value: (
                 <FlexIcons>

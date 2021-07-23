@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { login as apiLogin } from 'api/auth';
+
 import { userSessionKey } from 'config';
 
 const getInitialUser = () =>
@@ -16,28 +18,48 @@ const unsetUser = () => localStorage.removeItem(userSessionKey);
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
+    isLoading: true,
     user: getInitialUser(),
+    errors: null,
   },
   reducers: {
+    setIsLoading(state, { payload }) {
+      state.errors = null;
+      state.isLoading = payload;
+    },
     userLoggedIn(state, { payload }) {
+      state.errors = null;
       state.user = payload;
+      state.isLoading = false;
       setUser(payload);
     },
     userLoggedOut(state, { payload }) {
+      state.errors = null;
       state.user = null;
+      state.isLoading = false;
       unsetUser();
+    },
+    setError(state, { payload }) {
+      state.errors = payload;
     },
   },
 });
 
-export const { userLoggedIn, userLoggedOut } = authSlice.actions;
+export const { setIsLoading, userLoggedIn, userLoggedOut, setError } =
+  authSlice.actions;
 
 export const login =
-  (user, cb = () => {}) =>
+  (credentials, cb = () => {}) =>
   async (dispatch) => {
-    // TODO Call auth API and login
-    dispatch(userLoggedIn(user));
-    cb();
+    dispatch(setIsLoading(true));
+    try {
+      const { user, token } = await apiLogin(credentials);
+      dispatch(userLoggedIn({ ...user, token }));
+      cb(null, user);
+    } catch (err) {
+      dispatch(setError(err));
+      cb(err, null);
+    }
   };
 
 export const register =

@@ -1,8 +1,9 @@
 import JsonDB from '@jetlab/jsondb';
 
-import { jsonDbPath, baseUrl, appName, appDesc } from 'config';
+import { jsonDbPath } from 'config';
 
 const JsonDb = new JsonDB(jsonDbPath, {
+  // TODO: We should remove this from here logic once we support for other database drivers
   initialData: [
     {
       coll: `users`,
@@ -10,15 +11,7 @@ const JsonDb = new JsonDB(jsonDbPath, {
     },
     {
       coll: `config`,
-      data: [
-        {
-          type: 'app',
-          baseUrl,
-          appName,
-          appDesc,
-          defaultDBConn: 'jsondb',
-        },
-      ],
+      data: [],
     },
     {
       coll: 'resources',
