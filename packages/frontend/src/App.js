@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { fetchInitialConfig as acFetchInitialConfig } from 'store/reducers/configSlice';
+import { fetchAll as acFetchAllResources } from 'store/reducers/resourceSlice';
+import { fetchAll as acFetchAllMedia } from 'store/reducers/mediaSlice';
 
 import { FullPageLoading as Loading } from 'components/Loading';
 import Bootstrap from 'components/Bootstrap';
@@ -29,14 +31,20 @@ const Wrapper = styled.div`
 `;
 
 function App() {
-  const { isLoading, bootstrap } = useSelector((state) => state.config);
-
   const dispatch = useDispatch();
+
+  const { isLoading, bootstrap } = useSelector((state) => state.config);
 
   const fetchConfig = () => dispatch(acFetchInitialConfig());
 
+  const fetchAllResources = () => dispatch(acFetchAllResources());
+
+  const fetchAllMedia = () => dispatch(acFetchAllMedia());
+
   useEffect(() => {
     fetchConfig();
+    fetchAllResources();
+    fetchAllMedia();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

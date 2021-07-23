@@ -1,8 +1,14 @@
 import { combineReducers } from 'redux';
 import configReducer from './configSlice';
-import userReducer from './userSlice';
+import authSlice from './authSlice';
+import resourceReducer from './resourceSlice';
+import mediaSlice from './mediaSlice';
+import userSlice from './userSlice';
 
 export default combineReducers({
   config: configReducer,
-  user: userReducer,
+  auth: authSlice,
+  resources: resourceReducer,
+  media: mediaSlice,
+  users: userSlice
 });

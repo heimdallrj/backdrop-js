@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchAll as apiFetchAllUsers } from 'api/users';
+import { fetchAll as apiFetchAllMedia } from 'api/media';
 
-const userSlice = createSlice({
+const mediaSlice = createSlice({
   name: 'media',
   initialState: {
     loading: null,
-    users: [],
+    files: [],
     errors: null
   },
   reducers: {
@@ -14,8 +14,8 @@ const userSlice = createSlice({
       state.errors = null;
       state.isLoading = payload;
     },
-    usersFetched(state, { payload }) {
-      state.users = payload;
+    mediaFetched(state, { payload }) {
+      state.files = payload;
       state.errors = null;
       state.isLoading = false;
     },
@@ -26,20 +26,20 @@ const userSlice = createSlice({
   },
 });
 
-export const { setIsLoading, usersFetched, setError } = userSlice.actions;
+export const { setIsLoading, mediaFetched, setError } = mediaSlice.actions;
 
 export const fetchAll =
   (user, cb = () => { }) =>
     async (dispatch) => {
       dispatch(setIsLoading(true));
       try {
-        const users = await apiFetchAllUsers();
-        dispatch(usersFetched(users));
-        cb(null, users);
+        const files = await apiFetchAllMedia();
+        dispatch(mediaFetched(files));
+        cb(null, files);
       } catch (err) {
         dispatch(setError(err));
         cb(err, null);
       }
     };
 
-export default userSlice.reducer;
+export default mediaSlice.reducer;

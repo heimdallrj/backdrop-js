@@ -2,7 +2,7 @@ import { Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 
-import { register as acRegister } from 'store/reducers/userSlice';
+import { register as acRegister } from 'store/reducers/authSlice';
 
 import Button from 'components/Button';
 import TextInput from 'components/TextInput';
@@ -19,7 +19,7 @@ export default function Register() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.auth);
 
   const register = (user, cb) => dispatch(acRegister(user, cb));
 

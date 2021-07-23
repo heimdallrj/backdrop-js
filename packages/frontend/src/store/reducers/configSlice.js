@@ -47,34 +47,34 @@ export const { setIsLoading, initialConfigFetched, setError } =
   configSlice.actions;
 
 export const fetchInitialConfig =
-  (cb = () => {}) =>
-  async (dispatch) => {
-    dispatch(setIsLoading(true));
+  (cb = () => { }) =>
+    async (dispatch) => {
+      dispatch(setIsLoading(true));
 
-    try {
-      const config = await apiFetchInitialConfig();
-      dispatch(initialConfigFetched(config));
-    } catch (err) {
-      dispatch(setError(err));
-    }
-    dispatch(setIsLoading(false));
-  };
+      try {
+        const config = await apiFetchInitialConfig();
+        dispatch(initialConfigFetched(config));
+      } catch (err) {
+        dispatch(setError(err));
+      }
+      dispatch(setIsLoading(false));
+    };
 
 export const updateInitialConfig =
-  (config, cb = () => {}) =>
-  async (dispatch) => {
-    dispatch(setIsLoading(true));
+  (config, cb = () => { }) =>
+    async (dispatch) => {
+      dispatch(setIsLoading(true));
 
-    try {
-      const configCreated = await apiCreateInitialConfig(config);
-      dispatch(initialConfigFetched(configCreated));
-      dispatch(setIsLoading(false));
-      cb(null, configCreated);
-    } catch (err) {
-      dispatch(setError(err));
-      dispatch(setIsLoading(false));
-      cb(err, null);
-    }
-  };
+      try {
+        const configCreated = await apiCreateInitialConfig(config);
+        dispatch(initialConfigFetched(configCreated));
+        dispatch(setIsLoading(false));
+        cb(null, configCreated);
+      } catch (err) {
+        dispatch(setError(err));
+        dispatch(setIsLoading(false));
+        cb(err, null);
+      }
+    };
 
 export default configSlice.reducer;

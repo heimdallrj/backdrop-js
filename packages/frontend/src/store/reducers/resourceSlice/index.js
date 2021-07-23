@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchAll as apiFetchAllUsers } from 'api/users';
+import { fetchAll as apiFetchAllResources } from 'api/resources';
 
-const userSlice = createSlice({
-  name: 'media',
+const resourceSlice = createSlice({
+  name: 'resources',
   initialState: {
     loading: null,
-    users: [],
+    resources: [],
     errors: null
   },
   reducers: {
@@ -14,8 +14,8 @@ const userSlice = createSlice({
       state.errors = null;
       state.isLoading = payload;
     },
-    usersFetched(state, { payload }) {
-      state.users = payload;
+    resourcesFetched(state, { payload }) {
+      state.resources = payload;
       state.errors = null;
       state.isLoading = false;
     },
@@ -26,20 +26,20 @@ const userSlice = createSlice({
   },
 });
 
-export const { setIsLoading, usersFetched, setError } = userSlice.actions;
+export const { setIsLoading, resourcesFetched, setError } = resourceSlice.actions;
 
 export const fetchAll =
   (user, cb = () => { }) =>
     async (dispatch) => {
       dispatch(setIsLoading(true));
       try {
-        const users = await apiFetchAllUsers();
-        dispatch(usersFetched(users));
-        cb(null, users);
+        const resources = await apiFetchAllResources();
+        dispatch(resourcesFetched(resources));
+        cb(null, resources);
       } catch (err) {
         dispatch(setError(err));
         cb(err, null);
       }
     };
 
-export default userSlice.reducer;
+export default resourceSlice.reducer;
