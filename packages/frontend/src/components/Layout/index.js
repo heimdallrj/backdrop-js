@@ -1,34 +1,42 @@
-import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 import Nav from 'components/Nav';
 
-const Container = styled.div`
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-`;
+import {
+  Container,
+  Sidebar,
+  Heading,
+  HeaderWrap,
+  Main,
+  BackIcon,
+} from './styled';
 
-const Sidebar = styled.aside`
-  background: #2c3039;
-  width: 60px;
-`;
+export default function Layout({ title, children }) {
+  const history = useHistory();
 
-const Main = styled.div`
-  height: 100vh;
-  flex: 14;
-  padding: 15px;
-  background: #fff;
-  flex: 1;
-`;
+  const onBackClick = () => {
+    history.goBack();
+  };
 
-export default function Layout({ children }) {
+  const Header = () => {
+    if (!title) return null;
+    return (
+      <HeaderWrap>
+        <BackIcon onClick={onBackClick} />
+        <Heading>{title}</Heading>
+      </HeaderWrap>
+    );
+  };
+
   return (
     <Container>
       <Sidebar>
         <Nav />
       </Sidebar>
-      <Main>{children}</Main>
+      <Main>
+        <Header />
+        {children}
+      </Main>
     </Container>
   );
 }

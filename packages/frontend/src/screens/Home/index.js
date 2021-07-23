@@ -10,7 +10,10 @@ import { Wrapper, Widget } from './styled';
 export default function Home() {
   const dispatch = useDispatch();
 
-  const { resources: { resources }, media: { files } } = useSelector(state => state);
+  const {
+    resources: { resources },
+    media: { files },
+  } = useSelector((state) => state);
 
   // TODO Can remove this since we are fetchiung same in the App component
   const fetchAllResources = () => dispatch(acFetchAllResources());
@@ -32,7 +35,7 @@ export default function Home() {
           <p>Media</p>
           <p>{files.length}</p>
         </Widget>
-      </Wrapper >
-    </Layout >
+      </Wrapper>
+    </Layout>
   );
 }

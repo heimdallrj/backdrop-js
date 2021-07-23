@@ -7,7 +7,7 @@ const mediaSlice = createSlice({
   initialState: {
     loading: null,
     files: [],
-    errors: null
+    errors: null,
   },
   reducers: {
     setIsLoading(state, { payload }) {
@@ -29,17 +29,17 @@ const mediaSlice = createSlice({
 export const { setIsLoading, mediaFetched, setError } = mediaSlice.actions;
 
 export const fetchAll =
-  (user, cb = () => { }) =>
-    async (dispatch) => {
-      dispatch(setIsLoading(true));
-      try {
-        const files = await apiFetchAllMedia();
-        dispatch(mediaFetched(files));
-        cb(null, files);
-      } catch (err) {
-        dispatch(setError(err));
-        cb(err, null);
-      }
-    };
+  (user, cb = () => {}) =>
+  async (dispatch) => {
+    dispatch(setIsLoading(true));
+    try {
+      const files = await apiFetchAllMedia();
+      dispatch(mediaFetched(files));
+      cb(null, files);
+    } catch (err) {
+      dispatch(setError(err));
+      cb(err, null);
+    }
+  };
 
 export default mediaSlice.reducer;

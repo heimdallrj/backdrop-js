@@ -27,7 +27,7 @@ export default function Users() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { users } = useSelector(state => state.users);
+  const { users } = useSelector((state) => state.users);
 
   const fetchAllUsers = () => dispatch(acFetchAllUsers());
 
