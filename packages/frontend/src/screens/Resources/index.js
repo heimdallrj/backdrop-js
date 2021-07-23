@@ -59,7 +59,7 @@ export default function Resources() {
 
   const onClickRowHandler = ({ id }) => {
     const resource = resources.find(({ _id }) => _id === id);
-   setSelectedResource(resource);
+    setSelectedResource(resource);
   };
 
   useEffect(() => {

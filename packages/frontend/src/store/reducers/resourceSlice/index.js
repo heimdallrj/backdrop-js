@@ -33,7 +33,7 @@ const resourceSlice = createSlice({
   },
 });
 
-export const { setIsLoading, resourcesFetched,resourceDeleted, setError } = resourceSlice.actions;
+export const { setIsLoading, resourcesFetched, resourceDeleted, setError } = resourceSlice.actions;
 
 export const fetchAll =
   (user, cb = () => { }) =>
