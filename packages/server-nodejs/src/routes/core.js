@@ -1,17 +1,13 @@
 import express from 'express';
 import fileUpload from 'express-fileupload';
-import forEach from 'lodash/forEach';
-import keysIn from 'lodash/keysIn';
-import { readdirSync } from 'fs';
 
 import * as handlers from 'handlers';
 import * as usersHandler from 'handlers/core/users';
 import * as configHandler from 'handlers/core/config';
+import * as mediaHandler from 'handlers/core/media';
 
 import { response } from 'utils/http';
 import JsonDB, { db } from 'utils/database/jsondb';
-
-import { baseUrl, mediaDir, mediaPath, filesToBeIgnored } from 'config';
 
 const router = express.Router();
 
@@ -61,6 +57,7 @@ router.delete('/resource/:id', (req, res) => {
 });
 
 // media
+router.get('/media', mediaHandler.get);
 router.post(
   '/media',
   fileUpload({
@@ -69,60 +66,8 @@ router.post(
       fileSize: 2 * 1024 * 1024 * 1024, // 2MB max file(s) size
     },
   }),
-  async (req, res) => {
-    try {
-      if (!req.files) {
-        response.bad(res);
-      } else {
-        const { files } = req.files;
-        const isSingleFile = !Array.isArray(files);
-
-        if (isSingleFile) {
-          files.mv(`${mediaPath}/${files.name}`);
-          response.ok(res, [
-            {
-              name: files.name,
-              size: files.size,
-              mimetype: files.mimetype,
-              md5: files.md5,
-              url: `${baseUrl}/${mediaDir}/${files.name}`,
-            },
-          ]);
-        } else {
-          const payload = [];
-
-          forEach(keysIn(files), (key) => {
-            const file = files[key];
-            file.mv(`${mediaPath}/${file.name}`);
-
-            payload.push({
-              name: file.name,
-              size: file.size,
-              mimetype: file.mimetype,
-              md5: file.md5,
-              url: `${baseUrl}/${mediaDir}/${file.name}`,
-            });
-          });
-
-          response.ok(res, payload);
-        }
-      }
-    } catch (err) {
-      response.internalError(res);
-    }
-  }
+  mediaHandler.post
 );
-
-router.get('/media', (req, res) => {
-  try {
-    const files = readdirSync(mediaPath)
-      .filter((f) => !filesToBeIgnored.includes(f))
-      .map((f) => `${baseUrl}/${mediaDir}/${f}`);
-    response.ok(res, files);
-  } catch (err) {
-    response.internalError(res);
-  }
-});
 
 // config
 router.get('/config', configHandler.get);
