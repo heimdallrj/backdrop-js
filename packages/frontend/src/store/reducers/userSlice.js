@@ -1,9 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchAll as apiFetchAllUsers } from 'api/users';
+import {
+  fetchAll as apiFetchAllUsers,
+  create as apiCreateUser,
+} from 'api/users';
 
 const userSlice = createSlice({
-  name: 'media',
+  name: 'users',
   initialState: {
     loading: null,
     users: [],
@@ -19,6 +22,10 @@ const userSlice = createSlice({
       state.errors = null;
       state.isLoading = false;
     },
+    userCreated(state, { payload }) {
+      state.errors = null;
+      state.isLoading = false;
+    },
     setError(state, { payload }) {
       state.errors = payload;
       state.isLoading = false;
@@ -26,7 +33,8 @@ const userSlice = createSlice({
   },
 });
 
-export const { setIsLoading, usersFetched, setError } = userSlice.actions;
+export const { setIsLoading, usersFetched, userCreated, setError } =
+  userSlice.actions;
 
 export const fetchAll =
   (user, cb = () => {}) =>
@@ -36,6 +44,20 @@ export const fetchAll =
       const users = await apiFetchAllUsers();
       dispatch(usersFetched(users));
       cb(null, users);
+    } catch (err) {
+      dispatch(setError(err));
+      cb(err, null);
+    }
+  };
+
+export const register =
+  (user, cb = () => {}) =>
+  async (dispatch) => {
+    dispatch(setIsLoading(true));
+    try {
+      const _user = await apiCreateUser(user);
+      dispatch(userCreated());
+      cb(null, _user);
     } catch (err) {
       dispatch(setError(err));
       cb(err, null);

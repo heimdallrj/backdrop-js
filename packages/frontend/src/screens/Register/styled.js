@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
   width: 600px;
   margin: auto;
   padding: 50px;
+  margin-top: 10%;
 `;
 
 export const FormWrap = styled.div``;

@@ -2,7 +2,7 @@ import { Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 
-import { register as acRegister } from 'store/reducers/authSlice';
+import { register as acRegister } from 'store/reducers/userSlice';
 
 import Button from 'components/Button';
 import TextInput from 'components/TextInput';
@@ -11,8 +11,12 @@ import { Form } from 'providers/ThemeProvider/styled';
 import { Wrapper, FormFooter } from './styled';
 
 const initialValues = {
-  userName: 'admin',
+  screenName: 'Jane',
+  email: 'jane@example.com',
+  userName: 'jane',
   password: 'pa$$word',
+  role: 2,
+  status: 0,
 };
 
 export default function Register() {
@@ -38,10 +42,16 @@ export default function Register() {
           }
           return errors;
         }}
-        onSubmit={(values, { setSubmitting }) => {
-          register(values, () => {
-            setSubmitting(false);
-            history.push(`/`);
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          register(values, (err) => {
+            if (err) {
+              // TODO: Handle error
+            } else {
+              // TODO Trigger and email and send user verification link
+              resetForm();
+              setSubmitting(false);
+              history.push(`/login`);
+            }
           });
         }}
       >
@@ -58,11 +68,31 @@ export default function Register() {
         }) => (
           <Form onSubmit={handleSubmit}>
             <TextInput
+              name="screenName"
+              label="Screen Name"
+              value={values.screenName}
+              errors={errors.screenName}
+              touched={touched.screenName}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+
+            <TextInput
               name="userName"
               label="User Name"
               value={values.userName}
               errors={errors.userName}
               touched={touched.userName}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+
+            <TextInput
+              name="email"
+              label="E-mail"
+              value={values.email}
+              errors={errors.email}
+              touched={touched.email}
               onChange={handleChange}
               onBlur={handleBlur}
             />

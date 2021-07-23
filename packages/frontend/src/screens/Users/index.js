@@ -31,6 +31,9 @@ const columns = [
 
 const USER_ROLES = {
   0: 'administrator',
+  1: 'Editor',
+  2: 'Subscriber',
+  3: 'Guest',
 };
 
 const USER_STATUS = {
