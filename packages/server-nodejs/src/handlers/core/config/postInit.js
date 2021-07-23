@@ -25,6 +25,8 @@ export default function postInit(req, res) {
     userName,
     email,
     password: bcrypt.hashSync(password, salt),
+    role: 0,
+    status: 1,
   };
   db.users.insert(user);
 

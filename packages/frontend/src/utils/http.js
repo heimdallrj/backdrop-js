@@ -6,7 +6,7 @@ const requestInterceptor = (req) => {
 };
 
 const responseInterceptor = (res) => {
-  return res.data;
+  return res.data.message;
 };
 
 export const init = () => {

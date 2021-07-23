@@ -35,6 +35,7 @@ export const FlexIcons = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  align-items: center;
 `;
 
 export const Status = styled.span`
