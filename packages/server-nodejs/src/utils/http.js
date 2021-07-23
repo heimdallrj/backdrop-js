@@ -52,28 +52,15 @@ http.messages = httpStatus;
 // response
 export const response = {};
 
-response.ok = (res, message) =>
-  res.status(http.OK).json({
-    code: http.OK,
-    message: message || http.messages[http.OK],
-  });
+response.ok = (res, message = {}) => res.status(http.OK).json(message);
 
-response.notFound = (res, message) =>
-  res.status(http.NOT_FOUND).json({
-    code: http.NOT_FOUND,
-    message: message || http.messages[http.NOT_FOUND],
-  });
+response.notFound = (res, message = {}) =>
+  res.status(http.NOT_FOUND).json(message);
 
-response.internalError = (res, message) =>
-  res.status(http.INTERNAL_SERVER_ERROR).json({
-    code: http.INTERNAL_SERVER_ERROR,
-    message: message || http.messages[http.INTERNAL_SERVER_ERROR],
-  });
+response.internalError = (res, message = {}) =>
+  res.status(http.INTERNAL_SERVER_ERROR).json(message);
 
-response.bad = (res, message) =>
-  res.status(http.BAD_REQUEST).json({
-    code: http.BAD_REQUEST,
-    message: message || http.messages[http.BAD_REQUEST],
-  });
+response.bad = (res, message = {}) =>
+  res.status(http.BAD_REQUEST).json(message);
 
 export default http;
