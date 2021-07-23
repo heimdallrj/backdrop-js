@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
-import { fetchAll as apiFetchUsers } from 'api/users';
+import { fetchAll as acFetchAllUsers } from 'store/reducers/userSlice';
 
 import Layout from 'components/Layout';
 
@@ -24,16 +25,15 @@ import {
 
 export default function Users() {
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  const [users, setUsers] = useState([]);
+  const { users } = useSelector(state => state.users);
 
-  const fetchUsers = async () => {
-    const resp = await apiFetchUsers();
-    setUsers(resp);
-  };
+  const fetchAllUsers = () => dispatch(acFetchAllUsers());
 
   useEffect(() => {
-    fetchUsers();
+    fetchAllUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onClickUserHandler = (id) => {

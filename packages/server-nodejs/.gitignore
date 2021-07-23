@@ -1,7 +1,8 @@
 dist
-media/
+/media
 node_modules
 yarn-error.log
 package-lock.json
 .jsondb
 .env
+.DS_Store

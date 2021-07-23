@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
-import { 
-  fetchAll as apiFetchAllResources,
-  clear as apiDeleteResource
-} from 'api/resources';
+import { clear as apiDeleteResource} from 'api/resources';
+import { fetchAll as acFetchAllResources } from 'store/reducers/resourceSlice';
 
 import SidePane from 'components/SidePane';
 import Table from 'components/Table';
@@ -32,15 +31,14 @@ const columns = [
 
 export default function Resources() {
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  const [resources, setResources] = useState([]);
+  const { resources } = useSelector(state => state.resources);
+
   const [rows, setRows] = useState([]);
   const [selectedResource, setSelectedResource] = useState(null);
 
-  const fetchAllResources = async () => {
-    const resp = await apiFetchAllResources();
-    setResources(resp);
-  };
+  const fetchAllResources = () => dispatch(acFetchAllResources());
 
   const deleteResource = async (id) =>{
     await apiDeleteResource(id);
@@ -69,6 +67,7 @@ export default function Resources() {
 
   useEffect(() => {
     fetchAllResources();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

@@ -1,8 +1,14 @@
+import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 
+import { updateInitialConfig as acUpdateInitialConfig } from 'store/reducers/configSlice';
+
+import Button from 'components/Button';
 import TextInput from 'components/TextInput';
 import Select from 'components/Select';
-import Button from 'components/Button';
+import Preloader from 'components/Preloader';
+
+import { apiBaseUrl } from 'config';
 
 import { Form } from 'providers/ThemeProvider/styled';
 import {
@@ -24,10 +30,30 @@ const initialValues = {
   password: 'pa$$word',
   password_re: 'pa$$word',
   email: 'john@example.com',
-  dbAdapter: 'JsonDB',
+  dbDriver: 'JsonDB',
 };
 
-export default function Start() {
+const getInitialConfig = (values) => {
+  const { userName, screenName, password, email, appName, dbDriver } = values;
+  return {
+    user: { userName, screenName, password, email },
+    config: {
+      appName,
+      appDesc: 'Minimalistic API Artisan',
+      baseUrl: apiBaseUrl,
+      database: {
+        driver: dbDriver,
+      },
+    },
+  };
+};
+
+export default function Bootstrap() {
+  const dispatch = useDispatch();
+
+  const updateInitialConfig = (config, cb) =>
+    dispatch(acUpdateInitialConfig(config, cb));
+
   return (
     <Wrapper>
       <Welcome>
@@ -44,6 +70,7 @@ export default function Start() {
         <Formik
           initialValues={initialValues}
           validate={(values) => {
+            // TODO Do the validation here
             const errors = {};
             if (!values.appName) {
               errors.appName = 'Required';
@@ -51,7 +78,9 @@ export default function Start() {
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            setSubmitting(false);
+            updateInitialConfig(getInitialConfig(values), (err, resp) => {
+              // setSubmitting(false);
+            });
           }}
         >
           {({
@@ -68,20 +97,10 @@ export default function Start() {
             <Form onSubmit={handleSubmit}>
               <TextInput
                 name="appName"
-                label="App Name"
+                label="Application Name"
                 value={values.appName}
                 errors={errors.appName}
                 touched={touched.appName}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-
-              <TextInput
-                name="userName"
-                label="userName"
-                value={values.userName}
-                errors={errors.userName}
-                touched={touched.userName}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
@@ -97,28 +116,6 @@ export default function Start() {
               />
 
               <TextInput
-                name="password"
-                label="password"
-                value={values.password}
-                errors={errors.password}
-                touched={touched.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                masked
-              />
-
-              <TextInput
-                name="password_re"
-                label="password_re"
-                value={values.password_re}
-                errors={errors.password_re}
-                touched={touched.password_re}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                masked
-              />
-
-              <TextInput
                 name="email"
                 type="email"
                 label="Your email"
@@ -129,24 +126,63 @@ export default function Start() {
                 onBlur={handleBlur}
               />
 
+              <TextInput
+                name="userName"
+                label="User Name"
+                value={values.userName}
+                errors={errors.userName}
+                touched={touched.userName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+
+              <TextInput
+                name="password"
+                label="Password"
+                value={values.password}
+                errors={errors.password}
+                touched={touched.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                masked
+              />
+
+              <TextInput
+                name="password_re"
+                label="Re-type Password"
+                value={values.password_re}
+                errors={errors.password_re}
+                touched={touched.password_re}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                masked
+              />
+
               <Select
-                label="Database Adapter"
+                label="dbDriver"
                 options={dbOptions}
-                name="dbAdapter"
+                name="dbDriver"
                 value={
                   dbOptions
                     ? dbOptions.find(
-                        (option) => option.value === values.dbAdapter
-                      )
+                      (option) => option.value === values.dbDriver
+                    )
                     : ''
                 }
-                onChange={(option) => setFieldValue('dbAdapter', option.value)}
+                onChange={(option) => setFieldValue('dbDriver', option.value)}
                 onBlur={handleBlur}
               />
 
               <FormFooter>
                 <Button type="submit" disabled={isSubmitting}>
-                  Proceed
+                  <div style={{ display: 'flex' }}>
+                    {isSubmitting && (
+                      <Preloader
+                        style={{ width: '20px', margin: '0 8px 0 0' }}
+                      />
+                    )}{' '}
+                    <p>Proceed</p>
+                  </div>
                 </Button>
               </FormFooter>
             </Form>

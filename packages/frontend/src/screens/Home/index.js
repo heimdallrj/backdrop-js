@@ -1,21 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchAll as apiFetchAllResources } from 'api/resources';
+import { fetchAll as acFetchAllResources } from 'store/reducers/resourceSlice';
 
 import Layout from 'components/Layout';
 
 import { Wrapper, Widget } from './styled';
 
 export default function Home() {
-  const [resources, setResources] = useState([]);
+  const dispatch = useDispatch();
 
-  const fetchAllResources = async () => {
-    const resp = await apiFetchAllResources();
-    setResources(resp);
-  };
+  const { resources: { resources }, media: { files } } = useSelector(state => state);
+
+  // TODO Can remove this since we are fetchiung same in the App component
+  const fetchAllResources = () => dispatch(acFetchAllResources());
 
   useEffect(() => {
     fetchAllResources();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -25,7 +27,12 @@ export default function Home() {
           <p>Resources</p>
           <p>{resources.length}</p>
         </Widget>
-      </Wrapper>
-    </Layout>
+
+        <Widget>
+          <p>Media</p>
+          <p>{files.length}</p>
+        </Widget>
+      </Wrapper >
+    </Layout >
   );
 }
