@@ -22,6 +22,7 @@ import Media from 'screens/Media';
 import MediaUpload from 'screens/Media/Upload';
 import Settings from 'screens/Settings';
 import Users from 'screens/Users';
+import CreateUser from 'screens/Users/Create';
 import Logout from 'screens/Logout';
 
 const Wrapper = styled.div`
@@ -82,6 +83,7 @@ function App() {
         <ProtectedRoute exact path="/settings" component={Settings} />
 
         <ProtectedRoute exact path="/users" component={Users} />
+        <ProtectedRoute exact path="/users/create" component={CreateUser} />
       </Router>
     </Wrapper>
   );

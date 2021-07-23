@@ -5,7 +5,7 @@ import { fetchAll as apiFetchAllMedia } from 'api/media';
 
 import Layout from 'components/Layout';
 
-import { Wrapper, Heading, Button, List, ListItem, Image } from './styled';
+import { Wrapper, Button, List, ListItem, Image } from './styled';
 
 // TODO: Require to chnage from API
 const MediaItem = ({ url, name, type }) => {
@@ -29,10 +29,8 @@ export default function Media() {
   }, []);
 
   return (
-    <Layout>
+    <Layout title="Media Library">
       <Wrapper>
-        <Heading>Media Library</Heading>
-
         <Link to={`/media/upload`}>
           <Button>Upload new media</Button>
         </Link>

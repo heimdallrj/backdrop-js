@@ -95,7 +95,7 @@ export default function Users() {
   return (
     <Layout title="Users">
       <Wrapper>
-        <Link to={`/users/add`}>
+        <Link to={`/users/create`}>
           <Button>Create a new user</Button>
         </Link>
 

@@ -71,7 +71,7 @@ export default function CreateResource() {
   };
 
   return (
-    <Layout title="Create a new Resource">
+    <Layout title="Resources > Create">
       <Wrapper>
         <Formik
           initialValues={initialValues}

@@ -6,14 +6,7 @@ import { create as apiCreateMedia } from 'api/media';
 
 import Layout from 'components/Layout';
 
-import {
-  Wrapper,
-  Heading,
-  Library,
-  DropZone,
-  FileList,
-  UploadButton,
-} from './styled';
+import { Wrapper, Library, DropZone, FileList, UploadButton } from './styled';
 
 export default function Media() {
   const history = useHistory();
@@ -42,10 +35,8 @@ export default function Media() {
   ));
 
   return (
-    <Layout>
+    <Layout title="Media Library > Upload Media">
       <Wrapper>
-        <Heading>Media Library</Heading>
-
         <Library>
           <DropZone {...getRootProps({ className: 'dropzone' })}>
             <input {...getInputProps()} />
