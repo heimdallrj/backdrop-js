@@ -33,19 +33,19 @@ const authSlice = createSlice({
 export const { userLoggedIn, userLoggedOut } = authSlice.actions;
 
 export const login =
-  (user, cb = () => { }) =>
-    async (dispatch) => {
-      // TODO Call auth API and login
-      dispatch(userLoggedIn(user));
-      cb();
-    };
+  (user, cb = () => {}) =>
+  async (dispatch) => {
+    // TODO Call auth API and login
+    dispatch(userLoggedIn(user));
+    cb();
+  };
 
 export const register =
-  (user, cb = () => { }) =>
-    async (dispatch) => {
-      // dispatch(userLoggedOut());
-      cb();
-    };
+  (user, cb = () => {}) =>
+  async (dispatch) => {
+    // dispatch(userLoggedOut());
+    cb();
+  };
 
 export const logout = () => async (dispatch) => {
   dispatch(userLoggedOut());

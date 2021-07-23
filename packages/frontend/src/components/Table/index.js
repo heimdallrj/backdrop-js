@@ -8,52 +8,6 @@ import {
   Col,
 } from './styled';
 
-// const columns = [
-//   { label: 'ID', align: 'center' },
-//   { label: 'namespace', align: 'center' },
-//   { label: 'name' },
-//   { label: 'type' },
-//   { label: 'status', align: 'center' },
-//   { label: 'actions', visibility: false },
-// ];
-
-// const rows = [
-//   [
-//     { value: 1, align: 'center' },
-//     { value: 'api', align: 'center' },
-//     { value: 'posts' },
-//     { value: 'default' },
-//     { value: 'published', align: 'center' },
-//     {
-//       value: (
-//         <ActionWrap>
-//           <DocIcon onClick={() => { }} />
-//           <DeleteIcon onClick={() => { }} />
-//         </ActionWrap>
-//       )
-//     }
-//   ],
-// ];
-
-// const rows1 = [{
-//   id: 1,
-//   data: [
-//     { value: 1, align: 'center' },
-//     { value: 'api', align: 'center' },
-//     { value: 'posts' },
-//     { value: 'default' },
-//     { value: 'published', align: 'center' },
-//     {
-//       value: (
-//         <ActionWrap>
-//           <DocIcon onClick={() => { }} />
-//           <DeleteIcon onClick={() => { }} />
-//         </ActionWrap>
-//       )
-//     }
-//   ],
-// }];
-
 export default function TableComponent({
   columns = [],
   rows = [],
@@ -64,15 +18,11 @@ export default function TableComponent({
       <Table>
         <TableHead>
           <Row>
-            {columns.map(({ label, visibility = 'visible', align, width }) => (
-              <ColHead
-                key={label}
-                scope="col"
-                visibility={visibility}
-                align={align}
-                width={width}
-              >
-                {label}
+            {columns.map(({ label, align, size, visible = true }) => (
+              <ColHead key={label} scope="col" align={align} width={`${size}%`}>
+                <span style={{ visibility: visible ? 'visible' : 'hidden' }}>
+                  {label}
+                </span>
               </ColHead>
             ))}
           </Row>
@@ -80,8 +30,8 @@ export default function TableComponent({
         <TableBody>
           {rows.map((row, i) => (
             <Row key={row.id} onClick={() => onClickRow(row)}>
-              {row.data.map(({ value, align }, j) => (
-                <Col key={String(j)} align={align}>
+              {row.data.map(({ value, align, size }, j) => (
+                <Col key={String(j)} align={align} width={`${size}%`}>
                   {value}
                 </Col>
               ))}

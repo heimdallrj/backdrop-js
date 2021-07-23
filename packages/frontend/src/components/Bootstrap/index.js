@@ -165,8 +165,8 @@ export default function Bootstrap() {
                 value={
                   dbOptions
                     ? dbOptions.find(
-                      (option) => option.value === values.dbDriver
-                    )
+                        (option) => option.value === values.dbDriver
+                      )
                     : ''
                 }
                 onChange={(option) => setFieldValue('dbDriver', option.value)}

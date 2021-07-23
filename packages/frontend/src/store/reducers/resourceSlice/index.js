@@ -9,7 +9,7 @@ const resourceSlice = createSlice({
   initialState: {
     loading: null,
     resources: [],
-    errors: null
+    errors: null,
   },
   reducers: {
     setIsLoading(state, { payload }) {
@@ -36,18 +36,18 @@ const resourceSlice = createSlice({
 export const { setIsLoading, resourcesFetched, resourceDeleted, setError } = resourceSlice.actions;
 
 export const fetchAll =
-  (user, cb = () => { }) =>
-    async (dispatch) => {
-      dispatch(setIsLoading(true));
-      try {
-        const resources = await apiFetchAllResources();
-        dispatch(resourcesFetched(resources));
-        cb(null, resources);
-      } catch (err) {
-        dispatch(setError(err));
-        cb(err, null);
-      }
-    };
+  (user, cb = () => {}) =>
+  async (dispatch) => {
+    dispatch(setIsLoading(true));
+    try {
+      const resources = await apiFetchAllResources();
+      dispatch(resourcesFetched(resources));
+      cb(null, resources);
+    } catch (err) {
+      dispatch(setError(err));
+      cb(err, null);
+    }
+  };
 
 export const deleteResource =
   (id, cb = () => { }) =>

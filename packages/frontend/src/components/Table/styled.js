@@ -22,7 +22,7 @@ export const TableWrap = styled.section`
 `;
 
 export const Table = styled.table`
-  min-width: 100%;
+  width: 100%;
   border-collapse: collapse;
   text-indent: 0;
   border-color: inherit;
@@ -45,9 +45,8 @@ export const ColHead = styled.th`
   font-weight: 500;
   font-size: 0.75rem;
   line-height: 1rem;
-  padding: 0.75rem;
-  width: ${(props) => `${props.width || 0}`};
-  visibility: ${(props) => `${props.visibility || 'visible'}`};
+  padding: 0.75rem 0.6rem;
+  width: ${(props) => `${props.width || 'auto'}`};
   text-align: ${(props) => `${props.align || 'left'}`};
 `;
 
@@ -57,7 +56,7 @@ export const TableBody = styled.tbody`
 
 export const Col = styled.td`
   white-space: nowrap;
-  padding: 0.5rem;
+  padding: 0.5rem 0.6rem;
   font-weight: normal;
   font-size: 0.9rem;
   text-align: ${(props) => `${props.align || 'left'}`};

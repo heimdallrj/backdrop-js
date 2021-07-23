@@ -10,5 +10,5 @@ export default combineReducers({
   auth: authSlice,
   resources: resourceReducer,
   media: mediaSlice,
-  users: userSlice
+  users: userSlice,
 });

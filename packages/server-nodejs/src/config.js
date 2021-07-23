@@ -1,4 +1,5 @@
 import path from 'path';
+import bcrypt from 'bcrypt';
 
 require('dotenv').config();
 
@@ -20,3 +21,6 @@ export const oAuthGitHubClientId = process.env.OAUTH_GITHUB_CLIENT_ID;
 export const oAuthGitHubClientSecret = process.env.OAUTH_GITHUB_CLIENT_SECRET;
 
 export const jwtSecret = process.env.JWT_SECRET;
+
+const saltRounds = 10;
+export const salt = bcrypt.genSaltSync(saltRounds);

@@ -13,28 +13,32 @@ import Layout from 'components/Layout';
 
 import {
   Wrapper,
-  Heading,
   Button,
   AddDocumentIcon,
   DeleteIcon,
-  ActionWrap,
+  LockClosedIcon,
+  KeyIcon,
   Status,
+  Method,
+  NameWrap,
+  FlexIcons,
 } from './styled';
 
 const columns = [
-  { label: 'ID', align: 'center' },
-  { label: 'namespace', align: 'center' },
-  { label: 'name', width: '200px' },
-  { label: 'type' },
-  { label: 'status' },
-  { label: 'actions', visibility: 'hidden' },
+  { label: 'falgs', size: 5, visible: false },
+  { label: 'ID', size: 3, align: 'center' },
+  { label: 'namespace', size: 10, align: 'center' },
+  { label: 'name', size: 57 },
+  { label: 'type', size: 10, align: 'center' },
+  { label: 'status', size: 10, align: 'center' },
+  { label: 'actions', size: 5, visible: false },
 ];
 
 export default function Resources() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { resources } = useSelector(state => state.resources);
+  const { resources } = useSelector((state) => state.resources);
 
   const [rows, setRows] = useState([]);
   const [selectedResource, setSelectedResource] = useState(null);
@@ -62,6 +66,17 @@ export default function Resources() {
     setSelectedResource(resource);
   };
 
+  const Name = ({ name, methods }) => (
+    <NameWrap>
+      <div style={{ marginRight: '30px' }}>{name}</div>
+      <div>
+        {methods.map((m) => (
+          <Method key={m}>{m}</Method>
+        ))}
+      </div>
+    </NameWrap>
+  );
+
   useEffect(() => {
     fetchAllResources();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,23 +84,43 @@ export default function Resources() {
 
   useEffect(() => {
     const rowsFiltered = resources.map(
-      ({ _id, namespace, name, type, status }, index) => {
+      (
+        {
+          _id,
+          namespace,
+          name,
+          private: isPrivate,
+          protected: isProtected,
+          type,
+          methods,
+          status,
+        },
+        index
+      ) => {
         return {
           id: _id,
           data: [
-            { value: index + 1, align: 'center' },
-            { value: namespace, align: 'center' },
-            { value: name },
-            { value: type },
-            { value: <Status>{status}</Status> },
             {
               value: (
-                <ActionWrap>
+                <FlexIcons>
+                  {isProtected && <KeyIcon />} {isPrivate && <LockClosedIcon />}
+                </FlexIcons>
+              ),
+              align: 'center',
+            },
+            { value: index + 1, align: 'center' },
+            { value: namespace, align: 'center' },
+            { value: <Name name={name} methods={methods} /> },
+            { value: type, align: 'center' },
+            { value: <Status>{status}</Status>, align: 'center' },
+            {
+              value: (
+                <FlexIcons>
                   <AddDocumentIcon
                     onClick={onClickResourceHandler.bind(null, _id)}
                   />
                   <DeleteIcon onClick={onDeleteclick.bind(null,_id)} />
-                </ActionWrap>
+                </FlexIcons>
               ),
             },
           ],
@@ -97,10 +132,8 @@ export default function Resources() {
   }, [resources]);
 
   return (
-    <Layout>
+    <Layout title="Resources">
       <Wrapper>
-        <Heading>Resources</Heading>
-
         <Link to={`/resources/create`}>
           <Button>Create a new resource</Button>
         </Link>

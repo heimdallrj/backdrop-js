@@ -3,12 +3,7 @@ import jwt from 'jsonwebtoken';
 import { db } from 'utils/database/jsondb';
 import { response } from 'utils/http';
 
-import { jwtSecret } from 'config';
-
-// bycrypt config
-// TODO !duplicate
-const saltRounds = 10;
-const salt = bcrypt.genSaltSync(saltRounds);
+import { jwtSecret, salt } from 'config';
 
 export default function post(req, res) {
   const user = {
@@ -16,7 +11,6 @@ export default function post(req, res) {
     password: bcrypt.hashSync(req.body.password, salt),
   };
   // TODO Validate user
-
   const userExists = db.users.find({ email: user.email });
   if (userExists && userExists.length > 0) {
     return response.bad(res, 'User already exists');

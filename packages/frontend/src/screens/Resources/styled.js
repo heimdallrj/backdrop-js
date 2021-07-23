@@ -3,12 +3,10 @@ import styled from 'styled-components';
 import DocumentIconSource from 'assets/icons/Document/Outline';
 import DeleteIconSource from 'assets/icons/Delete/Outline';
 import AddDocumentIconSource from 'assets/icons/AddDocument/Outline';
+import KeyIconSource from 'assets/icons/Key/Solid';
+import LockClosedIconSource from 'assets/icons/Lock/Closed/Solid';
 
 export const Wrapper = styled.section``;
-
-export const Heading = styled.h5`
-  text-transform: uppercase;
-`;
 
 export const Button = styled.button`
   font-size: 0.8rem;
@@ -81,9 +79,18 @@ export const DeleteIcon = styled(DeleteIconSource)`
   cursor: pointer;
 `;
 
-export const ActionWrap = styled.div`
-  display: flex;
-  justify-content: space-evenly;
+export const LockClosedIcon = styled(LockClosedIconSource)`
+  color: gray;
+  width: 12px;
+  align-self: center;
+  cursor: pointer;
+`;
+
+export const KeyIcon = styled(KeyIconSource)`
+  color: gray;
+  width: 12px;
+  align-self: center;
+  cursor: pointer;
 `;
 
 export const Status = styled.span`
@@ -93,4 +100,31 @@ export const Status = styled.span`
   padding: 5px;
   border-radius: 20px;
   letter-spacing: 1px;
+`;
+
+export const Flex = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const FlexIcons = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+`;
+
+export const NameWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const Method = styled.span`
+  text-transform: uppercase;
+  font-size: 0.5rem;
+  background: #e4d9d9;
+  // border-radius: 20px;
+  padding: 5px;
+  letter-spacing: 1px;
+  margin: 0 3px;
 `;

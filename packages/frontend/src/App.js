@@ -17,6 +17,7 @@ import Home from 'screens/Home';
 import Resources from 'screens/Resources';
 import ResourceSingle from 'screens/Resources/Single';
 import CreateResource from 'screens/Resources/Create';
+import Crud from 'screens/Crud';
 import Media from 'screens/Media';
 import MediaUpload from 'screens/Media/Upload';
 import Settings from 'screens/Settings';
@@ -72,6 +73,8 @@ function App() {
           path="/resources/ext/:id"
           component={ResourceSingle}
         />
+
+        <ProtectedRoute exact path="/crud" component={Crud} />
 
         <ProtectedRoute exact path="/media" component={Media} />
         <ProtectedRoute exact path="/media/upload" component={MediaUpload} />
