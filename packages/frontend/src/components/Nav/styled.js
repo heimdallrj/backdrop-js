@@ -6,10 +6,16 @@ import ResourceIconSource from 'assets/icons/Resource/Solid';
 import MediaIconSource from 'assets/icons/Media/Solid';
 import SettingsIconSource from 'assets/icons/Settings/Solid';
 import UsersIconSource from 'assets/icons/Users/Solid';
+import DocumentsIconSource from 'assets/icons/Documents/Solid';
+import LogoutIconSource from 'assets/icons/Logout/Outline';
 
 export const Wrapper = styled.div`
   flex: 1;
   background: #2c3039;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
 `;
 
 export const AppIcon = styled(AppIconSource)`
@@ -30,6 +36,12 @@ export const ResourceIcon = styled(ResourceIconSource)`
   align-self: center;
 `;
 
+export const DocumentsIcon = styled(DocumentsIconSource)`
+  color: red;
+  width: 24px;
+  align-self: center;
+`;
+
 export const MediaIcon = styled(MediaIconSource)`
   color: red;
   width: 24px;
@@ -43,6 +55,12 @@ export const SettingsIcon = styled(SettingsIconSource)`
 `;
 
 export const UsersIcon = styled(UsersIconSource)`
+  color: red;
+  width: 24px;
+  align-self: center;
+`;
+
+export const LogoutIcon = styled(LogoutIconSource)`
   color: red;
   width: 24px;
   align-self: center;

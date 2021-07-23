@@ -84,7 +84,7 @@ export default function Login() {
                 <div style={{ display: 'flex' }}>
                   {isSubmitting && (
                     <Preloader style={{ width: '20px', margin: '0 8px 0 0' }} />
-                  )}{' '}
+                  )}
                   <p>Login</p>
                 </div>
               </Button>

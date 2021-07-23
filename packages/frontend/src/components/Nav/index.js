@@ -4,9 +4,11 @@ import {
   Wrapper,
   HomeIcon,
   ResourceIcon,
+  DocumentsIcon,
   MediaIcon,
   UsersIcon,
   SettingsIcon,
+  LogoutIcon,
   Menu,
   MenuItem,
 } from './styled';
@@ -26,6 +28,11 @@ export default function Nav() {
           </Link>
         </MenuItem>
         <MenuItem>
+          <Link to="/crud">
+            <DocumentsIcon />
+          </Link>
+        </MenuItem>
+        <MenuItem>
           <Link to="/media">
             <MediaIcon />
           </Link>
@@ -35,9 +42,17 @@ export default function Nav() {
             <UsersIcon />
           </Link>
         </MenuItem>
+      </Menu>
+
+      <Menu>
         <MenuItem>
           <Link to="/settings">
             <SettingsIcon />
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <Link to="/logout">
+            <LogoutIcon />
           </Link>
         </MenuItem>
       </Menu>

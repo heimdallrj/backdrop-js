@@ -4,11 +4,12 @@ export const Wrapper = styled.div`
   width: 600px;
   margin: auto;
   padding: 50px;
+  margin-top: 10%;
 `;
 
 export const FormWrap = styled.div``;
 
 export const FormFooter = styled.div`
-  text-align: center;
+  text-align: left;
   margin: 30px 0;
 `;

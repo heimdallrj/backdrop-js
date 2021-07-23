@@ -8,10 +8,11 @@ import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import hpp from 'hpp';
 
-import logger from 'utils/logger';
 import apiRoutes from 'routes/api';
 import coreRoutes from 'routes/core';
 import oauthRoutes from 'routes/oauth';
+
+import logger from 'utils/logger';
 
 import { port } from 'config';
 

@@ -2,10 +2,7 @@ import bcrypt from 'bcrypt';
 import { db } from 'utils/database/jsondb';
 import { response } from 'utils/http';
 
-// bycrypt config
-// TODO !duplicate
-const saltRounds = 10;
-const salt = bcrypt.genSaltSync(saltRounds);
+import { salt } from 'config';
 
 export default function postInit(req, res) {
   const {
