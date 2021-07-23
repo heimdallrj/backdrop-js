@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { fetchAll as apiFetchAllResources,
-  clear as apiDeleteResource
+  remove as apiDeleteResource
 } from 'api/resources';
 
 const resourceSlice = createSlice({

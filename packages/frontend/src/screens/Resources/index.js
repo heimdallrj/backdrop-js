@@ -119,7 +119,7 @@ export default function Resources() {
                   <AddDocumentIcon
                     onClick={onClickResourceHandler.bind(null, _id)}
                   />
-                  <DeleteIcon onClick={onDeleteclick.bind(null,_id)} />
+                  <DeleteIcon onClick={() => onDeleteclick(_id)} />
                 </FlexIcons>
               ),
             },
