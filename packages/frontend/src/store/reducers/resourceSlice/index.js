@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchAll as apiFetchAllResources } from 'api/resources';
+import { fetchAll as apiFetchAllResources,
+  remove as apiDeleteResource
+} from 'api/resources';
 
 const resourceSlice = createSlice({
   name: 'resources',
@@ -19,6 +21,11 @@ const resourceSlice = createSlice({
       state.errors = null;
       state.isLoading = false;
     },
+    resourceDeleted(state,{payload}){
+      state.resources = state.resources.filter((resource) => resource._id !== payload);
+      state.errors = null;
+      state.isLoading = false;
+    },
     setError(state, { payload }) {
       state.errors = payload;
       state.isLoading = false;
@@ -26,8 +33,7 @@ const resourceSlice = createSlice({
   },
 });
 
-export const { setIsLoading, resourcesFetched, setError } =
-  resourceSlice.actions;
+export const { setIsLoading, resourcesFetched, resourceDeleted, setError } = resourceSlice.actions;
 
 export const fetchAll =
   (user, cb = () => {}) =>
@@ -42,5 +48,19 @@ export const fetchAll =
       cb(err, null);
     }
   };
+
+export const deleteResource =
+  (id, cb = () => { }) =>
+    async (dispatch) => {
+      dispatch(setIsLoading(true));
+      try {
+        const response =await apiDeleteResource(id);
+        dispatch(resourceDeleted(id));
+        cb(null,response);
+      } catch (err) {
+        dispatch(setError(err));
+        cb(err, null);
+      }
+    };
 
 export default resourceSlice.reducer;
