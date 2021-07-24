@@ -36,7 +36,7 @@ const initialValues = {
 const getInitialConfig = (values) => {
   const { userName, screenName, password, email, appName, dbDriver } = values;
   return {
-    user: { userName, screenName, password, email },
+    admin: { userName, screenName, password, email },
     config: {
       appName,
       appDesc: 'Minimalistic API Artisan',

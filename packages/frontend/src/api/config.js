@@ -1,7 +1,9 @@
-import { get, post } from 'utils/http';
+import { get, patch, post } from 'utils/http';
 
 const namespace = 'core';
 
-export const fetchInitialConfig = () => get(`/${namespace}/config/init`);
-export const createInitialConfig = (config) =>
-  post(`/${namespace}/config/init`, config);
+export const fetchAppConfig = () => get(`/${namespace}/config/app`);
+export const createAppConfig = (config) =>
+  post(`/${namespace}/config/app`, config);
+export const updateConfig = (type, config) =>
+  patch(`/${namespace}/config/${type}`, config);

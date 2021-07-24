@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchAll as apiFetchAllResources,
-  remove as apiDeleteResource
+import {
+  fetchAll as apiFetchAllResources,
+  remove as apiDeleteResource,
 } from 'api/resources';
 
 const resourceSlice = createSlice({
@@ -21,8 +22,10 @@ const resourceSlice = createSlice({
       state.errors = null;
       state.isLoading = false;
     },
-    resourceDeleted(state,{payload}){
-      state.resources = state.resources.filter((resource) => resource._id !== payload);
+    resourceDeleted(state, { payload }) {
+      state.resources = state.resources.filter(
+        (resource) => resource._id !== payload
+      );
       state.errors = null;
       state.isLoading = false;
     },
@@ -33,7 +36,8 @@ const resourceSlice = createSlice({
   },
 });
 
-export const { setIsLoading, resourcesFetched, resourceDeleted, setError } = resourceSlice.actions;
+export const { setIsLoading, resourcesFetched, resourceDeleted, setError } =
+  resourceSlice.actions;
 
 export const fetchAll =
   (user, cb = () => {}) =>
@@ -50,17 +54,17 @@ export const fetchAll =
   };
 
 export const deleteResource =
-  (id, cb = () => { }) =>
-    async (dispatch) => {
-      dispatch(setIsLoading(true));
-      try {
-        const response =await apiDeleteResource(id);
-        dispatch(resourceDeleted(id));
-        cb(null,response);
-      } catch (err) {
-        dispatch(setError(err));
-        cb(err, null);
-      }
-    };
+  (id, cb = () => {}) =>
+  async (dispatch) => {
+    dispatch(setIsLoading(true));
+    try {
+      const response = await apiDeleteResource(id);
+      dispatch(resourceDeleted(id));
+      cb(null, response);
+    } catch (err) {
+      dispatch(setError(err));
+      cb(err, null);
+    }
+  };
 
 export default resourceSlice.reducer;

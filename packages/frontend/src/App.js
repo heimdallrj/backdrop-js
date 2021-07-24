@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { fetchInitialConfig as acFetchInitialConfig } from 'store/reducers/configSlice';
+import { fetchAppConfig as acFetchAppConfig } from 'store/reducers/configSlice';
 import { fetchAll as acFetchAllResources } from 'store/reducers/resourceSlice';
 import { fetchAll as acFetchAllMedia } from 'store/reducers/mediaSlice';
 
@@ -37,14 +37,14 @@ function App() {
 
   const { isLoading, bootstrap } = useSelector((state) => state.config);
 
-  const fetchConfig = () => dispatch(acFetchInitialConfig());
+  const fetchAppConfig = () => dispatch(acFetchAppConfig());
 
   const fetchAllResources = () => dispatch(acFetchAllResources());
 
   const fetchAllMedia = () => dispatch(acFetchAllMedia());
 
   useEffect(() => {
-    fetchConfig();
+    fetchAppConfig();
     fetchAllResources();
     fetchAllMedia();
     // eslint-disable-next-line react-hooks/exhaustive-deps
