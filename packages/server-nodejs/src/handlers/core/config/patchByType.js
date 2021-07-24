@@ -1,6 +1,19 @@
 import { db } from 'utils/database/jsondb';
 import { response } from 'utils/http';
 
+const defaultConfigs = {
+  enableSignUp: true,
+  loginOptions: ['default'],
+  smtp: {
+    host: 'smtp.example.com',
+    port: 2525,
+    auth: {
+      user: '$user',
+      pass: '$pass',
+    },
+  },
+};
+
 export default function getByType(req, res) {
   try {
     const { type } = req.params;
@@ -14,6 +27,7 @@ export default function getByType(req, res) {
     }
 
     const configToSave = {
+      ...defaultConfigs,
       ..._config,
       ...config,
       admin: _admin,

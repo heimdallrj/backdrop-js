@@ -10,5 +10,15 @@
     "screenName": "John",
     "userName": "admin",
     "email": "john@example.com"
+  },
+  "enableSignUp": true,
+  "loginOptions": ["default"],
+  "smtp": {
+    "host": "smtp.example.com",
+    "port": 2525,
+    "auth": {
+      "user": "$user",
+      "pass": "$pass"
+    }
   }
 }

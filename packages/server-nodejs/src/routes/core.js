@@ -6,6 +6,7 @@ import * as resourceHandler from 'handlers/core/resource';
 import * as usersHandler from 'handlers/core/users';
 import * as configHandler from 'handlers/core/config';
 import * as mediaHandler from 'handlers/core/media';
+import * as emailHandler from 'handlers/core/email';
 
 const router = express.Router();
 
@@ -44,5 +45,8 @@ router.get('/users/:id', usersHandler.getSingle);
 router.post('/users', usersHandler.post);
 router.patch('/users/:id', usersHandler.patch);
 router.delete('/users/:id', usersHandler.delete);
+
+// email
+router.post('/email', emailHandler.post);
 
 export default router;

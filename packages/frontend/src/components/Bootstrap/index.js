@@ -34,7 +34,15 @@ const initialValues = {
 };
 
 const getInitialConfig = (values) => {
-  const { userName, screenName, password, email, appName, dbDriver } = values;
+  const {
+    userName,
+    screenName,
+    password,
+    email,
+    appName,
+    dbDriver,
+    enableSignUp,
+  } = values;
   return {
     admin: { userName, screenName, password, email },
     config: {
@@ -44,6 +52,7 @@ const getInitialConfig = (values) => {
       database: {
         driver: dbDriver,
       },
+      enableSignUp,
     },
   };
 };
