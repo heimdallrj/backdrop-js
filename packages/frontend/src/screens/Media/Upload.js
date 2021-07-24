@@ -5,8 +5,9 @@ import { useHistory } from 'react-router-dom';
 import { create as apiCreateMedia } from 'api/media';
 
 import Layout from 'components/Layout';
+import Button from 'components/Button';
 
-import { Wrapper, Library, DropZone, FileList, UploadButton } from './styled';
+import { Wrapper, Library, DropZone, FileList, FormFooter } from './styled';
 
 export default function Media() {
   const history = useHistory();
@@ -51,13 +52,11 @@ export default function Media() {
           )}
 
           {files && files.length > 0 && (
-            <UploadButton
-              onClick={handleUpload}
-              type="button"
-              className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-            >
-              {uploding ? <span>Uploading..</span> : <span>Upload</span>}
-            </UploadButton>
+            <FormFooter>
+              <Button type="button" onClick={handleUpload}>
+                {uploding ? <span>Uploading..</span> : <span>Upload</span>}
+              </Button>
+            </FormFooter>
           )}
         </Library>
       </Wrapper>
