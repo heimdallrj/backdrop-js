@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchAll as apiFetchAllUsers,
   create as apiCreateUser,
+  remove as apiDeleteUser,
 } from 'api/users';
 
 const userSlice = createSlice({
@@ -26,6 +27,12 @@ const userSlice = createSlice({
       state.errors = null;
       state.isLoading = false;
     },
+    userDeleted(state, { payload }) {
+      const _users = state.users.filter((user) => user._id !== payload);
+      state.users = _users;
+      state.errors = null;
+      state.isLoading = false;
+    },
     setError(state, { payload }) {
       state.errors = payload;
       state.isLoading = false;
@@ -33,8 +40,13 @@ const userSlice = createSlice({
   },
 });
 
-export const { setIsLoading, usersFetched, userCreated, setError } =
-  userSlice.actions;
+export const {
+  setIsLoading,
+  usersFetched,
+  userCreated,
+  userDeleted,
+  setError,
+} = userSlice.actions;
 
 export const fetchAll =
   (user, cb = () => {}) =>
@@ -56,7 +68,21 @@ export const register =
     dispatch(setIsLoading(true));
     try {
       const _user = await apiCreateUser(user);
-      dispatch(userCreated());
+      dispatch(userCreated(_user));
+      cb(null, _user);
+    } catch (err) {
+      dispatch(setError(err));
+      cb(err, null);
+    }
+  };
+
+export const deleteUser =
+  (userId, cb = () => {}) =>
+  async (dispatch) => {
+    dispatch(setIsLoading(true));
+    try {
+      const _user = await apiDeleteUser(userId);
+      dispatch(userDeleted(userId));
       cb(null, _user);
     } catch (err) {
       dispatch(setError(err));

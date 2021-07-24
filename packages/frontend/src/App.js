@@ -25,6 +25,7 @@ import MediaUpload from 'screens/Media/Upload';
 import Settings from 'screens/Settings';
 import Users from 'screens/Users';
 import CreateUser from 'screens/Users/Create';
+import UpdateUser from 'screens/Users/Update';
 import Logout from 'screens/Logout';
 
 const Wrapper = styled.div`
@@ -92,6 +93,7 @@ function App() {
 
         <ProtectedRoute exact path="/users" component={Users} />
         <ProtectedRoute exact path="/users/create" component={CreateUser} />
+        <ProtectedRoute exact path="/users/update/:id" component={UpdateUser} />
       </Router>
     </Wrapper>
   );

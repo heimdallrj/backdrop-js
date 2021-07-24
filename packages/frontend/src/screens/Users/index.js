@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
-import { fetchAll as acFetchAllUsers } from 'store/reducers/userSlice';
+import {
+  fetchAll as acFetchAllUsers,
+  deleteUser as acDeleteUser,
+} from 'store/reducers/userSlice';
 
 import Table from 'components/Table';
 
@@ -51,6 +54,17 @@ export default function Users() {
 
   const fetchAllUsers = () => dispatch(acFetchAllUsers());
 
+  const onClickEditHandler = (id) => {
+    history.push(`/users/update/${id}`);
+  };
+
+  const onDeleteHandler = (id) => {
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm('Do you want to delete this resource?')) {
+      dispatch(acDeleteUser(id));
+    }
+  };
+
   useEffect(() => {
     fetchAllUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -75,8 +89,8 @@ export default function Users() {
             {
               value: (
                 <FlexIcons>
-                  <DocIcon onClick={onClickUserHandler.bind(null, _id)} />
-                  <DeleteIcon onClick={() => {}} />
+                  <DocIcon onClick={onClickEditHandler.bind(null, _id)} />
+                  <DeleteIcon onClick={() => onDeleteHandler(_id)} />
                 </FlexIcons>
               ),
             },
@@ -87,10 +101,6 @@ export default function Users() {
     setRows(rowsFiltered);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
-
-  const onClickUserHandler = (id) => {
-    history.push(`/users/${id}`);
-  };
 
   return (
     <Layout title="Users">
