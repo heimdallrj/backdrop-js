@@ -5,8 +5,6 @@ require('dotenv').config();
 
 export const baseUrl = process.env.BASE_URL;
 export const port = process.env.PORT || 5000;
-export const appName = process.env.APP_NAME;
-export const appDesc = process.env.APP_DESC;
 export const mediaDir = process.env.MEDIA_DIR;
 export const mediaPath = path.join(__dirname, '..', mediaDir);
 

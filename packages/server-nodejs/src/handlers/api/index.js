@@ -1,6 +1,6 @@
 import { db } from 'utils/database/jsondb';
 
-import { baseUrl, appName, appDesc } from 'config';
+import { baseUrl } from 'config';
 
 const namespace = 'api';
 
@@ -37,6 +37,10 @@ export function api(req, res) {
       };
     }
   });
+
+  const appConfig = db.config.findOne({ type: 'app' });
+  const { appName, appDesc } = appConfig;
+
   return res.json({
     name: appName,
     description: appDesc,
