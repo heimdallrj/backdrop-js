@@ -13,14 +13,27 @@ import {
   ResourceItem,
   CrudWrapper,
   ResourceTitle,
+  DraftIcon,
+  FlexIcons,
+  EditIcon,
+  DeleteIcon,
+  Status,
 } from './styled';
+
+const columns = [
+  { label: 'falgs', size: 5, visible: false },
+  { label: 'ID', size: 3, align: 'center' },
+  { label: 'Author', size: 10 },
+  { label: 'Last Updated', size: 20 },
+  { label: 'Status', size: 10, align: 'center' },
+  { label: 'actions', size: 5, visible: false },
+];
 
 export default function Crud() {
   const { resources } = useSelector((state) => state.resources);
 
   const [resource, setResource] = useState(null);
-  const [columns] = useState([]);
-  const [rows] = useState([]);
+  const [rows, setRows] = useState([]);
 
   const onSelectResource = (name) => {
     const selected = resources.find((r) => r.name === name);
@@ -28,14 +41,66 @@ export default function Crud() {
   };
 
   const fetchAll = async ({ name }) => {
-    const resp = await apiFetchAllResourceData(name);
-    console.log('++', resp);
+    const data = await apiFetchAllResourceData(name);
+
+    if (data && data.length > 0) {
+      const _rows = data.map(({ _id, lastUpdatedAt }, index) => {
+        return {
+          id: _id,
+          data: [
+            {
+              value: (
+                <FlexIcons>
+                  <DraftIcon />
+                </FlexIcons>
+              ),
+            },
+            {
+              value: index + 1,
+              align: 'center',
+            },
+            {
+              value: '$author',
+            },
+            {
+              value: lastUpdatedAt,
+            },
+            {
+              value: <Status>active</Status>,
+              align: 'center',
+            },
+            {
+              value: (
+                <FlexIcons>
+                  <EditIcon onClick={() => {}} />
+                  <DeleteIcon onClick={() => {}} />
+                </FlexIcons>
+              ),
+            },
+          ],
+        };
+      });
+
+      setRows(_rows);
+    }
   };
+
+  useEffect(() => {
+    // TODO Fetch all the resources (no need now since we fetch already)
+  }, []);
+
+  useEffect(() => {
+    if (resources && resources.length > 0 && !resource) {
+      setResource(resources[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resources]);
 
   useEffect(() => {
     if (resource) {
       fetchAll(resource);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resource]);
 
   return (
@@ -54,10 +119,7 @@ export default function Crud() {
           {resource && (
             <>
               <ResourceTitle>{resource.name}</ResourceTitle>
-
               <Table columns={columns} rows={rows} />
-
-              <pre>{JSON.stringify(resource, null, 2)}</pre>
             </>
           )}
         </CrudWrapper>
