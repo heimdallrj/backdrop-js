@@ -1,13 +1,17 @@
 import styled from 'styled-components';
 
 import DraftIconSource from 'assets/icons/DraftIcon/Solid';
-import EditIconSource from 'assets/icons/Document/Outline';
+import EditIconSource from 'assets/icons/Documents/Outline';
 import DeleteIconSource from 'assets/icons/Delete/Outline';
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   padding: 5px;
+`;
+
+export const Button = styled.button`
+  font-size: 0.8rem;
 `;
 
 export const Selector = styled.div`

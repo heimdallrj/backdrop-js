@@ -1,0 +1,50 @@
+import { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import { create as apiCreate } from 'api';
+
+import Layout from 'components/Layout';
+import FormBuilder from 'components/FormBuilder';
+
+export default function CrudCreate() {
+  const history = useHistory();
+
+  const { resource: name, id } = useParams();
+  const { resources } = useSelector((state) => state.resources);
+
+  const [resource, setResource] = useState(null);
+  const [schema, setSchema] = useState([]);
+
+  useEffect(() => {
+    if (resources && resources.length > 0 && !resource) {
+      setResource(resources[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resources]);
+
+  useEffect(() => {
+    if (resource) {
+      setSchema(resource.schema);
+      // fetchAll(resource);
+      if (id) fetch(id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resource]);
+
+  const onSubmitHandler = async (formData, cb = () => {}) => {
+    await apiCreate(name, formData);
+    cb();
+    history.push('/crud');
+  };
+
+  return (
+    <Layout title={`CRUD > ${name} > CREATE`}>
+      <FormBuilder
+        schema={schema}
+        submitBtnText="Create"
+        onSubmit={onSubmitHandler}
+      />
+    </Layout>
+  );
+}

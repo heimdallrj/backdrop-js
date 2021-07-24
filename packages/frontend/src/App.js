@@ -18,6 +18,8 @@ import Resources from 'screens/Resources';
 import ResourceSingle from 'screens/Resources/Single';
 import CreateResource from 'screens/Resources/Create';
 import Crud from 'screens/Crud';
+import CrudCreate from 'screens/Crud/Create';
+import CrudUpdate from 'screens/Crud/Update';
 import Media from 'screens/Media';
 import MediaUpload from 'screens/Media/Upload';
 import Settings from 'screens/Settings';
@@ -76,6 +78,12 @@ function App() {
         />
 
         <ProtectedRoute exact path="/crud" component={Crud} />
+        <ProtectedRoute exact path="/crud/:resource" component={CrudCreate} />
+        <ProtectedRoute
+          exact
+          path="/crud/:resource/:id"
+          component={CrudUpdate}
+        />
 
         <ProtectedRoute exact path="/media" component={Media} />
         <ProtectedRoute exact path="/media/upload" component={MediaUpload} />
