@@ -1,0 +1,8 @@
+{
+  "screenName": "John Doe",
+  "userName": "admin",
+  "email": "john@example.com",
+  "password": "pa$$word",
+  "role": 0,
+  "status": 1
+}

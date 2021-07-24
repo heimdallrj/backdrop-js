@@ -1,0 +1,14 @@
+{
+  "type": "app",
+  "appName": "Backdrop.js",
+  "appDesc": "Minimalistic API Artisan",
+  "baseUrl": "http://localhost:5000",
+  "database": {
+    "driver": "JsonDB"
+  },
+  "admin": {
+    "screenName": "John",
+    "userName": "admin",
+    "email": "john@example.com"
+  }
+}
