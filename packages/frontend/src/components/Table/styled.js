@@ -89,3 +89,9 @@ export const Status = styled.span`
   border-radius: 20px;
   letter-spacing: 1px;
 `;
+
+export const NoData = styled.div`
+  text-align: center;
+  padding: 20px 0;
+  font-size: 13px;
+`;

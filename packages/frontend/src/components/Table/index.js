@@ -6,12 +6,13 @@ import {
   ColHead,
   TableBody,
   Col,
+  NoData,
 } from './styled';
 
 export default function TableComponent({
   columns = [],
   rows = [],
-  onClickRow = () => {},
+  onClickRow = () => { },
 }) {
   return (
     <TableWrap>
@@ -39,6 +40,8 @@ export default function TableComponent({
           ))}
         </TableBody>
       </Table>
+
+      {rows.length === 0 && (<NoData>No data found.</NoData>)}
     </TableWrap>
   );
 }
