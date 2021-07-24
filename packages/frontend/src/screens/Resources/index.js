@@ -7,7 +7,6 @@ import {
   deleteResource as acDeleteResource,
 } from 'store/reducers/resourceSlice';
 
-import SidePane from 'components/SidePane';
 import Table from 'components/Table';
 
 import Layout from 'components/Layout';
@@ -15,7 +14,7 @@ import Layout from 'components/Layout';
 import {
   Wrapper,
   Button,
-  AddDocumentIcon,
+  EditIcon,
   DeleteIcon,
   LockClosedIcon,
   KeyIcon,
@@ -42,16 +41,11 @@ export default function Resources() {
   const { resources } = useSelector((state) => state.resources);
 
   const [rows, setRows] = useState([]);
-  const [selectedResource, setSelectedResource] = useState(null);
 
   const fetchAllResources = () => dispatch(acFetchAllResources());
 
   const onClickResourceHandler = (id) => {
-    history.push(`/resources/ext/${id}`);
-  };
-
-  const onCloseSidePaneHandler = () => {
-    setSelectedResource(null);
+    history.push(`/resources/update/${id}`);
   };
 
   const onDeleteclick = (id) => {
@@ -59,11 +53,6 @@ export default function Resources() {
     if (confirm('Do you want to delete this resource?')) {
       dispatch(acDeleteResource(id));
     }
-  };
-
-  const onClickRowHandler = ({ id }) => {
-    const resource = resources.find(({ _id }) => _id === id);
-    setSelectedResource(resource);
   };
 
   const Name = ({ name, methods }) => (
@@ -116,9 +105,7 @@ export default function Resources() {
             {
               value: (
                 <FlexIcons>
-                  <AddDocumentIcon
-                    onClick={onClickResourceHandler.bind(null, _id)}
-                  />
+                  <EditIcon onClick={onClickResourceHandler.bind(null, _id)} />
                   <DeleteIcon onClick={() => onDeleteclick(_id)} />
                 </FlexIcons>
               ),
@@ -138,16 +125,8 @@ export default function Resources() {
           <Button>Create a new resource</Button>
         </Link>
 
-        <Table columns={columns} rows={rows} onClickRow={onClickRowHandler} />
+        <Table columns={columns} rows={rows} />
       </Wrapper>
-
-      <SidePane
-        isOpen={!!selectedResource}
-        backdropClicked={onCloseSidePaneHandler}
-      >
-        <pre>{JSON.stringify(selectedResource, null, 2)}</pre>
-        <p>TODO Edit resource form goes here.</p>
-      </SidePane>
     </Layout>
   );
 }

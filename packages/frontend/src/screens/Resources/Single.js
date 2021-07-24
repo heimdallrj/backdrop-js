@@ -28,7 +28,7 @@ export default function ResourceSingle() {
   }
 
   return (
-    <Layout>
+    <Layout title="Resources > Update">
       <pre>{JSON.stringify(resource, null, 2)}</pre>
       <p>TODO Add data to this resource form goes here.</p>
     </Layout>

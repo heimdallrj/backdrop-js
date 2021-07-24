@@ -71,7 +71,7 @@ function App() {
         />
         <ProtectedRoute
           exact
-          path="/resources/ext/:id"
+          path="/resources/update/:id"
           component={ResourceSingle}
         />
 
