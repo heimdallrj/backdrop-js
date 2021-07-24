@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
-import { fetchAll as acFetchAllResources,
-  deleteResource as acDeleteResource
+import {
+  fetchAll as acFetchAllResources,
+  deleteResource as acDeleteResource,
 } from 'store/reducers/resourceSlice';
 
 import SidePane from 'components/SidePane';
@@ -53,12 +54,11 @@ export default function Resources() {
     setSelectedResource(null);
   };
 
-  const onDeleteclick=(id) =>{
+  const onDeleteclick = (id) => {
     // eslint-disable-next-line no-restricted-globals
-    if(confirm('Do you want to delete this resource?'))
-    {
+    if (confirm('Do you want to delete this resource?')) {
       dispatch(acDeleteResource(id));
-    }    
+    }
   };
 
   const onClickRowHandler = ({ id }) => {

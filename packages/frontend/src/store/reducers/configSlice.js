@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import {
-  fetchInitialConfig as apiFetchInitialConfig,
-  createInitialConfig as apiCreateInitialConfig,
+  fetchAppConfig as apiFetchAppConfig,
+  createAppConfig as apiCreateAppConfig,
+  updateConfig as apiUpdateConfig,
 } from 'api/config';
 
 const configSlice = createSlice({
@@ -18,7 +19,7 @@ const configSlice = createSlice({
       state.errors = null;
       state.isLoading = payload;
     },
-    initialConfigFetched(state, { payload }) {
+    configFetched(state, { payload }) {
       /**
        * if config === null | undefined; nothing happens, yet. (bootstrap = null)
        * if config === {}; it means that the app is being loaded for the first time (bootstrap = true)
@@ -36,28 +37,34 @@ const configSlice = createSlice({
       state.errors = null;
       state.config = payload;
       state.bootstrap = bootstrap;
+      state.isLoading = false;
+    },
+    configUpdated(state, { payload }) {
+      state.errors = null;
+      state.config = payload;
+      state.isLoading = false;
     },
     setError(state, { payload }) {
       state.errors = payload;
+      state.isLoading = false;
     },
   },
 });
 
-export const { setIsLoading, initialConfigFetched, setError } =
+export const { setIsLoading, configFetched, configUpdated, setError } =
   configSlice.actions;
 
-export const fetchInitialConfig =
+export const fetchAppConfig =
   (cb = () => {}) =>
   async (dispatch) => {
     dispatch(setIsLoading(true));
 
     try {
-      const config = await apiFetchInitialConfig();
-      dispatch(initialConfigFetched(config));
+      const config = await apiFetchAppConfig();
+      dispatch(configFetched(config));
     } catch (err) {
       dispatch(setError(err));
     }
-    dispatch(setIsLoading(false));
   };
 
 export const updateInitialConfig =
@@ -66,13 +73,26 @@ export const updateInitialConfig =
     dispatch(setIsLoading(true));
 
     try {
-      const configCreated = await apiCreateInitialConfig(config);
-      dispatch(initialConfigFetched(configCreated));
-      dispatch(setIsLoading(false));
+      const configCreated = await apiCreateAppConfig(config);
+      dispatch(configFetched(configCreated));
       cb(null, configCreated);
     } catch (err) {
       dispatch(setError(err));
-      dispatch(setIsLoading(false));
+      cb(err, null);
+    }
+  };
+
+export const updateAppConfig =
+  (config, cb = () => {}) =>
+  async (dispatch) => {
+    dispatch(setIsLoading(true));
+
+    try {
+      const _config = await apiUpdateConfig('app', config);
+      dispatch(configFetched(_config));
+      cb(null, _config);
+    } catch (err) {
+      dispatch(setError(err));
       cb(err, null);
     }
   };

@@ -1,3 +1,4 @@
 export { default as get } from './get';
-export { default as getInit } from './getInit';
-export { default as postInit } from './postInit';
+export { default as getByType } from './getByType';
+export { default as postByType } from './postByType';
+export { default as patchByType } from './patchByType';

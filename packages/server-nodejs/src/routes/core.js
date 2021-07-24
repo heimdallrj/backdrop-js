@@ -34,8 +34,9 @@ router.post(
 
 // config
 router.get('/config', configHandler.get);
-router.get('/config/init', configHandler.getInit);
-router.post('/config/init', configHandler.postInit);
+router.get('/config/:type', configHandler.getByType);
+router.post('/config/:type', configHandler.postByType);
+router.patch('/config/:type', configHandler.patchByType);
 
 // users
 router.get('/users', usersHandler.get);
