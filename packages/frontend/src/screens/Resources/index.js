@@ -16,6 +16,7 @@ import {
   Button,
   EditIcon,
   DeleteIcon,
+  AddDocumentIcon,
   LockClosedIcon,
   KeyIcon,
   Status,
@@ -53,6 +54,10 @@ export default function Resources() {
     if (confirm('Do you want to delete this resource?')) {
       dispatch(acDeleteResource(id));
     }
+  };
+
+  const onAddNewHandler = (name) => {
+    history.push(`/crud/${name}`);
   };
 
   const Name = ({ name, methods }) => (
@@ -105,6 +110,7 @@ export default function Resources() {
             {
               value: (
                 <FlexIcons>
+                  <AddDocumentIcon onClick={() => onAddNewHandler(name)} />
                   <EditIcon onClick={onClickResourceHandler.bind(null, _id)} />
                   <DeleteIcon onClick={() => onDeleteclick(_id)} />
                 </FlexIcons>

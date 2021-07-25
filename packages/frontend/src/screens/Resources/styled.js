@@ -5,6 +5,7 @@ import DeleteIconSource from 'assets/icons/Delete/Outline';
 import KeyIconSource from 'assets/icons/Key/Solid';
 import LockClosedIconSource from 'assets/icons/Lock/Closed/Solid';
 import EditIconSource from 'assets/icons/Document/Outline';
+import AddDocumentIconSource from 'assets/icons/AddDocument/Outline';
 
 export const Wrapper = styled.section``;
 
@@ -66,6 +67,13 @@ export const DocIcon = styled(DocumentIconSource)`
 `;
 
 export const EditIcon = styled(EditIconSource)`
+  color: gray;
+  width: 16px;
+  align-self: center;
+  cursor: pointer;
+`;
+
+export const AddDocumentIcon = styled(AddDocumentIconSource)`
   color: gray;
   width: 16px;
   align-self: center;
