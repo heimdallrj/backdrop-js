@@ -11,9 +11,9 @@ import hpp from 'hpp';
 import * as pingHandler from 'handlers/ping';
 import * as bootstrapHandler from 'handlers/bootstrap';
 
-import apiRoutes from 'routes/api';
-import coreRoutes from 'routes/core';
 import authRoutes from 'routes/auth';
+import coreRoutes from 'routes/core';
+import apiRoutes from 'routes/api';
 import oauthRoutes from 'routes/oauth';
 
 import logger from 'utils/logger';
@@ -45,9 +45,9 @@ const serve = async () => {
   app.get('/ping', pingHandler.get);
   app.post('/bootstrap', bootstrapHandler.post);
 
-  app.use('/api', apiRoutes);
-  app.use('/core', coreRoutes);
   app.use('/auth', authRoutes);
+  app.use('/core', coreRoutes);
+  app.use('/api', apiRoutes);
   app.use('/oauth', oauthRoutes);
 
   app.use(express.static(path.join(path.join(__dirname, 'public'))));

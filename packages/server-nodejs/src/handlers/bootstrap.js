@@ -1,12 +1,19 @@
 import bcrypt from 'bcrypt';
 import { db } from 'utils/database/jsondb';
 import { response } from 'utils/http';
+import uniqid from 'uniqid';
 
 import { salt } from 'config';
 
 const defaultConfig = {
   enableSignUp: true,
   auth: ['default'],
+};
+
+const defaultUserConfig = {
+  role: 0,
+  status: 1,
+  token: uniqid(),
 };
 
 export function post(req, res) {
@@ -37,8 +44,7 @@ export function post(req, res) {
       userName,
       email,
       password: bcrypt.hashSync(password, salt),
-      role: 0,
-      status: 1,
+      ...defaultUserConfig,
     };
     db.users.insert(user);
 

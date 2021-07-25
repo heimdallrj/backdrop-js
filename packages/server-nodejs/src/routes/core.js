@@ -12,6 +12,13 @@ const router = express.Router();
 
 router.get('/', handlers.core);
 
+// users
+router.get('/users', usersHandler.get);
+router.get('/users/:id', usersHandler.getSingle);
+router.post('/users', usersHandler.post);
+router.patch('/users/:id', usersHandler.patch);
+router.delete('/users/:id', usersHandler.delete);
+
 // resource
 router.get('/resource', resourceHandler.get);
 router.get('/resource/:id', resourceHandler.getSingle);
@@ -38,13 +45,6 @@ router.get('/config', configHandler.get);
 router.get('/config/:type', configHandler.getByType);
 router.post('/config/:type', configHandler.postByType);
 router.patch('/config/:type', configHandler.patchByType);
-
-// users
-router.get('/users', usersHandler.get);
-router.get('/users/:id', usersHandler.getSingle);
-router.post('/users', usersHandler.post);
-router.patch('/users/:id', usersHandler.patch);
-router.delete('/users/:id', usersHandler.delete);
 
 // email
 router.post('/email', emailHandler.post);
