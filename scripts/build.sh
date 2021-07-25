@@ -1,7 +1,7 @@
 #!/bin/bash
 
 appName=backdrop
-version=v1.0.0-alpha.0
+version=v1.0.0-alpha.1
 buildDir="$appName"-"$version"
 
 rm -rf "$buildDir"
