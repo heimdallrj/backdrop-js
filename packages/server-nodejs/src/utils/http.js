@@ -72,4 +72,7 @@ response.bad = (res, message = httpStatus[http.BAD_REQUEST]) =>
 response.unauthorized = (res, message = httpStatus[http.UNAUTHORIZED]) =>
   res.status(http.UNAUTHORIZED).json({ code: http.UNAUTHORIZED, message });
 
+response.forbidden = (res, message = httpStatus[http.FORBIDDEN]) =>
+  res.status(http.FORBIDDEN).json({ code: http.FORBIDDEN, message });
+
 export default http;
