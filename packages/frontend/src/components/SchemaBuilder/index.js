@@ -3,11 +3,31 @@ import styled from 'styled-components';
 
 import TextInput from 'components/TextInput';
 import Select from 'components/Select';
-import Button from 'components/Button';
+import ButtonSource from 'components/Button';
 
 export const Wrapper = styled.div`
+  padding: 5px 10px 15px;
+  background: #ece7e7;
+  margin: 20px 0;
+`;
+
+export const Row = styled.div`
   border: 1px solid rgba(229, 231, 235, 1);
+  background: #fff;
   padding: 10px;
+  margin: 6px 0;
+`;
+
+export const AddNewButton = styled.p`
+  font-size: 0.8em;
+  color: blue;
+  cursor: pointer;
+  padding: 5px 0 15px;
+`;
+
+export const Button = styled(ButtonSource)`
+  background: #2c3039;
+  font-size: 0.6em;
 `;
 
 const typeOptions = [
@@ -38,7 +58,7 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
     <Wrapper>
       {schema.map(({ name, type }, index) => {
         return (
-          <div key={String(index)}>
+          <Row key={String(index)}>
             <TextInput
               name="name[]"
               label="name"
@@ -63,11 +83,11 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
               onChange={(option) => handleOnChange(index, 'type', option.value)}
               onBlur={() => {}}
             />
-          </div>
+          </Row>
         );
       })}
 
-      <p onClick={handleAddNew}>+ Add new</p>
+      <AddNewButton onClick={handleAddNew}>+ Add new</AddNewButton>
 
       <Button type="button" onClick={() => onUpdateSchema(schema)}>
         Save

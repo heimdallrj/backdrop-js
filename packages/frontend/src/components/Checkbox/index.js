@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 import { Checkbox as CheckboxSource } from '@jetpack/Checkbox';
 
-import { FormField } from 'providers/ThemeProvider/styled';
+import { FormField as FormFieldSource } from 'providers/ThemeProvider/styled';
+
+export const FormField = styled(FormFieldSource)`
+  display: flex;
+  align-items: center;
+`;
 
 export const LabelWrap = styled.div``;
 export const Label = styled.label`
@@ -11,6 +16,7 @@ export const Label = styled.label`
   font-weight: 700;
   font-size: 0.75rem;
   line-height: 1.8rem;
+  margin: auto 8px;
 `;
 
 export default function Checkbox({
@@ -22,8 +28,8 @@ export default function Checkbox({
 }) {
   return (
     <FormField>
-      <LabelWrap>{label && <Label htmlFor={name}>{label}</Label>}</LabelWrap>
       <CheckboxSource {...restProps} name={name} />
+      <LabelWrap>{label && <Label htmlFor={name}>{label}</Label>}</LabelWrap>
     </FormField>
   );
 }

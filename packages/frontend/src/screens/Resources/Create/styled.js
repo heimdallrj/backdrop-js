@@ -37,3 +37,7 @@ export const FormFooter = styled.div`
   text-align: left;
   margin: 20px 0;
 `;
+
+export const CheckboxWrapper = styled.div`
+  display: flex;
+`;

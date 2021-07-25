@@ -14,13 +14,19 @@ import CustomSelect from 'components/Select/CustomSelect';
 import SchemaBuilder from 'components/SchemaBuilder';
 
 import { Form, FormField } from 'providers/ThemeProvider/styled';
-import { Wrapper, FormWrap, Label, FormFooter } from './styled';
+import {
+  Wrapper,
+  FormWrap,
+  Label,
+  FormFooter,
+  CheckboxWrapper,
+} from './styled';
 
 const typeOptions = [
   { value: 'default', label: 'default' },
   { value: 'proxy', label: 'proxy' },
-  { value: 'static', label: 'static' },
-  { value: 'custom', label: 'custom' },
+  // { value: 'static', label: 'static' }, // TODO: Enable when ready
+  // { value: 'custom', label: 'custom' },
 ];
 
 const statusOptions = [
@@ -118,6 +124,26 @@ export default function CreateResource() {
                   readOnly
                 />
 
+                <CheckboxWrapper>
+                  <Checkbox
+                    label="Private"
+                    name="private"
+                    checked={values.private || false}
+                    errors={errors.private}
+                    touched={touched.private}
+                    onChange={handleChange}
+                  />
+
+                  <Checkbox
+                    label="Protected"
+                    name="protected"
+                    checked={values.protected || false}
+                    errors={errors.protected}
+                    touched={touched.protected}
+                    onChange={handleChange}
+                  />
+                </CheckboxWrapper>
+
                 <TextInput
                   name="name"
                   label="name"
@@ -147,7 +173,13 @@ export default function CreateResource() {
                   <Label htmlFor="methods">methods</Label>
                   <Field
                     name="methods"
-                    options={methodsOptions}
+                    options={methodsOptions.filter((opt) => {
+                      if (values.type === 'proxy') {
+                        return opt.value === 'get';
+                      } else {
+                        return true;
+                      }
+                    })}
                     component={CustomSelect}
                     isMulti={true}
                   />
@@ -164,24 +196,6 @@ export default function CreateResource() {
                     onBlur={handleBlur}
                   />
                 )}
-
-                <Checkbox
-                  label="Private"
-                  name="private"
-                  checked={values.private || false}
-                  errors={errors.private}
-                  touched={touched.private}
-                  onChange={handleChange}
-                />
-
-                <Checkbox
-                  label="Protected"
-                  name="protected"
-                  checked={values.protected || false}
-                  errors={errors.protected}
-                  touched={touched.protected}
-                  onChange={handleChange}
-                />
 
                 <Select
                   label="status"
