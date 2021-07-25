@@ -25,6 +25,7 @@ export function get(req, res) {
 
 export function post(req, res) {
   try {
+    // TODO: Should allow use email or username
     const { userName, password } = req.body;
 
     const user = db.users.findOne({ userName });

@@ -1,7 +1,7 @@
 import express from 'express';
 import fileUpload from 'express-fileupload';
 
-import tokenAuth from 'middlewares/tokenAuth';
+import * as coreMiddlewares from 'middlewares/core';
 
 import * as handlers from 'handlers';
 import * as resourceHandler from 'handlers/core/resource';
@@ -15,22 +15,22 @@ const router = express.Router();
 router.get('/', handlers.core);
 
 // users
-router.get('/users', tokenAuth, usersHandler.get);
-router.get('/users/:id', tokenAuth, usersHandler.getSingle);
-router.post('/users', tokenAuth, usersHandler.post);
-router.patch('/users/:id', tokenAuth, usersHandler.patch);
-router.delete('/users/:id', tokenAuth, usersHandler.delete);
+router.get('/users', coreMiddlewares.auth, usersHandler.get);
+router.get('/users/:id', coreMiddlewares.auth, usersHandler.getSingle);
+router.post('/users', coreMiddlewares.auth, usersHandler.post);
+router.patch('/users/:id', coreMiddlewares.auth, usersHandler.patch);
+router.delete('/users/:id', coreMiddlewares.auth, usersHandler.delete);
 
 // resource
-router.get('/resource', tokenAuth, resourceHandler.get);
-router.get('/resource/:id', tokenAuth, resourceHandler.getSingle);
-router.post('/resource', tokenAuth, resourceHandler.post);
-router.put('/resource/:id', tokenAuth, resourceHandler.put);
-router.patch('/resource/:id', tokenAuth, resourceHandler.patch);
-router.delete('/resource/:id', tokenAuth, resourceHandler.delete);
+router.get('/resource', coreMiddlewares.auth, resourceHandler.get);
+router.get('/resource/:id', coreMiddlewares.auth, resourceHandler.getSingle);
+router.post('/resource', coreMiddlewares.auth, resourceHandler.post);
+router.put('/resource/:id', coreMiddlewares.auth, resourceHandler.put);
+router.patch('/resource/:id', coreMiddlewares.auth, resourceHandler.patch);
+router.delete('/resource/:id', coreMiddlewares.auth, resourceHandler.delete);
 
 // media
-// TODO: Add tokenAuth middleware
+// TODO: Add coreMiddlewares.auth middleware
 router.get('/media', mediaHandler.get);
 router.post(
   '/media',
@@ -44,12 +44,12 @@ router.post(
 );
 
 // config
-router.get('/config', tokenAuth, configHandler.get);
-router.get('/config/:type', tokenAuth, configHandler.getByType);
-router.post('/config/:type', tokenAuth, configHandler.postByType);
-router.patch('/config/:type', tokenAuth, configHandler.patchByType);
+router.get('/config', coreMiddlewares.auth, configHandler.get);
+router.get('/config/:type', coreMiddlewares.auth, configHandler.getByType);
+router.post('/config/:type', coreMiddlewares.auth, configHandler.postByType);
+router.patch('/config/:type', coreMiddlewares.auth, configHandler.patchByType);
 
 // email
-router.post('/email', tokenAuth, emailHandler.post);
+router.post('/email', coreMiddlewares.auth, emailHandler.post);
 
 export default router;

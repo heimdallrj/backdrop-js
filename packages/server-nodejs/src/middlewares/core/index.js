@@ -7,7 +7,7 @@
 // import { jwtSecret } from 'config';
 
 // eslint-disable-next-line consistent-return
-export default function tokenAuthMiddleware(req, res, next) {
+export function auth(req, res, next) {
   // const { authorization } = req.headers;
 
   // if (authorization) {
