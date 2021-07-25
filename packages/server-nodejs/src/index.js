@@ -8,9 +8,12 @@ import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import hpp from 'hpp';
 
-import apiRoutes from 'routes/api';
-import coreRoutes from 'routes/core';
+import * as pingHandler from 'handlers/ping';
+import * as bootstrapHandler from 'handlers/bootstrap';
+
 import authRoutes from 'routes/auth';
+import coreRoutes from 'routes/core';
+import apiRoutes from 'routes/api';
 import oauthRoutes from 'routes/oauth';
 
 import logger from 'utils/logger';
@@ -37,10 +40,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('dev'));
 
+// TODO Start database connection first.
 const serve = async () => {
-  app.use('/api', apiRoutes);
-  app.use('/core', coreRoutes);
+  app.get('/ping', pingHandler.get);
+  app.post('/bootstrap', bootstrapHandler.post);
+
   app.use('/auth', authRoutes);
+  app.use('/core', coreRoutes);
+  app.use('/api', apiRoutes);
   app.use('/oauth', oauthRoutes);
 
   app.use(express.static(path.join(path.join(__dirname, 'public'))));

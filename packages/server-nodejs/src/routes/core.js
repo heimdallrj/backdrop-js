@@ -1,6 +1,8 @@
 import express from 'express';
 import fileUpload from 'express-fileupload';
 
+import * as coreMiddlewares from 'middlewares/core';
+
 import * as handlers from 'handlers';
 import * as resourceHandler from 'handlers/core/resource';
 import * as usersHandler from 'handlers/core/users';
@@ -12,15 +14,23 @@ const router = express.Router();
 
 router.get('/', handlers.core);
 
+// users
+router.get('/users', coreMiddlewares.auth, usersHandler.get);
+router.get('/users/:id', coreMiddlewares.auth, usersHandler.getSingle);
+router.post('/users', coreMiddlewares.auth, usersHandler.post);
+router.patch('/users/:id', coreMiddlewares.auth, usersHandler.patch);
+router.delete('/users/:id', coreMiddlewares.auth, usersHandler.delete);
+
 // resource
-router.get('/resource', resourceHandler.get);
-router.get('/resource/:id', resourceHandler.getSingle);
-router.post('/resource', resourceHandler.post);
-router.put('/resource/:id', resourceHandler.put);
-router.patch('/resource/:id', resourceHandler.patch);
-router.delete('/resource/:id', resourceHandler.delete);
+router.get('/resource', coreMiddlewares.auth, resourceHandler.get);
+router.get('/resource/:id', coreMiddlewares.auth, resourceHandler.getSingle);
+router.post('/resource', coreMiddlewares.auth, resourceHandler.post);
+router.put('/resource/:id', coreMiddlewares.auth, resourceHandler.put);
+router.patch('/resource/:id', coreMiddlewares.auth, resourceHandler.patch);
+router.delete('/resource/:id', coreMiddlewares.auth, resourceHandler.delete);
 
 // media
+// TODO: Add coreMiddlewares.auth middleware
 router.get('/media', mediaHandler.get);
 router.post(
   '/media',
@@ -34,19 +44,12 @@ router.post(
 );
 
 // config
-router.get('/config', configHandler.get);
-router.get('/config/:type', configHandler.getByType);
-router.post('/config/:type', configHandler.postByType);
-router.patch('/config/:type', configHandler.patchByType);
-
-// users
-router.get('/users', usersHandler.get);
-router.get('/users/:id', usersHandler.getSingle);
-router.post('/users', usersHandler.post);
-router.patch('/users/:id', usersHandler.patch);
-router.delete('/users/:id', usersHandler.delete);
+router.get('/config', coreMiddlewares.auth, configHandler.get);
+router.get('/config/:type', coreMiddlewares.auth, configHandler.getByType);
+router.post('/config/:type', coreMiddlewares.auth, configHandler.postByType);
+router.patch('/config/:type', coreMiddlewares.auth, configHandler.patchByType);
 
 // email
-router.post('/email', emailHandler.post);
+router.post('/email', coreMiddlewares.auth, emailHandler.post);
 
 export default router;
