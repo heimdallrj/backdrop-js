@@ -40,6 +40,6 @@ export default function postByType(req, res) {
 
     return response.notFound(res);
   } catch (err) {
-    response.internalError(res);
+    return response.internalError(res);
   }
 }

@@ -12,7 +12,7 @@
     "email": "john@example.com"
   },
   "enableSignUp": true,
-  "loginOptions": ["default"],
+  "auth": ["default"],
   "smtp": {
     "host": "smtp.example.com",
     "port": 2525,

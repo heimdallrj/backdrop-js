@@ -52,21 +52,24 @@ http.messages = httpStatus;
 // response
 export const response = {};
 
-response.ok = (res, message = {}) =>
+response.ok = (res, message = httpStatus[http.OK]) =>
   res.status(http.OK).json({ code: http.OK, message });
 
-response.notFound = (res, message = {}) =>
+response.notFound = (res, message = httpStatus[http.NOT_FOUND]) =>
   res.status(http.NOT_FOUND).json({ code: http.NOT_FOUND, message });
 
-response.internalError = (res, message = {}) =>
+response.internalError = (
+  res,
+  message = httpStatus[http.INTERNAL_SERVER_ERROR]
+) =>
   res
     .status(http.INTERNAL_SERVER_ERROR)
     .json({ code: http.INTERNAL_SERVER_ERROR, message });
 
-response.bad = (res, message = {}) =>
+response.bad = (res, message = httpStatus[http.BAD_REQUEST]) =>
   res.status(http.BAD_REQUEST).json({ code: http.BAD_REQUEST, message });
 
-response.unauthorized = (res, message = {}) =>
+response.unauthorized = (res, message = httpStatus[http.UNAUTHORIZED]) =>
   res.status(http.UNAUTHORIZED).json({ code: http.UNAUTHORIZED, message });
 
 export default http;
