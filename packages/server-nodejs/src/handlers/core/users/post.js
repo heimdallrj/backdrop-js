@@ -18,9 +18,10 @@ export default function post(req, res) {
   try {
     // TODO Validate user
     const reqBody = req.body;
-    const { screenName, email, password } = reqBody;
+    const { screenName, userName, email, password } = reqBody;
     const user = {
       screenName,
+      userName,
       email,
       password: bcrypt.hashSync(password, salt),
       ...defaultUserConfig,

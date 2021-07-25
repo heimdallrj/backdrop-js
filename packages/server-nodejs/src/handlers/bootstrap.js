@@ -31,6 +31,7 @@ export function post(req, res) {
     // @config
     let configCreated = null;
     const _config = {
+      type: 'app',
       appName,
       appDesc,
       ...defaultConfig,
