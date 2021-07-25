@@ -17,8 +17,6 @@ const initialValues = {
   email: 'jane@example.com',
   userName: 'jane',
   password: 'pa$$word',
-  role: 2,
-  status: 0,
 };
 
 export default function CreateUser() {

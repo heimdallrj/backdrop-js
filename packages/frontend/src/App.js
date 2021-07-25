@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { ping as apiPing } from 'api';
 
 import { fetchAppConfig as acFetchAppConfig } from 'store/reducers/configSlice';
 import { fetchAll as acFetchAllResources } from 'store/reducers/resourceSlice';
@@ -38,7 +40,15 @@ const Wrapper = styled.div`
 function App() {
   const dispatch = useDispatch();
 
-  const { isLoading, bootstrap } = useSelector((state) => state.config);
+  const [bootstrap, setBootstrap] = useState(null);
+  const { isLoading } = useSelector((state) => state.config);
+
+  const ping = async () => {
+    const heartbeat = await apiPing();
+    if (heartbeat === null) {
+      setBootstrap(!!!heartbeat);
+    }
+  };
 
   const fetchAppConfig = () => dispatch(acFetchAppConfig());
 
@@ -47,6 +57,7 @@ function App() {
   const fetchAllMedia = () => dispatch(acFetchAllMedia());
 
   useEffect(() => {
+    ping();
     fetchAppConfig();
     fetchAllResources();
     fetchAllMedia();

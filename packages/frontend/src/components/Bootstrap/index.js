@@ -1,14 +1,10 @@
-import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 
-import { updateInitialConfig as acUpdateInitialConfig } from 'store/reducers/configSlice';
+import { bootstrap as apiBootstrap } from 'api';
 
 import Button from 'components/Button';
 import TextInput from 'components/TextInput';
-import Select from 'components/Select';
 import Preloader from 'components/Preloader';
-
-import { apiBaseUrl } from 'config';
 
 import { Form } from 'providers/ThemeProvider/styled';
 import {
@@ -21,8 +17,6 @@ import {
   FormFooter,
 } from './styled';
 
-const dbOptions = [{ value: 'JsonDB', label: 'JsonDB' }];
-
 const initialValues = {
   appName: 'Backdrop-js',
   screenName: 'John Doe',
@@ -30,38 +24,23 @@ const initialValues = {
   userName: 'admin',
   password: 'pa$$word',
   password_re: 'pa$$word',
-  dbDriver: 'JsonDB',
 };
 
 const getInitialConfig = (values) => {
-  const {
-    userName,
-    screenName,
-    password,
-    email,
-    appName,
-    dbDriver,
-    enableSignUp,
-  } = values;
+  const { userName, screenName, password, email, appName } = values;
   return {
-    admin: { userName, screenName, password, email },
-    config: {
-      appName,
-      appDesc: 'Minimalistic API Artisan',
-      baseUrl: apiBaseUrl,
-      database: {
-        driver: dbDriver,
-      },
-      enableSignUp,
-    },
+    appName,
+    appDesc: 'Minimalistic API Artisan',
+    adminUser: { userName, screenName, password, email },
   };
 };
 
 export default function Bootstrap() {
-  const dispatch = useDispatch();
-
-  const updateInitialConfig = (config, cb) =>
-    dispatch(acUpdateInitialConfig(config, cb));
+  const postBootstrap = async (config, { setSubmitting }) => {
+    await apiBootstrap(config);
+    setSubmitting(false);
+    return (window.location.href = '/login');
+  };
 
   return (
     <Wrapper>
@@ -86,10 +65,8 @@ export default function Bootstrap() {
             }
             return errors;
           }}
-          onSubmit={(values, { setSubmitting }) => {
-            updateInitialConfig(getInitialConfig(values), (err, resp) => {
-              // setSubmitting(false);
-            });
+          onSubmit={(values, formikProps) => {
+            postBootstrap(getInitialConfig(values), formikProps);
           }}
         >
           {({
@@ -165,21 +142,6 @@ export default function Bootstrap() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 masked
-              />
-
-              <Select
-                label="dbDriver"
-                options={dbOptions}
-                name="dbDriver"
-                value={
-                  dbOptions
-                    ? dbOptions.find(
-                        (option) => option.value === values.dbDriver
-                      )
-                    : ''
-                }
-                onChange={(option) => setFieldValue('dbDriver', option.value)}
-                onBlur={handleBlur}
               />
 
               <FormFooter>
