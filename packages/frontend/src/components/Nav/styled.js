@@ -75,5 +75,9 @@ export const Menu = styled.ul`
 
 export const MenuItem = styled.li`
   cursor: pointer;
-  margin: 7px 0;
+  padding: 7px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: ${(props) => (props.active ? '#ffffff' : '#2c3039')};
 `;

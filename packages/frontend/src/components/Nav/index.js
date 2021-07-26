@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 import {
   Wrapper,
@@ -13,48 +14,63 @@ import {
   MenuItem,
 } from './styled';
 
+const mainMenuItems = [
+  {
+    to: '/',
+    icon: <HomeIcon />,
+  },
+  { to: '/resources', icon: <ResourceIcon /> },
+  {
+    to: '/crud',
+    icon: <DocumentsIcon />,
+  },
+  {
+    to: '/media',
+    icon: <MediaIcon />,
+  },
+  {
+    to: '/users',
+    icon: <UsersIcon />,
+  },
+];
+
+const bottomMenuItems = [
+  {
+    to: '/settings',
+    icon: <SettingsIcon />,
+  },
+  {
+    to: '/logout',
+    icon: <LogoutIcon />,
+  },
+];
+
 export default function Nav() {
+  const location = useLocation();
+
+  const [selectedPath, setSelectedPath] = useState('/');
+
+  useEffect(() => {
+    const { pathname } = location;
+    setSelectedPath(`/${pathname.split('/')[1]}`);
+  }, [location]);
+
   return (
     <Wrapper>
       <Menu>
-        <MenuItem>
-          <Link to="/">
-            <HomeIcon />
-          </Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="/resources">
-            <ResourceIcon />
-          </Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="/crud">
-            <DocumentsIcon />
-          </Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="/media">
-            <MediaIcon />
-          </Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="/users">
-            <UsersIcon />
-          </Link>
-        </MenuItem>
+        {mainMenuItems.map(({ to, icon }) => (
+          <MenuItem key={to} active={selectedPath === to}>
+            <Link to={to}>{icon}</Link>
+          </MenuItem>
+        ))}
       </Menu>
 
       <Menu>
-        <MenuItem>
-          <Link to="/settings">
-            <SettingsIcon />
-          </Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="/logout">
-            <LogoutIcon />
-          </Link>
-        </MenuItem>
+        {bottomMenuItems.map(({ to, icon }) => (
+          <MenuItem key={to} active={selectedPath === to}>
+            <Link to={to}>{icon}</Link>
+          </MenuItem>
+        ))}
       </Menu>
     </Wrapper>
   );
