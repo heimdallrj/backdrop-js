@@ -19,4 +19,5 @@ module.exports = {
       'babel-module': {},
     },
   },
+  ignorePatterns: ['bootstrap.js'],
 };
