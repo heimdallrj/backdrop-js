@@ -19,6 +19,7 @@ import oauthRoutes from 'routes/oauth';
 import logger from 'utils/logger';
 
 import { port } from 'config';
+import init from './init';
 
 const app = express();
 
@@ -40,24 +41,25 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('dev'));
 
-// TODO Start database connection first.
 const serve = async () => {
-  app.get('/ping', pingHandler.get);
-  app.post('/bootstrap', bootstrapHandler.post);
+  init(() => {
+    app.get('/ping', pingHandler.get);
+    app.post('/bootstrap', bootstrapHandler.post);
 
-  app.use('/auth', authRoutes);
-  app.use('/core', coreRoutes);
-  app.use('/api', apiRoutes);
-  app.use('/oauth', oauthRoutes);
+    app.use('/auth', authRoutes);
+    app.use('/core', coreRoutes);
+    app.use('/api', apiRoutes);
+    app.use('/oauth', oauthRoutes);
 
-  app.use(express.static(path.join(path.join(__dirname, 'public'))));
+    app.use(express.static(path.join(path.join(__dirname, 'public'))));
 
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
-  });
+    app.get('/*', (req, res) => {
+      res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+    });
 
-  app.listen(port, () => {
-    logger.log(`Server is running on ${port}`);
+    app.listen(port, () => {
+      logger.log(`Server is running on ${port}`);
+    });
   });
 };
 
