@@ -68,8 +68,6 @@ export default function CreateResource() {
   const history = useHistory();
   const { user } = useSelector((state) => state.auth);
 
-  console.log('=', user);
-
   const [schema, setSchema] = useState([]);
 
   const createResource = async (resource) => {
@@ -99,7 +97,7 @@ export default function CreateResource() {
               schema: normalize(schema),
               author: {
                 id: user._id,
-                name: user.userName
+                name: user.userName,
               },
             };
             createResource(resourceData);
@@ -169,8 +167,8 @@ export default function CreateResource() {
                   value={
                     typeOptions
                       ? typeOptions.find(
-                        (option) => option.value === values.type
-                      )
+                          (option) => option.value === values.type
+                        )
                       : ''
                   }
                   onChange={(option) => setFieldValue('type', option.value)}
@@ -212,8 +210,8 @@ export default function CreateResource() {
                   value={
                     statusOptions
                       ? statusOptions.find(
-                        (option) => option.value === values.status
-                      )
+                          (option) => option.value === values.status
+                        )
                       : ''
                   }
                   onChange={(option) => setFieldValue('status', option.value)}
@@ -227,7 +225,7 @@ export default function CreateResource() {
                   />
                 )}
 
-                < FormFooter >
+                <FormFooter>
                   <Button type="submit" disabled={isSubmitting}>
                     <div style={{ display: 'flex' }}>
                       {isSubmitting && (
@@ -244,6 +242,6 @@ export default function CreateResource() {
           )}
         </Formik>
       </Wrapper>
-    </Layout >
+    </Layout>
   );
 }

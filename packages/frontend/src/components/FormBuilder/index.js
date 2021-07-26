@@ -7,6 +7,8 @@ import Button from 'components/Button';
 import TextInput from 'components/TextInput';
 import Preloader from 'components/Preloader';
 
+import Editor from './Editor';
+
 import { Form } from 'providers/ThemeProvider/styled';
 
 const Wrapper = styled.div``;
@@ -66,7 +68,38 @@ export default function FormBuilder({
           /* and other goodies */
         }) => (
           <Form onSubmit={handleSubmit}>
-            {fields.map(({ name, label }) => {
+            {fields.map(({ name, label, type }) => {
+              if (type === 'string') {
+                return (
+                  <TextInput
+                    key={name}
+                    name={name}
+                    label={label}
+                    value={values[name]}
+                    errors={errors[name]}
+                    touched={touched[name]}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                );
+              }
+
+              if (type === 'text') {
+                return (
+                  <Editor
+                    key={name}
+                    name={name}
+                    label={label}
+                    value={values[name]}
+                    errors={errors[name]}
+                    touched={touched[name]}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder="Write something..."
+                  />
+                );
+              }
+
               return (
                 <TextInput
                   key={name}

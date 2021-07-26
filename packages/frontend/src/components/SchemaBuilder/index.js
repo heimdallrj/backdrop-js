@@ -71,7 +71,7 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
               onChange={(evt) =>
                 handleOnChange(index, 'name', evt.target.value)
               }
-              onBlur={() => { }}
+              onBlur={() => {}}
             />
 
             <Select
@@ -84,7 +84,7 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
                   : ''
               }
               onChange={(option) => handleOnChange(index, 'type', option.value)}
-              onBlur={() => { }}
+              onBlur={() => {}}
             />
 
             <Checkbox
@@ -93,8 +93,8 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
               checked={required || false}
               errors={null}
               touched={null}
-              onChange={
-                (evt) => handleOnChange(index, 'required', evt.target.checked)
+              onChange={(evt) =>
+                handleOnChange(index, 'required', evt.target.checked)
               }
             />
 
@@ -108,7 +108,7 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
               onChange={(evt) =>
                 handleOnChange(index, 'length', evt.target.value)
               }
-              onBlur={() => { }}
+              onBlur={() => {}}
             />
           </Row>
         );
