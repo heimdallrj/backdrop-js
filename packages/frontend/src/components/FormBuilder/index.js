@@ -87,7 +87,7 @@ export default function FormBuilder({
                   {isSubmitting && (
                     <Preloader style={{ width: '20px', margin: '0 8px 0 0' }} />
                   )}
-                  <p>Update</p>
+                  <p>{submitBtnText}</p>
                 </div>
               </Button>
             </FormFooter>

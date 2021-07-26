@@ -13,6 +13,12 @@ export const Input = styled(InputSource)`
   width: 100%;
   appearance: none;
   display: block;
+
+  &:read-only {
+    background-color: #ddd;
+    border: none;
+    outline: none;
+  }
 `;
 
 export const LabelWrap = styled.div``;

@@ -12,6 +12,7 @@ export default function CrudCreate() {
 
   const { resource: name, id } = useParams();
   const { resources } = useSelector((state) => state.resources);
+  const { user } = useSelector((state) => state.auth);
 
   const [resource, setResource] = useState(null);
   const [schema, setSchema] = useState([]);
@@ -32,8 +33,8 @@ export default function CrudCreate() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resource]);
 
-  const onSubmitHandler = async (formData, cb = () => {}) => {
-    await apiCreate(name, formData);
+  const onSubmitHandler = async (formData, cb = () => { }) => {
+    await apiCreate(name, { ...formData, author: { name: user.userName, id: user._id } });
     cb();
     history.push('/crud');
   };

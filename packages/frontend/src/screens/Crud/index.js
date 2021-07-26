@@ -55,7 +55,7 @@ export default function Crud() {
     const data = await apiFetchAll(name);
 
     if (data && data.length > 0) {
-      const _rows = data.map(({ _id, lastUpdatedAt }, index) => {
+      const _rows = data.map(({ _id, lastUpdatedAt, author }, index) => {
         return {
           id: _id,
           data: [
@@ -71,7 +71,7 @@ export default function Crud() {
               align: 'center',
             },
             {
-              value: '$author',
+              value: author.name,
             },
             {
               value: lastUpdatedAt,
@@ -133,7 +133,11 @@ export default function Crud() {
         <Selector>
           <Menu>
             {resources.map(({ _id, name }) => (
-              <ResourceItem key={_id} onClick={() => onSelectResource(name)}>
+              <ResourceItem
+                key={_id}
+                active={resource && resource._id === _id}
+                onClick={() => onSelectResource(name)}
+              >
                 {name}
               </ResourceItem>
             ))}

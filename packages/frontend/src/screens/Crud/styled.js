@@ -23,10 +23,12 @@ export const Menu = styled.ul`
 `;
 
 export const ResourceItem = styled.li`
-  background-color: #f1eaea;
+  // background-color: #f1eaea;
   margin: 2px 0;
   padding: 5px 15px;
   cursor: pointer;
+  background-color: ${props => props.active ? '#2c3039' : '#f1eaea'};
+  color: ${props => props.active ? 'red' : '#000'};
 `;
 
 export const CrudWrapper = styled.div`

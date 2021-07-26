@@ -4,10 +4,12 @@ import styled from 'styled-components';
 import TextInput from 'components/TextInput';
 import Select from 'components/Select';
 import ButtonSource from 'components/Button';
+import Checkbox from 'components/Checkbox';
 
 export const Wrapper = styled.div`
   padding: 5px 10px 15px;
-  background: #ece7e7;
+  // background: #ece7e7;
+  border: 1px solid rgba(229, 231, 235, 1);
   margin: 20px 0;
 `;
 
@@ -32,6 +34,7 @@ export const Button = styled(ButtonSource)`
 
 const typeOptions = [
   { value: 'string', label: 'String' },
+  { value: 'text', label: 'Text' },
   { value: 'number', label: 'Number' },
   { value: 'date', label: 'Date' },
   { value: 'boolean', label: 'Boolean' },
@@ -56,7 +59,7 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
 
   return (
     <Wrapper>
-      {schema.map(({ name, type }, index) => {
+      {schema.map(({ name, type, required, length }, index) => {
         return (
           <Row key={String(index)}>
             <TextInput
@@ -68,20 +71,44 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
               onChange={(evt) =>
                 handleOnChange(index, 'name', evt.target.value)
               }
-              onBlur={() => {}}
+              onBlur={() => { }}
             />
 
             <Select
               label="type"
               options={typeOptions}
-              name="type"
+              name="type[]"
               value={
                 typeOptions
                   ? typeOptions.find((option) => option.value === type)
                   : ''
               }
               onChange={(option) => handleOnChange(index, 'type', option.value)}
-              onBlur={() => {}}
+              onBlur={() => { }}
+            />
+
+            <Checkbox
+              label="Required"
+              name="required[]"
+              checked={required || false}
+              errors={null}
+              touched={null}
+              onChange={
+                (evt) => handleOnChange(index, 'required', evt.target.checked)
+              }
+            />
+
+            <TextInput
+              name="lenght[]"
+              label="length"
+              value={length}
+              type="number"
+              errors={null}
+              touched={null}
+              onChange={(evt) =>
+                handleOnChange(index, 'length', evt.target.value)
+              }
+              onBlur={() => { }}
             />
           </Row>
         );

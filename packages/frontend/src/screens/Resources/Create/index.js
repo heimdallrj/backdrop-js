@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Formik, Field } from 'formik';
 import { useHistory } from 'react-router-dom';
 
@@ -65,6 +66,9 @@ function normalize(rawSchema) {
 
 export default function CreateResource() {
   const history = useHistory();
+  const { user } = useSelector((state) => state.auth);
+
+  console.log('=', user);
 
   const [schema, setSchema] = useState([]);
 
@@ -93,6 +97,10 @@ export default function CreateResource() {
             const resourceData = {
               ...values,
               schema: normalize(schema),
+              author: {
+                id: user._id,
+                name: user.userName
+              },
             };
             createResource(resourceData);
             setSubmitting(false);
@@ -161,8 +169,8 @@ export default function CreateResource() {
                   value={
                     typeOptions
                       ? typeOptions.find(
-                          (option) => option.value === values.type
-                        )
+                        (option) => option.value === values.type
+                      )
                       : ''
                   }
                   onChange={(option) => setFieldValue('type', option.value)}
@@ -204,20 +212,22 @@ export default function CreateResource() {
                   value={
                     statusOptions
                       ? statusOptions.find(
-                          (option) => option.value === values.status
-                        )
+                        (option) => option.value === values.status
+                      )
                       : ''
                   }
                   onChange={(option) => setFieldValue('status', option.value)}
                   onBlur={handleBlur}
                 />
 
-                <SchemaBuilder
-                  initialSchema={schema}
-                  onUpdateSchema={handleSchemaUpdate}
-                />
+                {values.type !== 'proxy' && (
+                  <SchemaBuilder
+                    initialSchema={schema}
+                    onUpdateSchema={handleSchemaUpdate}
+                  />
+                )}
 
-                <FormFooter>
+                < FormFooter >
                   <Button type="submit" disabled={isSubmitting}>
                     <div style={{ display: 'flex' }}>
                       {isSubmitting && (
@@ -234,6 +244,6 @@ export default function CreateResource() {
           )}
         </Formik>
       </Wrapper>
-    </Layout>
+    </Layout >
   );
 }
