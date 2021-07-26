@@ -9,7 +9,7 @@ import {
   MediaIcon,
   UsersIcon,
   SettingsIcon,
-  LogoutIcon,
+  UserIcon,
   Menu,
   MenuItem,
 } from './styled';
@@ -39,10 +39,6 @@ const bottomMenuItems = [
     to: '/settings',
     icon: <SettingsIcon />,
   },
-  {
-    to: '/logout',
-    icon: <LogoutIcon />,
-  },
 ];
 
 export default function Nav() {
@@ -66,6 +62,11 @@ export default function Nav() {
       </Menu>
 
       <Menu>
+        <MenuItem>
+          <Link to="/logout">
+            <UserIcon />
+          </Link>
+        </MenuItem>
         {bottomMenuItems.map(({ to, icon }) => (
           <MenuItem key={to} active={selectedPath === to}>
             <Link to={to}>{icon}</Link>

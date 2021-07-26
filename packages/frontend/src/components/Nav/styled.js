@@ -7,7 +7,7 @@ import MediaIconSource from 'assets/icons/Media/Solid';
 import SettingsIconSource from 'assets/icons/Settings/Solid';
 import UsersIconSource from 'assets/icons/Users/Solid';
 import DocumentsIconSource from 'assets/icons/Documents/Solid';
-import LogoutIconSource from 'assets/icons/Logout/Outline';
+import UserIconSource from 'assets/icons/User/Circle/Outline';
 
 export const Wrapper = styled.div`
   flex: 1;
@@ -60,12 +60,6 @@ export const UsersIcon = styled(UsersIconSource)`
   align-self: center;
 `;
 
-export const LogoutIcon = styled(LogoutIconSource)`
-  color: red;
-  width: 24px;
-  align-self: center;
-`;
-
 export const Menu = styled.ul`
   display: flex;
   flex-direction: column;
@@ -80,4 +74,10 @@ export const MenuItem = styled.li`
   display: flex;
   justify-content: center;
   background: ${(props) => (props.active ? '#ffffff' : '#2c3039')};
+`;
+
+export const UserIcon = styled(UserIconSource)`
+  color: red;
+  width: 24px;
+  align-self: center;
 `;
