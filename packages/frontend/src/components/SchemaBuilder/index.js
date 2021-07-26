@@ -41,7 +41,7 @@ const typeOptions = [
 
 export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
   const [schema, setSchema] = useState(initialSchema || []);
-
+  console.log(initialSchema)
   const handleAddNew = () => {
     setSchema([...schema, { name: '', type: 'string' }]);
   };
