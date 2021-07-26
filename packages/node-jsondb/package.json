@@ -1,7 +1,7 @@
 {
-  "name": "@jetlab/jsondb",
+  "name": "@backdropjs/jsondb",
   "version": "0.0.2",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "start:watch": "babel src --watch --out-dir dist",
     "build": "babel src --out-dir dist"

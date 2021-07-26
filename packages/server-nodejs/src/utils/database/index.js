@@ -1,4 +1,4 @@
-import JsonDB from '@jetlab/jsondb';
+import JsonDB from '@backdropjs/jsondb';
 
 import { jsonDbPath } from 'config';
 import logger from 'utils/logger';
