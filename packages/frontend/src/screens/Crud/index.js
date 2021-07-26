@@ -34,8 +34,11 @@ const columns = [
 export default function Crud() {
   const history = useHistory();
 
-  const { resources } = useSelector((state) => state.resources);
+  const { resources: resourcesOriginal } = useSelector(
+    (state) => state.resources
+  );
 
+  const [resources, setResources] = useState([]);
   const [resource, setResource] = useState(null);
   const [rows, setRows] = useState([]);
 
@@ -96,6 +99,11 @@ export default function Crud() {
   useEffect(() => {
     // TODO Fetch all the resources (no need now since we fetch already)
   }, []);
+
+  useEffect(() => {
+    const filtered = resourcesOriginal.filter((ro) => ro.type !== 'proxy');
+    setResources(filtered);
+  }, [resourcesOriginal]);
 
   useEffect(() => {
     if (resources && resources.length > 0 && !resource) {
