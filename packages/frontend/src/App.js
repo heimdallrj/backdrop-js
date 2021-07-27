@@ -17,7 +17,7 @@ import Login from 'screens/Login';
 import Register from 'screens/Register';
 import Home from 'screens/Home';
 import Resources from 'screens/Resources';
-import ResourceSingle from 'screens/Resources/Single';
+import UpdateResource from 'screens/Resources/Update';
 import CreateResource from 'screens/Resources/Create';
 import Crud from 'screens/Crud';
 import CrudCreate from 'screens/Crud/Create';
@@ -86,7 +86,7 @@ function App() {
         <ProtectedRoute
           exact
           path="/resources/update/:id"
-          component={ResourceSingle}
+          component={UpdateResource}
         />
 
         <ProtectedRoute exact path="/crud" component={Crud} />
