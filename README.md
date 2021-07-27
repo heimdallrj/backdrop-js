@@ -50,9 +50,38 @@ yarn
 - Use `fix: <That fix>` for fixes
 - Use `chore: <Regular Task>` for regular tasks
 
+##### Commit messages
+
+- Follow these guidelines
+  - [How to Write a Git Commit Message by Chris Beams](https://chris.beams.io/posts/git-commit/)
+  - [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+
 ##### Issues
 
-TODO
+Apply labels appropriately for each issues when created:
+
+- `epic`
+- `bug`
+- `feature`
+- `feature-request`
+- `enhancement`
+- `documentation`
+- `question`
+- `help wanted`
+
+Components:
+
+- `comp:cli`
+- `comp:frontend`
+- `comp:node-jsondb`
+- `comp:server`
+
+Labels for maintainers
+
+- `wontfix`
+- `invalid`
+- `good first issue`
+- `duplicate`
 
 ### FAQ
 
