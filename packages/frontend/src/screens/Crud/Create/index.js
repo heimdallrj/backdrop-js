@@ -19,10 +19,11 @@ export default function CrudCreate() {
 
   useEffect(() => {
     if (resources && resources.length > 0 && !resource) {
-      setResource(resources[0]);
+      const filtered = resources.find((r) => r.name === name);
+      setResource(filtered);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resources]);
+  }, [name, resources]);
 
   useEffect(() => {
     if (resource) {

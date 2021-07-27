@@ -54,8 +54,10 @@ export default function Crud() {
   const fetchAll = async ({ name }) => {
     const data = await apiFetchAll(name);
 
+    let _rows = [];
+
     if (data && data.length > 0) {
-      const _rows = data.map(({ _id, lastUpdatedAt, author }, index) => {
+      _rows = data.map(({ _id, lastUpdatedAt, author }, index) => {
         return {
           id: _id,
           data: [
@@ -91,9 +93,8 @@ export default function Crud() {
           ],
         };
       });
-
-      setRows(_rows);
     }
+    setRows(_rows);
   };
 
   useEffect(() => {

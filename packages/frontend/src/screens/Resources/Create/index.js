@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Formik, Field } from 'formik';
 import { useHistory } from 'react-router-dom';
-import forEach from 'lodash/forEach';
 
 import { create as apiCreateResource } from 'api/resources';
 

@@ -70,7 +70,6 @@ export default function FormBuilder({
         }) => (
           <Form onSubmit={handleSubmit}>
             {fields.map(({ name, label, type }) => {
-              console.log('+', type);
               if (type === 'Text') {
                 return (
                   <TextInput

@@ -58,17 +58,13 @@ export default function RichText({
   name,
   placeholder,
 }) {
-  const onChangeHandler = (text, delta) => {
-    onChange(text);
-  };
-
   return (
     <FormField>
       <LabelWrap>{label && <Label htmlFor={name}>{label}</Label>}</LabelWrap>
       <ReactQuill
         theme={'snow'}
-        onChange={onChangeHandler}
-        value={value}
+        onChange={onChange}
+        value={value || ''}
         modules={modules}
         formats={formats}
         bounds={'.app'}
