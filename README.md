@@ -31,6 +31,29 @@ yarn
 - Upload `${appName}-${version}.zip` there
 - Release
 
+#### Contributing
+
+- As the project is in early satge, we keep numbers of project in same repository.
+- Primary branch is `master`, and strongly recommend to avoid pushing changes to `master` branch directly.
+- Always use feature branches.
+- Alyways put active WIP PRs in draft stage
+
+##### Branch names
+
+- Use `feat/<awasome-feature>-[issue-id]` naming conventions for feature branches
+- Use `fix/<good-fix>-[issue-id]` for bug fixes
+- Use `chore/<task>-[issue-id]` for regular tasks
+
+##### PR naming
+
+- Use `feat: <My Awesome Feature>` naming conventions for feature titles
+- Use `fix: <That fix>` for fixes
+- Use `chore: <Regular Task>` for regular tasks
+
+##### Issues
+
+TODO
+
 ### FAQ
 
 #### Error: Cannot find module '<path>/backdrop-js/node_modules/@backdropjs/jsondb/dist/index.js'. Please verify that the package.json has a valid "main" entry
