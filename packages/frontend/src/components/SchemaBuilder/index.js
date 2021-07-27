@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import TextInput from 'components/TextInput';
@@ -33,17 +34,23 @@ export const Button = styled(ButtonSource)`
 `;
 
 const typeOptions = [
-  { value: 'string', label: 'String' },
   { value: 'text', label: 'Text' },
-  { value: 'number', label: 'Number' },
-  { value: 'date', label: 'Date' },
-  { value: 'boolean', label: 'Boolean' },
-  { value: 'array', label: 'Array' },
-  { value: 'object', label: 'Object' },
+  { value: 'multiline-text', label: 'Multiline Text' },
+  { value: 'rich-text', label: 'RichText' },
+  { value: 'resource', label: 'Resource' },
+  // { value: 'date', label: 'Date' },
+  // { value: 'boolean', label: 'Boolean' },
+  // { value: 'array', label: 'Array' },
+  // { value: 'object', label: 'Object' },
 ];
 
 export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
+  const { resources } = useSelector((state) => state.resources);
+
   const [schema, setSchema] = useState(initialSchema || []);
+
+  const [resourcesOpt, setResourcesOpt] = useState([]);
+  const [resourcesMap, setResourcesMap] = useState({});
 
   const handleAddNew = () => {
     setSchema([...schema, { name: '', type: 'string' }]);
@@ -57,11 +64,36 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
     });
   };
 
+  const handleOnResourceRelationship = (name, resource) => {
+    const newResourcesMap = { ...resourcesMap };
+    newResourcesMap[name] = resource;
+    setResourcesMap(newResourcesMap);
+  };
+
+  useEffect(() => {
+    if (resources && resources.length > 0) {
+      setResourcesOpt(
+        resources.map(({ _id, name }) => ({ label: name, value: _id }))
+      );
+    }
+  }, [resources]);
+
   return (
     <Wrapper>
       {schema.map(({ name, type, required, length }, index) => {
         return (
           <Row key={String(index)}>
+            <Checkbox
+              label="Required"
+              name="required[]"
+              checked={required || false}
+              errors={null}
+              touched={null}
+              onChange={(evt) =>
+                handleOnChange(index, 'required', evt.target.checked)
+              }
+            />
+
             <TextInput
               name="name[]"
               label="name"
@@ -87,16 +119,18 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
               onBlur={() => {}}
             />
 
-            <Checkbox
-              label="Required"
-              name="required[]"
-              checked={required || false}
-              errors={null}
-              touched={null}
-              onChange={(evt) =>
-                handleOnChange(index, 'required', evt.target.checked)
-              }
-            />
+            {type === 'resource' && (
+              <Select
+                label="Resource"
+                options={resourcesOpt}
+                name="type.resource[]"
+                value={resourcesMap[name] || ''}
+                onChange={(option) =>
+                  handleOnResourceRelationship(name, option)
+                }
+                onBlur={() => {}}
+              />
+            )}
 
             <TextInput
               name="lenght[]"
@@ -116,7 +150,10 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
 
       <AddNewButton onClick={handleAddNew}>+ Add new</AddNewButton>
 
-      <Button type="button" onClick={() => onUpdateSchema(schema)}>
+      <Button
+        type="button"
+        onClick={() => onUpdateSchema(schema, resourcesMap)}
+      >
         Save
       </Button>
     </Wrapper>

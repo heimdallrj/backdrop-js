@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Formik, Field } from 'formik';
 import { useHistory } from 'react-router-dom';
+import forEach from 'lodash/forEach';
 
 import { create as apiCreateResource } from 'api/resources';
 
@@ -74,7 +75,15 @@ export default function CreateResource() {
     await apiCreateResource(resource);
   };
 
-  const handleSchemaUpdate = (newSchema) => {
+  const handleSchemaUpdate = (newSchema, resourcesMap = {}) => {
+    // Set relationships
+    forEach(resourcesMap, ({ label, value }, key) => {
+      const fieldIndex = newSchema.findIndex(({ name }) => name === key);
+      const _relationships = newSchema[fieldIndex].relationships || [];
+      _relationships.push({ type: 'resource', name: label, id: value });
+      newSchema[fieldIndex]['relationships'] = _relationships;
+    });
+
     setSchema(newSchema);
   };
 
