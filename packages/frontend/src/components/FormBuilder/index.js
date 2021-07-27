@@ -7,7 +7,7 @@ import Button from 'components/Button';
 import TextInput from 'components/TextInput';
 import Preloader from 'components/Preloader';
 
-import Editor from './Editor';
+import RichText from './RichText';
 
 import { Form } from 'providers/ThemeProvider/styled';
 
@@ -69,7 +69,7 @@ export default function FormBuilder({
         }) => (
           <Form onSubmit={handleSubmit}>
             {fields.map(({ name, label, type }) => {
-              if (type === 'string') {
+              if (type === 'text') {
                 return (
                   <TextInput
                     key={name}
@@ -84,9 +84,9 @@ export default function FormBuilder({
                 );
               }
 
-              if (type === 'text') {
+              if (type === 'rich-text') {
                 return (
-                  <Editor
+                  <RichText
                     key={name}
                     name={name}
                     label={label}

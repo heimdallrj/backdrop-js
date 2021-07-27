@@ -28,7 +28,7 @@ export const ResourceItem = styled.li`
   padding: 5px 15px;
   cursor: pointer;
   background-color: ${(props) => (props.active ? '#2c3039' : '#f1eaea')};
-  color: ${(props) => (props.active ? 'red' : '#000')};
+  color: ${(props) => (props.active ? 'white' : '#000')};
 `;
 
 export const CrudWrapper = styled.div`

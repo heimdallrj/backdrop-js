@@ -51,13 +51,23 @@ const formats = [
   'video',
 ];
 
-export default function Editor({ value, onChange, label, name, placeholder }) {
+export default function RichText({
+  value,
+  onChange,
+  label,
+  name,
+  placeholder,
+}) {
+  const onChangeHandler = (text, delta) => {
+    onChange(text);
+  };
+
   return (
     <FormField>
       <LabelWrap>{label && <Label htmlFor={name}>{label}</Label>}</LabelWrap>
       <ReactQuill
         theme={'snow'}
-        onChange={onChange}
+        onChange={onChangeHandler}
         value={value}
         modules={modules}
         formats={formats}
