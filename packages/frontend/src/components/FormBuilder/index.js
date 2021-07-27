@@ -6,6 +6,7 @@ import forEach from 'lodash/forEach';
 import Button from 'components/Button';
 import TextInput from 'components/TextInput';
 import Preloader from 'components/Preloader';
+import Textarea from 'components/Textarea';
 
 import RichText from './RichText';
 
@@ -69,7 +70,8 @@ export default function FormBuilder({
         }) => (
           <Form onSubmit={handleSubmit}>
             {fields.map(({ name, label, type }) => {
-              if (type === 'text') {
+              console.log('+', type);
+              if (type === 'Text') {
                 return (
                   <TextInput
                     key={name}
@@ -84,7 +86,7 @@ export default function FormBuilder({
                 );
               }
 
-              if (type === 'rich-text') {
+              if (type === 'RichText') {
                 return (
                   <RichText
                     key={name}
@@ -96,6 +98,21 @@ export default function FormBuilder({
                     onChange={handleChange}
                     onBlur={handleBlur}
                     placeholder="Write something..."
+                  />
+                );
+              }
+
+              if (type === 'MultilineText') {
+                return (
+                  <Textarea
+                    key={name}
+                    name={name}
+                    label={label}
+                    value={values[name]}
+                    errors={errors[name]}
+                    touched={touched[name]}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
                 );
               }

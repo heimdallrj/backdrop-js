@@ -8,34 +8,34 @@ const validate = (inputs, schema) => {
   let valid = true;
   const errors = {};
 
-  forEach(inputs, (value, field) => {
-    const config = schema[field];
+  // forEach(inputs, (value, field) => {
+  //   const config = schema[field];
 
-    // validate: type
-    if (config.type) {
-      // eslint-disable-next-line
-      if (typeof value !== config.type) {
-        valid = false;
-        errors[field] = 'Invalid type';
-      }
-    }
+  //   // validate: type
+  //   if (config.type) {
+  //     // eslint-disable-next-line
+  //     if (typeof value !== config.type) {
+  //       valid = false;
+  //       errors[field] = 'Invalid type';
+  //     }
+  //   }
 
-    // validate: length
-    if (config.length) {
-      if (value.length > 256) {
-        valid = false;
-        errors[field] = 'Invalid length';
-      }
-    }
+  //   // validate: length
+  //   if (config.length) {
+  //     if (value.length > 256) {
+  //       valid = false;
+  //       errors[field] = 'Invalid length';
+  //     }
+  //   }
 
-    // validate: required
-    if (config.required) {
-      if (!value || value.trim() === '') {
-        valid = false;
-        errors[field] = 'Required';
-      }
-    }
-  });
+  //   // validate: required
+  //   if (config.required) {
+  //     if (!value || value.trim() === '') {
+  //       valid = false;
+  //       errors[field] = 'Required';
+  //     }
+  //   }
+  // });
 
   return [valid, errors];
 };

@@ -1,59 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
+import forEach from 'lodash/forEach';
 
 import TextInput from 'components/TextInput';
 import Select from 'components/Select';
-import ButtonSource from 'components/Button';
 import Checkbox from 'components/Checkbox';
 
-export const Wrapper = styled.div`
-  padding: 5px 10px 15px;
-  // background: #ece7e7;
-  border: 1px solid rgba(229, 231, 235, 1);
-  margin: 20px 0;
-`;
+import { inputTypeOptions } from 'config';
 
-export const Row = styled.div`
-  border: 1px solid rgba(229, 231, 235, 1);
-  background: #fff;
-  padding: 10px;
-  margin: 6px 0;
-`;
-
-export const AddNewButton = styled.p`
-  font-size: 0.8em;
-  color: blue;
-  cursor: pointer;
-  padding: 5px 0 15px;
-`;
-
-export const Button = styled(ButtonSource)`
-  background: #2c3039;
-  font-size: 0.6em;
-`;
-
-const typeOptions = [
-  { value: 'text', label: 'Text' },
-  { value: 'multiline-text', label: 'Multiline Text' },
-  { value: 'rich-text', label: 'RichText' },
-  { value: 'resource', label: 'Resource' },
-  // { value: 'date', label: 'Date' },
-  // { value: 'boolean', label: 'Boolean' },
-  // { value: 'array', label: 'Array' },
-  // { value: 'object', label: 'Object' },
-];
+import { Wrapper, Row, AddNewButton, Button } from './styled';
 
 export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
   const { resources } = useSelector((state) => state.resources);
 
   const [schema, setSchema] = useState(initialSchema || []);
+  const [relationship, setRelationship] = useState({});
 
   const [resourcesOpt, setResourcesOpt] = useState([]);
-  const [resourcesMap, setResourcesMap] = useState({});
+  const [selectorsOpt, setSelectorsOpt] = useState([]);
 
   const handleAddNew = () => {
-    setSchema([...schema, { name: '', type: 'string' }]);
+    setSchema([...schema, { name: '', type: 'string', length: '' }]);
   };
 
   const handleOnChange = (index, field, value) => {
@@ -64,16 +31,47 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
     });
   };
 
-  const handleOnResourceRelationship = (name, resource) => {
-    const newResourcesMap = { ...resourcesMap };
-    newResourcesMap[name] = resource;
-    setResourcesMap(newResourcesMap);
+  const onResourceRelationshipHandler = (name, resource) => {
+    // Set selectors options
+    const selectors = (resource && resource.fields) || [];
+    setSelectorsOpt(selectors.map((field) => ({ label: field, value: field })));
+
+    const newRelationship = { ...relationship };
+    newRelationship[name] = resource;
+    setRelationship(newRelationship);
+  };
+
+  const onResourceRelationshipSelectorHandler = (name, selector) => {
+    const newRelationship = { ...relationship };
+    newRelationship[name] = { ...newRelationship[name] };
+    newRelationship[name]['selector'] = selector;
+    setRelationship(newRelationship);
+  };
+
+  const onUpdateSchemaHandler = () => {
+    forEach(relationship, ({ label, value, defaultValue, selector }, key) => {
+      const schemaIndex = schema.findIndex(({ name }) => name === key);
+      const _relationship = schema[schemaIndex].relationship || [];
+      _relationship.push({
+        type: 'resource',
+        name: label,
+        selector: (selector && selector.value) || null,
+      });
+      schema[schemaIndex]['relationship'] = _relationship;
+    });
+    onUpdateSchema(schema);
   };
 
   useEffect(() => {
     if (resources && resources.length > 0) {
       setResourcesOpt(
-        resources.map(({ _id, name }) => ({ label: name, value: _id }))
+        resources.map(({ _id, name, schema }) => ({
+          label: name,
+          value: _id,
+          fields: Object.keys(schema),
+          selector: '',
+          defaultValue: [],
+        }))
       );
     }
   }, [resources]);
@@ -108,28 +106,47 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
 
             <Select
               label="type"
-              options={typeOptions}
+              options={inputTypeOptions}
               name="type[]"
               value={
-                typeOptions
-                  ? typeOptions.find((option) => option.value === type)
+                inputTypeOptions
+                  ? inputTypeOptions.find((option) => option.value === type)
                   : ''
               }
               onChange={(option) => handleOnChange(index, 'type', option.value)}
               onBlur={() => {}}
             />
 
-            {type === 'resource' && (
-              <Select
-                label="Resource"
-                options={resourcesOpt}
-                name="type.resource[]"
-                value={resourcesMap[name] || ''}
-                onChange={(option) =>
-                  handleOnResourceRelationship(name, option)
-                }
-                onBlur={() => {}}
-              />
+            {type === 'Resource' && (
+              <Row>
+                <Select
+                  label="Resource"
+                  options={resourcesOpt}
+                  name="type.resource[]"
+                  value={relationship[name] || ''}
+                  onChange={(option) =>
+                    onResourceRelationshipHandler(name, option)
+                  }
+                  onBlur={() => {}}
+                />
+
+                <Select
+                  label="Selector"
+                  options={selectorsOpt}
+                  name="type.resource.selectorId[]"
+                  value={
+                    (relationship &&
+                      relationship[name] &&
+                      relationship &&
+                      relationship[name].selector) ||
+                    ''
+                  }
+                  onChange={(option) =>
+                    onResourceRelationshipSelectorHandler(name, option)
+                  }
+                  onBlur={() => {}}
+                />
+              </Row>
             )}
 
             <TextInput
@@ -150,10 +167,7 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
 
       <AddNewButton onClick={handleAddNew}>+ Add new</AddNewButton>
 
-      <Button
-        type="button"
-        onClick={() => onUpdateSchema(schema, resourcesMap)}
-      >
+      <Button type="button" onClick={onUpdateSchemaHandler}>
         Save
       </Button>
     </Wrapper>

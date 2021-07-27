@@ -7,5 +7,27 @@
   "methods": "",
   "endpoint": "",
   "status": "draft",
-  "schema": {}
+  "schema": {
+    "author": {
+      "type": "text",
+      "required": true,
+      "length": "55"
+    },
+    "email": {
+      "type": "text",
+      "length": "65",
+      "required": true
+    },
+    "comments": {
+      "type": "Resource",
+      "length": "",
+      "relationship": [
+        {
+          "type": "resource",
+          "name": "comments",
+          "selector": "postId"
+        }
+      ]
+    }
+  }
 }

@@ -16,6 +16,4 @@ Textarea.propTypes = {
   cols: PropTypes.number,
 };
 
-Textarea.defaultProps = {
-  checked: false,
-};
+Textarea.defaultProps = {};

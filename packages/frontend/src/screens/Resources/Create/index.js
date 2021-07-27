@@ -75,15 +75,7 @@ export default function CreateResource() {
     await apiCreateResource(resource);
   };
 
-  const handleSchemaUpdate = (newSchema, resourcesMap = {}) => {
-    // Set relationships
-    forEach(resourcesMap, ({ label, value }, key) => {
-      const fieldIndex = newSchema.findIndex(({ name }) => name === key);
-      const _relationships = newSchema[fieldIndex].relationships || [];
-      _relationships.push({ type: 'resource', name: label, id: value });
-      newSchema[fieldIndex]['relationships'] = _relationships;
-    });
-
+  const handleSchemaUpdate = (newSchema) => {
     setSchema(newSchema);
   };
 
