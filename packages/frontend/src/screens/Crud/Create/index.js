@@ -28,7 +28,6 @@ export default function CrudCreate() {
   useEffect(() => {
     if (resource) {
       setSchema(resource.schema);
-      // fetchAll(resource);
       if (id) fetch(id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -7,6 +7,7 @@ import { updateAppConfig as acUpdateAppConfig } from 'store/reducers/configSlice
 import Layout from 'components/Layout';
 import TextInput from 'components/TextInput';
 import Button from 'components/Button';
+import Checkbox from 'components/Checkbox';
 import Preloader from 'components/Preloader';
 
 import { Form } from 'providers/ThemeProvider/styled';
@@ -76,6 +77,15 @@ export default function Settings() {
                   touched={touched.appDesc}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                />
+
+                <Checkbox
+                  label="Enable SignUp"
+                  name="enableSignUp"
+                  checked={values.enableSignUp || false}
+                  errors={errors.enableSignUp}
+                  touched={touched.enableSignUp}
+                  onChange={handleChange}
                 />
 
                 <FormFooter>
