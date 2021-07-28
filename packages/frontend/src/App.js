@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ping as apiPing } from 'api';
@@ -12,6 +12,7 @@ import { fetchAll as acFetchAllMedia } from 'store/reducers/mediaSlice';
 import { FullPageLoading as Loading } from 'components/Loading';
 import Bootstrap from 'components/Bootstrap';
 import ProtectedRoute from 'components/ProtectedRoute';
+import Route from 'components/Route';
 
 import Login from 'screens/Login';
 import Register from 'screens/Register';
@@ -76,33 +77,71 @@ function App() {
 
         <ProtectedRoute exact path="/" component={Home} />
 
-        <ProtectedRoute exact path="/resources" component={Resources} />
         <ProtectedRoute
+          featureId="resources"
+          exact
+          path="/resources"
+          component={Resources}
+        />
+        <ProtectedRoute
+          featureId="resources"
           exact
           path="/resources/create"
           component={CreateResource}
         />
         <ProtectedRoute
+          featureId="resources"
           exact
           path="/resources/update/:id"
           component={UpdateResource}
         />
 
-        <ProtectedRoute exact path="/crud" component={Crud} />
-        <ProtectedRoute exact path="/crud/:resource" component={CrudCreate} />
+        <ProtectedRoute featureId="curd" exact path="/crud" component={Crud} />
         <ProtectedRoute
+          featureId="curd"
+          exact
+          path="/crud/:resource"
+          component={CrudCreate}
+        />
+        <ProtectedRoute
+          featureId="curd"
           exact
           path="/crud/:resource/:id"
           component={CrudUpdate}
         />
 
-        <ProtectedRoute exact path="/media" component={Media} />
+        <ProtectedRoute
+          featureId="media"
+          exact
+          path="/media"
+          component={Media}
+        />
 
-        <ProtectedRoute exact path="/settings" component={Settings} />
+        <ProtectedRoute
+          featureId="settings"
+          exact
+          path="/settings"
+          component={Settings}
+        />
 
-        <ProtectedRoute exact path="/users" component={Users} />
-        <ProtectedRoute exact path="/users/create" component={CreateUser} />
-        <ProtectedRoute exact path="/users/update/:id" component={UpdateUser} />
+        <ProtectedRoute
+          featureId="users"
+          exact
+          path="/users"
+          component={Users}
+        />
+        <ProtectedRoute
+          featureId="users"
+          exact
+          path="/users/create"
+          component={CreateUser}
+        />
+        <ProtectedRoute
+          featureId="users"
+          exact
+          path="/users/update/:id"
+          component={UpdateUser}
+        />
       </Router>
     </Wrapper>
   );

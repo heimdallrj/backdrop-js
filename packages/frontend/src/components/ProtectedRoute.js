@@ -1,8 +1,13 @@
 import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
-const ProtectedRoute = ({ component: Component, ...restProps }) => {
+import Unauthorized from 'components/Unauthorized';
+
+import { featuresConfig } from 'config/features';
+
+const ProtectedRoute = ({ component: Component, featureId, ...restProps }) => {
   const { user } = useSelector((state) => state.auth);
+  const { role } = user || {};
 
   return (
     <Route
@@ -16,6 +21,12 @@ const ProtectedRoute = ({ component: Component, ...restProps }) => {
               to={{ pathname: '/login', state: { from: props.location } }}
             />
           );
+        }
+
+        if (user && role && featuresConfig[featureId]) {
+          if (featuresConfig[featureId].includes(role) === false) {
+            return <Unauthorized />;
+          }
         }
 
         // authorised so return component
