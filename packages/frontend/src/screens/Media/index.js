@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import { fetchAll as apiFetchAllMedia } from 'api/media';
 
 import Layout from 'components/Layout';
+import Uploader from './Uploader';
 
-import { Wrapper, Button, List, ListItem, Image } from './styled';
+import { Wrapper, List, ListItem, Image } from './styled';
 
 // TODO: Require to chnage from API
 const MediaItem = ({ url, name, type }) => {
@@ -31,9 +31,7 @@ export default function Media() {
   return (
     <Layout title="Media Library">
       <Wrapper>
-        <Link to={`/media/upload`}>
-          <Button>Upload new media</Button>
-        </Link>
+        <Uploader />
 
         <List>{files.map(MediaItem)}</List>
       </Wrapper>

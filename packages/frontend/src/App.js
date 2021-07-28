@@ -23,7 +23,6 @@ import Crud from 'screens/Crud';
 import CrudCreate from 'screens/Crud/Create';
 import CrudUpdate from 'screens/Crud/Update';
 import Media from 'screens/Media';
-import MediaUpload from 'screens/Media/Upload';
 import Settings from 'screens/Settings';
 import Users from 'screens/Users';
 import CreateUser from 'screens/Users/Create';
@@ -98,7 +97,6 @@ function App() {
         />
 
         <ProtectedRoute exact path="/media" component={Media} />
-        <ProtectedRoute exact path="/media/upload" component={MediaUpload} />
 
         <ProtectedRoute exact path="/settings" component={Settings} />
 

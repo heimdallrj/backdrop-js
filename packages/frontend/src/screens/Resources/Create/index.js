@@ -158,6 +158,7 @@ export default function CreateResource() {
                   touched={touched.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  placeholder="eg. posts"
                 />
 
                 <Select

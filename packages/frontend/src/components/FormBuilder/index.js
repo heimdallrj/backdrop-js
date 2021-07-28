@@ -69,7 +69,7 @@ export default function FormBuilder({
           /* and other goodies */
         }) => (
           <Form onSubmit={handleSubmit}>
-            {fields.map(({ name, label, type }) => {
+            {fields.map(({ name, label, type, placeholder }) => {
               if (type === 'Text') {
                 return (
                   <TextInput
@@ -81,6 +81,7 @@ export default function FormBuilder({
                     touched={touched[name]}
                     onChange={handleChange}
                     onBlur={handleBlur}
+                    placeholder={placeholder}
                   />
                 );
               }
@@ -96,7 +97,7 @@ export default function FormBuilder({
                     touched={touched[name]}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="Write something..."
+                    placeholder={placeholder}
                   />
                 );
               }
@@ -112,6 +113,7 @@ export default function FormBuilder({
                     touched={touched[name]}
                     onChange={handleChange}
                     onBlur={handleBlur}
+                    placeholder={placeholder}
                   />
                 );
               }
@@ -126,6 +128,7 @@ export default function FormBuilder({
                   touched={touched[name]}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  placeholder={placeholder}
                 />
               );
             })}

@@ -102,6 +102,7 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
                 handleOnChange(index, 'name', evt.target.value)
               }
               onBlur={() => {}}
+              placeholder="eg. title"
             />
 
             <Select
@@ -160,6 +161,7 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
                 handleOnChange(index, 'length', evt.target.value)
               }
               onBlur={() => {}}
+              placeholder="eg. 255"
             />
           </Row>
         );

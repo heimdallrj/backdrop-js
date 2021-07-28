@@ -41,6 +41,7 @@ export default function FormFields({
           touched={touched.screenName}
           onChange={handleChange}
           onBlur={handleBlur}
+          placeholder="eg. John Doe"
         />
 
         <TextInput
@@ -51,6 +52,7 @@ export default function FormFields({
           touched={touched.userName}
           onChange={handleChange}
           onBlur={handleBlur}
+          placeholder="eg. john"
         />
 
         <TextInput
@@ -61,6 +63,7 @@ export default function FormFields({
           touched={touched.email}
           onChange={handleChange}
           onBlur={handleBlur}
+          placeholder="eg. john@example.com"
         />
 
         {!isUpdate && (
@@ -74,6 +77,7 @@ export default function FormFields({
               onChange={handleChange}
               onBlur={handleBlur}
               masked
+              placeholder="eg. pa$$word"
             />
 
             <TextInput
@@ -85,6 +89,7 @@ export default function FormFields({
               onChange={handleChange}
               onBlur={handleBlur}
               masked
+              placeholder="eg. pa$$word"
             />
           </>
         )}
