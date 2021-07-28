@@ -9,7 +9,7 @@ import { response } from 'utils/http';
 import { jwtSecret, salt } from 'config';
 
 const defaultUserConfig = {
-  role: 2,
+  role: 3,
   status: 0,
   token: uniqid(),
 };
@@ -18,13 +18,14 @@ export default function post(req, res) {
   try {
     // TODO Validate user
     const reqBody = req.body;
-    const { screenName, userName, email, password } = reqBody;
+    const { screenName, userName, email, password, role } = reqBody;
     const user = {
+      ...defaultUserConfig,
       screenName,
       userName,
       email,
       password: bcrypt.hashSync(password, salt),
-      ...defaultUserConfig,
+      role: role || defaultUserConfig.role,
     };
 
     const _user = db.users.find({ email: user.email });

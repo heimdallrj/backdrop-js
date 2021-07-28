@@ -1,14 +1,18 @@
 [
   {
     "role": 0,
-    "description": "Administrator"
+    "description": "administrator"
   },
   {
     "role": 1,
-    "description": "Editor"
+    "description": "manager"
   },
   {
     "role": 2,
-    "description": "Subscriber"
+    "description": "editor"
+  },
+  {
+    "role": 3,
+    "description": "subscriber"
   }
 ]
