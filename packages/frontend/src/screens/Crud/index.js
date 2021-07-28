@@ -17,15 +17,17 @@ import {
   ResourceTitle,
   DraftIcon,
   FlexIcons,
-  EditIcon,
   DeleteIcon,
+  KeyIcon,
+  EditIcon,
+  LockClosedIcon,
   Status,
 } from './styled';
 
 const columns = [
-  { label: 'falgs', size: 5, visible: false },
-  { label: 'ID', size: 3, align: 'center' },
-  { label: 'Author', size: 10 },
+  { label: 'falgs', size: 3, visible: false },
+  { label: 'ID', size: 5, align: 'center' },
+  { label: 'Author', size: 12 },
   { label: 'Last Updated', size: 20 },
   { label: 'Status', size: 10, align: 'center' },
   { label: 'actions', size: 5, visible: false },
@@ -57,42 +59,52 @@ export default function Crud() {
     let _rows = [];
 
     if (data && data.length > 0) {
-      _rows = data.map(({ _id, lastUpdatedAt, author }, index) => {
-        return {
-          id: _id,
-          data: [
-            {
-              value: (
-                <FlexIcons>
-                  <DraftIcon />
-                </FlexIcons>
-              ),
-            },
-            {
-              value: index + 1,
-              align: 'center',
-            },
-            {
-              value: author.name,
-            },
-            {
-              value: lastUpdatedAt,
-            },
-            {
-              value: <Status>active</Status>,
-              align: 'center',
-            },
-            {
-              value: (
-                <FlexIcons>
-                  <EditIcon onClick={() => onClickEditHandler(resource, _id)} />
-                  <DeleteIcon onClick={() => onDeleteHandler(resource, _id)} />
-                </FlexIcons>
-              ),
-            },
-          ],
-        };
-      });
+      _rows = data.map(
+        (
+          { _id, lastUpdatedAt, author, isProtected, isPrivate, draft },
+          index
+        ) => {
+          return {
+            id: _id,
+            data: [
+              {
+                value: (
+                  <FlexIcons>
+                    {isProtected && <KeyIcon />}{' '}
+                    {isPrivate && <LockClosedIcon />} {draft && <DraftIcon />}
+                  </FlexIcons>
+                ),
+              },
+              {
+                value: index + 1,
+                align: 'center',
+              },
+              {
+                value: author.name,
+              },
+              {
+                value: lastUpdatedAt,
+              },
+              {
+                value: <Status>active</Status>,
+                align: 'center',
+              },
+              {
+                value: (
+                  <FlexIcons>
+                    <EditIcon
+                      onClick={() => onClickEditHandler(resource, _id)}
+                    />
+                    <DeleteIcon
+                      onClick={() => onDeleteHandler(resource, _id)}
+                    />
+                  </FlexIcons>
+                ),
+              },
+            ],
+          };
+        }
+      );
     }
     setRows(_rows);
   };

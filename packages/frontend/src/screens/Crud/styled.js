@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 import DraftIconSource from 'assets/icons/DraftIcon/Solid';
-import EditIconSource from 'assets/icons/Documents/Outline';
+import EditIconSource from 'assets/icons/Document/Outline';
 import DeleteIconSource from 'assets/icons/Delete/Outline';
+import KeyIconSource from 'assets/icons/Key/Solid';
+import LockClosedIconSource from 'assets/icons/Lock/Closed/Solid';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -45,7 +47,7 @@ export const ResourceTitle = styled.h5`
 
 export const DraftIcon = styled(DraftIconSource)`
   color: gray;
-  width: 12px;
+  width: 16px;
   align-self: center;
   cursor: pointer;
 `;
@@ -60,6 +62,20 @@ export const EditIcon = styled(EditIconSource)`
 export const DeleteIcon = styled(DeleteIconSource)`
   color: gray;
   width: 16px;
+  align-self: center;
+  cursor: pointer;
+`;
+
+export const LockClosedIcon = styled(LockClosedIconSource)`
+  color: gray;
+  width: 12px;
+  align-self: center;
+  cursor: pointer;
+`;
+
+export const KeyIcon = styled(KeyIconSource)`
+  color: gray;
+  width: 12px;
   align-self: center;
   cursor: pointer;
 `;
