@@ -12,7 +12,6 @@ import {
   MediaIcon,
   UsersIcon,
   SettingsIcon,
-  UserIcon,
   Menu,
   MenuItem,
 } from './styled';
@@ -80,11 +79,6 @@ export default function Nav() {
       </Menu>
 
       <Menu>
-        <MenuItem>
-          <Link to="/logout">
-            <UserIcon />
-          </Link>
-        </MenuItem>
         {getMenuItems(bottomMenuItems).map(({ to, icon }) => (
           <MenuItem key={to} active={selectedPath === to}>
             <Link to={to}>{icon}</Link>

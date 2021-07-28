@@ -43,6 +43,7 @@ export const ResourceTitle = styled.h5`
   padding: 0;
   font-size: 20px;
   font-weight: bold;
+  text-transform: uppercase;
 `;
 
 export const DraftIcon = styled(DraftIconSource)`
