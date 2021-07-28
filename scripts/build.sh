@@ -10,7 +10,7 @@ mkdir "$buildDir"
 # server
 serverDir=packages/server-nodejs
 declare -a dirs=('src');
-declare -a files=('.babelrc' '.env.example' '.eslintignore' '.eslintrc.js' '.gitignore' '.prettierignore' '.prettierrc.js' 'package.json', 'README.md');
+declare -a files=('.babelrc' '.env.example' '.eslintignore' '.eslintrc.js' '.gitignore' '.prettierignore' '.prettierrc.js' 'package.json', 'README.md', 'Dockerfile', '.dockerignore');
 
 for dir in "${dirs[@]}"
 do
