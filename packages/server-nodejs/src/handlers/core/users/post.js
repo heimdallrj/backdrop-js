@@ -9,7 +9,7 @@ import { response } from 'utils/http';
 import { jwtSecret, salt } from 'config';
 
 const defaultUserConfig = {
-  role: 2,
+  role: 3,
   status: 0,
   token: uniqid(),
 };

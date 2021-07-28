@@ -5,10 +5,14 @@
   },
   {
     "role": 1,
-    "description": "editor"
+    "description": "manager"
   },
   {
     "role": 2,
+    "description": "editor"
+  },
+  {
+    "role": 3,
     "description": "subscriber"
   }
 ]

@@ -1,6 +1,6 @@
 import SelectSource from 'react-select';
 
-import { FormField } from 'providers/ThemeProvider/styled';
+import { FormField, FormFieldError } from 'providers/ThemeProvider/styled';
 import { LabelWrap, Label, SelectWrap } from './styled';
 
 export default function Select({
@@ -8,6 +8,8 @@ export default function Select({
   name,
   options,
   value,
+  touched,
+  errors,
   onChange,
   ...restProps
 }) {
@@ -23,6 +25,7 @@ export default function Select({
           onChange={onChange}
         />
       </SelectWrap>
+      {touched && errors && <FormFieldError>{errors}</FormFieldError>}
     </FormField>
   );
 }

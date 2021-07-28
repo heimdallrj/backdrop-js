@@ -1,6 +1,7 @@
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import * as yup from 'yup';
 
 import { register as acRegister } from 'store/reducers/userSlice';
 
@@ -10,13 +11,26 @@ import { Wrapper } from './styled';
 
 import FormFields from '../FormFields';
 
+// TODO Improve validationSchema
+const validationSchema = yup.object().shape({
+  screenName: yup.string().required('* required'),
+  userName: yup.string().required('* required'),
+  email: yup.string().email('* invalid email address').required('* required'),
+  password: yup.string().required('* required'),
+  password_re: yup
+    .string()
+    .required('* required')
+    .oneOf([yup.ref('password'), null], '* passwords must match'),
+  role: yup.number().required('* required').positive().integer(),
+});
+
 const initialValues = {
-  screenName: 'Jane',
-  email: 'jane@example.com',
-  userName: 'jane',
-  password: 'pa$$word',
-  password_re: 'pa$$word',
-  role: 2,
+  screenName: '',
+  email: '',
+  userName: '',
+  password: '',
+  password_re: '',
+  role: 3,
 };
 
 export default function CreateUser() {
@@ -30,13 +44,7 @@ export default function CreateUser() {
       <Wrapper>
         <Formik
           initialValues={initialValues}
-          validate={(values) => {
-            const errors = {};
-            // if (!values.name) {
-            //   errors.name = 'Required';
-            // }
-            return errors;
-          }}
+          validationSchema={validationSchema}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             register(values, (err) => {
               if (err) {

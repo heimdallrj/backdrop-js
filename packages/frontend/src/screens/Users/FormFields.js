@@ -8,8 +8,14 @@ import { FormWrap, FormFooter } from './styled';
 
 const userRoleOptions = [
   { value: 0, label: 'administrator' },
-  { value: 1, label: 'editor' },
-  { value: 2, label: 'subscriber' },
+  { value: 1, label: 'manager' },
+  { value: 2, label: 'editor' },
+  { value: 3, label: 'subscriber' },
+];
+
+const userStatusOptions = [
+  { value: 0, label: 'inactive' },
+  { value: 1, label: 'active' },
 ];
 
 export default function FormFields({
@@ -22,6 +28,7 @@ export default function FormFields({
   setFieldValue,
   handleSubmit,
   submitText,
+  isUpdate = false,
 }) {
   return (
     <FormWrap>
@@ -56,27 +63,31 @@ export default function FormFields({
           onBlur={handleBlur}
         />
 
-        <TextInput
-          name="password"
-          label="password"
-          value={values.password}
-          errors={errors.password}
-          touched={touched.password}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          masked
-        />
+        {!isUpdate && (
+          <>
+            <TextInput
+              name="password"
+              label="password"
+              value={values.password}
+              errors={errors.password}
+              touched={touched.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              masked
+            />
 
-        <TextInput
-          name="password_re"
-          label="password (confirm)"
-          value={values.password_re}
-          errors={errors.password_re}
-          touched={touched.password_re}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          masked
-        />
+            <TextInput
+              name="password_re"
+              label="password (confirm)"
+              value={values.password_re}
+              errors={errors.password_re}
+              touched={touched.password_re}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              masked
+            />
+          </>
+        )}
 
         <Select
           label="role"
@@ -85,11 +96,28 @@ export default function FormFields({
           value={
             userRoleOptions
               ? userRoleOptions.find((option) => option.value === values.role)
-              : ''
+              : 3
           }
-          onChange={(option) => setFieldValue('role', option.value)}
+          onChange={(option) => setFieldValue('role', Number(option.value))}
           onBlur={handleBlur}
         />
+
+        {isUpdate && (
+          <Select
+            label="Status"
+            options={userStatusOptions}
+            name="status"
+            value={
+              userStatusOptions
+                ? userStatusOptions.find(
+                    (option) => option.value === values.status
+                  )
+                : 0
+            }
+            onChange={(option) => setFieldValue('role', Number(option.value))}
+            onBlur={handleBlur}
+          />
+        )}
 
         <FormFooter>
           <Button type="submit" disabled={isSubmitting}>

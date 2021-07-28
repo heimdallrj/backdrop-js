@@ -4,10 +4,7 @@ import { Formik, Field } from 'formik';
 import { useHistory, useParams } from 'react-router-dom';
 import forEach from 'lodash/forEach';
 
-import {
-  create as apiCreateResource,
-  update as apiUpdateResource,
-} from 'api/resources';
+import { update as apiUpdateResource } from 'api/resources';
 
 import Layout from 'components/Layout';
 import TextInput from 'components/TextInput';
