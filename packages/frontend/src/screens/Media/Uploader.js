@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { useHistory } from 'react-router-dom';
 
 import { create as apiCreateMedia } from 'api/media';
 
@@ -8,19 +7,26 @@ import Button from 'components/Button';
 
 import { Wrapper, Library, DropZone, FileList, FormFooter } from './styled';
 
-export default function Media() {
-  const history = useHistory();
+export default function Uploader({ onUpload }) {
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    accept: 'image/jpeg, image/png image/gif',
+    maxFiles: 5,
+  });
 
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
-
-  // eslint-disable-next-line no-unused-vars
+  const [files, setFiles] = useState([]);
+  const [, setError] = useState(null);
   const [uploding, setUploading] = useState(false);
 
   const createMedia = async () => {
     setUploading(true);
     apiCreateMedia(acceptedFiles, (err, resp) => {
+      if (err) {
+        setError(err);
+      }
       setUploading(false);
-      history.push('/media');
+      setFiles([]);
+
+      if (resp) onUpload(resp);
     });
   };
 
@@ -28,11 +34,14 @@ export default function Media() {
     createMedia(files);
   };
 
-  const files = acceptedFiles.map((file) => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
+  useEffect(() => {
+    const _files = acceptedFiles.map((file) => (
+      <li key={file.path}>
+        {file.path} - {file.size} bytes
+      </li>
+    ));
+    setFiles(_files);
+  }, [acceptedFiles]);
 
   return (
     <Wrapper>
@@ -40,11 +49,11 @@ export default function Media() {
         <DropZone {...getRootProps({ className: 'dropzone' })}>
           <input {...getInputProps()} />
           <p>Drag 'n' drop some files here, or click to select files</p>
+          <em>(Only *.jpeg, *.png and *.gif images will be accepted)</em>
         </DropZone>
 
         {files && files.length > 0 && (
           <FileList>
-            <h5>Files</h5>
             <ul>{files}</ul>
           </FileList>
         )}
