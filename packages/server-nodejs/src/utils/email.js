@@ -6,18 +6,18 @@ export default function mailer() {
   const transporter = nodemailer.createTransport({
     host: smtpHost,
     port: smtpPort,
-    secure: false,
+    // secure: false,
     auth: {
       user: smtpUser,
       pass: smtpPass,
     },
-    tls: {
-      rejectUnauthorized: false,
-    },
+    // tls: {
+    //   rejectUnauthorized: false,
+    // },
   });
 
   return {
-    send(to, subject, text) {
+    send(to, subject, text, cb) {
       const mailOptions = {
         from: smtpFrom,
         to,
@@ -25,7 +25,7 @@ export default function mailer() {
         text,
       };
 
-      return transporter.sendMail(mailOptions);
+      transporter.sendMail(mailOptions, cb);
     },
   };
 }

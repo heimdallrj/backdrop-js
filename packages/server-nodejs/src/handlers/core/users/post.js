@@ -4,9 +4,9 @@ import uniqid from 'uniqid';
 
 import { db } from 'utils/database/jsondb';
 import { response } from 'utils/http';
-// import mailer from 'utils/email';
+import Mailer from 'utils/email';
 
-import { jwtSecret, salt } from 'config';
+import { jwtSecret, salt, baseUrl } from 'config';
 
 const defaultUserConfig = {
   role: 3,
@@ -14,6 +14,7 @@ const defaultUserConfig = {
   token: uniqid(),
 };
 
+// eslint-disable-next-line consistent-return
 export default function post(req, res) {
   try {
     // TODO Validate user
@@ -39,14 +40,18 @@ export default function post(req, res) {
     delete userCreated.token;
 
     // TODO: Send email
-    // mailer.send(
-    //   email,
-    //   'Verify your account',
-    //   `${baseUrl}/auth/user?token=${defaultUserConfig.token}`
-    // );
+    const mailer = new Mailer();
+    mailer.send(
+      email,
+      'Verify your account',
+      `${baseUrl}/auth/user?token=${defaultUserConfig.token}`,
+      (err) => {
+        if (err) return response.internalError(res);
 
-    const token = jwt.sign(userCreated, jwtSecret);
-    return response.ok(res, { user: userCreated, token });
+        const token = jwt.sign(userCreated, jwtSecret);
+        return response.ok(res, { user: userCreated, token });
+      }
+    );
   } catch (err) {
     return response.internalError(res);
   }
