@@ -15,9 +15,10 @@ export function get(req, res) {
     if (!user) return response.unauthorized(res);
 
     // If user found, change token to expire
-    const _user = { ...user, token: uniqid() };
+    const _user = { ...user, status: 1, token: uniqid() };
     db().users.updateOne({ token }, _user);
-    return response.ok(res);
+    // return response.ok(res);
+    return res.redirect('/');
   } catch (err) {
     return response.internalError(res);
   }
