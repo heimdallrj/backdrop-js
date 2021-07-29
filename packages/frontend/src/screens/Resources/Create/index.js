@@ -13,6 +13,7 @@ import Checkbox from 'components/Checkbox';
 import Preloader from 'components/Preloader';
 import CustomSelect from 'components/Select/CustomSelect';
 import SchemaBuilder from 'components/SchemaBuilder';
+import CustomAPIBuilder from './CustomAPIBuilder';
 
 import { Form, FormField } from 'providers/ThemeProvider/styled';
 import {
@@ -27,7 +28,7 @@ const typeOptions = [
   { value: 'default', label: 'default' },
   { value: 'proxy', label: 'proxy' },
   // { value: 'static', label: 'static' }, // TODO: Enable when ready
-  // { value: 'custom', label: 'custom' },
+  { value: 'custom', label: 'custom' },
 ];
 
 const statusOptions = [
@@ -219,12 +220,14 @@ export default function CreateResource() {
                   onBlur={handleBlur}
                 />
 
-                {values.type !== 'proxy' && (
+                {['default'].includes(values.type) && (
                   <SchemaBuilder
                     initialSchema={schema}
                     onUpdateSchema={handleSchemaUpdate}
                   />
                 )}
+
+                {values.type === 'custom' && <CustomAPIBuilder {...values} />}
 
                 <FormFooter>
                   <Button type="submit" disabled={isSubmitting}>
