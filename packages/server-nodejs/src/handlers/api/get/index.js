@@ -16,7 +16,7 @@ export default function get(req, res) {
     }
 
     const collName = `_${resourceConfig.name}`;
-    const docs = db[collName].find();
+    const docs = db()[collName].find();
 
     // TODO: Implements pagination and search
 
