@@ -36,6 +36,7 @@ const columns = [
 export default function Crud() {
   const history = useHistory();
 
+  const { user } = useSelector((state) => state.auth);
   const { resources: resourcesOriginal } = useSelector(
     (state) => state.resources
   );
@@ -114,9 +115,14 @@ export default function Crud() {
   }, []);
 
   useEffect(() => {
-    const filtered = resourcesOriginal.filter((ro) => ro.type !== 'proxy');
+    const filtered = resourcesOriginal.filter((ro) => {
+      if (ro.protected) {
+        if (user.role !== 0) return false;
+      }
+      return ro.type !== 'proxy';
+    });
     setResources(filtered);
-  }, [resourcesOriginal]);
+  }, [resourcesOriginal, user]);
 
   useEffect(() => {
     if (resources && resources.length > 0 && !resource) {
