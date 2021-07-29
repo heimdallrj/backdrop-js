@@ -61,6 +61,7 @@ yarn
 Apply labels appropriately for each issues when created:
 
 - `epic`
+- `story`
 - `bug`
 - `feature`
 - `feature-request`
@@ -82,6 +83,13 @@ Labels for maintainers
 - `invalid`
 - `good first issue`
 - `duplicate`
+- `lock`
+
+Priorities
+
+- `priority:high`
+- `priority:medium`
+- `priority:low`
 
 ### FAQ
 
