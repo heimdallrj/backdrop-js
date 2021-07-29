@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "backdrop-js",
+  "version": "1.0.0-alpha.2",
   "workspaces": [
     "packages/*"
   ],
@@ -15,9 +16,16 @@
     "build:frontend": "cd packages/frontend && yarn build",
     "build:jsondb": "cd packages/node-jsondb && yarn build",
     "prebuild": "yarn build:server && yarn build:frontend",
-    "build": "./scripts/build.sh"
+    "build": "node ./scripts/build.js"
   },
   "dependencies": {
-    "concurrently": "^6.2.0"
+    "concurrently": "^6.2.0",
+    "cross-spawn": "^7.0.3",
+    "mkdirp": "^1.0.4",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "fs-extra": "^10.0.0"
   }
 }

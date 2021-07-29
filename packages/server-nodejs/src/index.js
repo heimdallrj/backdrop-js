@@ -50,7 +50,7 @@ serve(async () => {
   app.use('/api', apiRoutes);
   app.use('/oauth', oauthRoutes);
 
-  app.use(express.static(path.join(path.join(__dirname, 'public'))));
+  app.use(express.static(path.join(path.join(__dirname, '..', 'public'))));
 
   app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
