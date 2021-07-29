@@ -30,7 +30,7 @@ try {
 
   // @server
   const serverDirPath = path.join(__dirname, '..', 'packages', 'server-nodejs');
-  const excludes = ['.env', '.env.example', '.vscode', 'media', '.jsondb', 'src', 'dist', 'node_modules', 'public'];
+  const excludes = ['.env', '.vscode', 'media', '.jsondb', 'src', 'dist', 'node_modules', 'public'];
 
   const filesOrDirs = fs.readdirSync(serverDirPath).filter(fOrd => !excludes.includes(fOrd));
 
