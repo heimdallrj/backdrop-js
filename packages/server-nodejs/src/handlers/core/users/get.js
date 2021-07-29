@@ -9,6 +9,6 @@ const sanatize = (users = []) =>
   });
 
 export default function get(req, res) {
-  const users = db.users.find();
+  const users = db().users.find();
   return response.ok(res, sanatize(users));
 }

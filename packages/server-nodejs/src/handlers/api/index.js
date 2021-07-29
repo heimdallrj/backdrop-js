@@ -12,7 +12,7 @@ export { default as patch } from './patch';
 export { default as delete } from './delete';
 
 export function api(req, res) {
-  const docs = db.resources.find({
+  const docs = db().resources.find({
     namespace,
     private: false,
     status: 'published',
@@ -38,7 +38,7 @@ export function api(req, res) {
     }
   });
 
-  const appConfig = db.config.findOne({ type: 'app' });
+  const appConfig = db().config.findOne({ type: 'app' });
   const { appName, appDesc } = appConfig;
 
   return res.json({

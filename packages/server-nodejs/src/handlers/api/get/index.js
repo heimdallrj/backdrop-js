@@ -18,6 +18,8 @@ export default function get(req, res) {
     const collName = `_${resourceConfig.name}`;
     const docs = db[collName].find();
 
+    // TODO: Implements pagination and search
+
     return response.ok(res, docs);
   } catch (err) {
     return response.internalError(res);

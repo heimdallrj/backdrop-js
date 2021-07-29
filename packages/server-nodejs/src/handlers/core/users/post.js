@@ -28,13 +28,13 @@ export default function post(req, res) {
       role: role || defaultUserConfig.role,
     };
 
-    const _user = db.users.find({ email: user.email });
+    const _user = db().users.find({ email: user.email });
     // If user exists, return error
     if (_user && _user.length > 0) {
       return response.bad(res, 'User already exists');
     }
 
-    const userCreated = db.users.insert(user);
+    const userCreated = db().users.insert(user);
     delete userCreated.password;
     delete userCreated.token;
 

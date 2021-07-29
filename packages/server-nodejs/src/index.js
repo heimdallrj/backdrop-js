@@ -19,7 +19,7 @@ import oauthRoutes from 'routes/oauth';
 import logger from 'utils/logger';
 
 import { port } from 'config';
-import { serve } from './server';
+import serve from './serve';
 
 const app = express();
 
