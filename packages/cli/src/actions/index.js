@@ -18,7 +18,7 @@ const ensureDirSync = function (path) {
   fs.mkdirSync(path);
 };
 
-function installDeps(appDir, namespace, { install }) {
+function installDeps(appDir, app, { install }) {
   process.chdir(appDir);
 
   let child;
@@ -41,7 +41,7 @@ function installDeps(appDir, namespace, { install }) {
   logger.log('Inside that directory, you can run several commands:');
   logger.log();
 
-  logger.log(`  ${chalk.cyan('npm run start:dev')}`);
+  logger.log(`  ${chalk.cyan('npm run start')}`);
   logger.log(`    Starts the development server.`);
   logger.log();
 
@@ -49,54 +49,48 @@ function installDeps(appDir, namespace, { install }) {
   logger.log(`    Bundles the app into static files for production.`);
   logger.log();
 
-  logger.log(`  ${chalk.cyan('npm start')}`);
+  logger.log(`  ${chalk.cyan('npm start:prod')}`);
   logger.log(`    Starts the production server.`);
   logger.log();
 
   logger.log('You can start by typing:');
   logger.log();
 
-  logger.log(`  cd ${namespace}`);
-  logger.log(`  ${chalk.cyan('npm start:dev')}`);
+  logger.log(`  ${chalk.cyan(`cd ${app}`)}`);
+  logger.log(`  ${chalk.cyan('npm start')}`);
   logger.log();
   logger.log('Cheers!');
 };
 
 // init()
-function init(namespace, options) {
-  // Get the working directory and application path
-  const cwd = process.cwd();
-  const appDir = `${cwd} / ${namespace}`;
+function init(app, options) {
+  try {
+    // Get the working directory and application path
+    const cwd = process.cwd();
+    const appDir = `${cwd}/${app}`;
 
-  logger.log(`Creating a new Backdrop Server in ${chalk.green(appDir)}.`);
-  logger.log('Downloading...');
+    logger.log(`Creating a new Backdrop Server in ${chalk.green(appDir)}.`);
+    logger.log('Downloading...');
 
-  // Create temp directory
-  const tmpDir = path.join(__dirname, '..', '..', '_tmp');
-  const tmpExtractedDir = path.join(tmpDir, `backdrop - ${version}`);
-  const tmpZipFilePath = path.join(tmpDir, `backdrop - ${version}.zip`);
-  ensureDirSync(tmpDir);
+    // Create temp directory
+    const tmpDir = path.join(cwd, `_${app}`);
+    const releaseFp = path.join(tmpDir, `backdrop-js-${version}`);
+    ensureDirSync(tmpDir);
 
-  // Check if the latest version is exisist
-  if (fsExtra.isFileExists(tmpZipFilePath)) {
-    // No need to download
-    fse.copySync(tmpExtractedDir, appDir);
-
-    installDeps(appDir, namespace, options);
-  } else {
     // Download latest release to temp directory
     const dl = new DownloaderHelper(releaseUrl, tmpDir);
     dl.on('end', () => {
-      fs.createReadStream(tmpZipFilePath)
+      fs.createReadStream(`${releaseFp}.zip`)
         .pipe(unzipper.Extract({ path: tmpDir })
           .on('finish', () => {
-            fse.copySync(tmpExtractedDir, appDir);
+            fse.copySync(releaseFp, appDir);
             fsExtra.forceUnlink(tmpDir);
-
-            installDeps(appDir, namespace, options);
+            installDeps(appDir, app, options);
           }));
     });
     dl.start();
+  } catch (e) {
+    logger.error(e);
   }
 }
 

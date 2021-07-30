@@ -6,10 +6,10 @@ program.version(pkg.version);
 
 // program: initialize
 program
-  .command("server init <namespace>")
+  .command("init <app>")
   .option('-i, --install', 'install dependencies')
   .description("Initialize the project")
-  .action((namespace, options) => actions.init(namespace, options));
+  .action((...args) => actions.init(...args));
 
 // program: [anything else]
 program.command("*").action((args) => actions.error(args));
