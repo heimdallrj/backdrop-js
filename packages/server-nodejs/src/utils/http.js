@@ -52,27 +52,35 @@ http.messages = httpStatus;
 // response
 export const response = {};
 
-response.ok = (res, message = httpStatus[http.OK]) =>
-  res.status(http.OK).json({ code: http.OK, message });
+response.ok = (res, data = httpStatus[http.OK], errors = null) =>
+  res.status(http.OK).json({ code: http.OK, data, errors });
 
-response.notFound = (res, message = httpStatus[http.NOT_FOUND]) =>
-  res.status(http.NOT_FOUND).json({ code: http.NOT_FOUND, message });
+response.notFound = (res, data = null, errors = [httpStatus[http.NOT_FOUND]]) =>
+  res.status(http.NOT_FOUND).json({ code: http.NOT_FOUND, data, errors });
 
 response.internalError = (
   res,
-  message = httpStatus[http.INTERNAL_SERVER_ERROR]
+  data = null,
+  errors = [httpStatus[http.INTERNAL_SERVER_ERROR]]
 ) =>
   res
     .status(http.INTERNAL_SERVER_ERROR)
-    .json({ code: http.INTERNAL_SERVER_ERROR, message });
+    .json({ code: http.INTERNAL_SERVER_ERROR, data, errors });
 
-response.bad = (res, message = httpStatus[http.BAD_REQUEST]) =>
-  res.status(http.BAD_REQUEST).json({ code: http.BAD_REQUEST, message });
+response.bad = (res, data = null, errors = [httpStatus[http.BAD_REQUEST]]) =>
+  res.status(http.BAD_REQUEST).json({ code: http.BAD_REQUEST, data, errors });
 
-response.unauthorized = (res, message = httpStatus[http.UNAUTHORIZED]) =>
-  res.status(http.UNAUTHORIZED).json({ code: http.UNAUTHORIZED, message });
+response.unauthorized = (
+  res,
+  data = null,
+  errors = [httpStatus[http.UNAUTHORIZED]]
+) =>
+  res.status(http.UNAUTHORIZED).json({ code: http.UNAUTHORIZED, data, errors });
 
-response.forbidden = (res, message = httpStatus[http.FORBIDDEN]) =>
-  res.status(http.FORBIDDEN).json({ code: http.FORBIDDEN, message });
+response.forbidden = (
+  res,
+  data = null,
+  errors = [httpStatus[http.FORBIDDEN]]
+) => res.status(http.FORBIDDEN).json({ code: http.FORBIDDEN, data, errors });
 
 export default http;
