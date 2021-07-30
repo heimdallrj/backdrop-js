@@ -1,6 +1,18 @@
 import axios from 'axios';
 
+import { userSessionKey } from 'config';
+
+import localStorage from './localStorage';
+
 const requestInterceptor = (req) => {
+  const user = localStorage.getParsed(userSessionKey);
+  const { token } = user || {};
+
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
+    setAuthHeader(token);
+  }
+
   return req;
 };
 
