@@ -31,15 +31,18 @@ router.delete('/resource/:id', coreMiddlewares.auth, resourceHandler.delete);
 
 // media
 // TODO: Add coreMiddlewares.auth middleware
-router.get('/media', mediaHandler.get);
+router.get('/media', coreMiddlewares.auth, mediaHandler.get);
 router.post(
   '/media',
-  fileUpload({
-    createParentPath: true,
-    limits: {
-      fileSize: 2 * 1024 * 1024 * 1024, // 2MB max file(s) size
-    },
-  }),
+  [
+    coreMiddlewares.auth,
+    fileUpload({
+      createParentPath: true,
+      limits: {
+        fileSize: 2 * 1024 * 1024 * 1024, // 2MB max file(s) size
+      },
+    }),
+  ],
   mediaHandler.post
 );
 

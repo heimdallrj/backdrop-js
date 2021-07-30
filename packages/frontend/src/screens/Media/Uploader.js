@@ -9,7 +9,7 @@ import { Wrapper, Library, DropZone, FileList, FormFooter } from './styled';
 
 export default function Uploader({ onUpload }) {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    accept: 'image/jpeg, image/png image/gif',
+    accept: 'image/jpeg, image/png, image/gif',
     maxFiles: 5,
   });
 

@@ -140,7 +140,7 @@ export default function Crud() {
 
   const onDeleteHandler = async ({ name }, id) => {
     // eslint-disable-next-line no-restricted-globals
-    if (confirm('Do you want to delete this resource?')) {
+    if (confirm('Do you want to delete?')) {
       await apiDelete(name, id);
       fetchAll({ name });
     }

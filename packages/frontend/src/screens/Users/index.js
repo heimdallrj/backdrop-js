@@ -60,7 +60,7 @@ export default function Users() {
 
   const onDeleteHandler = (id) => {
     // eslint-disable-next-line no-restricted-globals
-    if (confirm('Do you want to delete this resource?')) {
+    if (confirm('Do you want to delete?')) {
       dispatch(acDeleteUser(id));
     }
   };
