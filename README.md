@@ -19,9 +19,7 @@ yarn
 
 #### Build
 
-- Open `./scripts/build.sh`
-- Update `version` at Line 4 in `build.sh`
-- Run `npm run build` to build compined version of both backend and frontend.
+- Run `yarn build` to build compined version of both backend and frontend.
 - Build will be created in the root named `${appName}-${version}`
 
 #### Release
@@ -61,6 +59,7 @@ yarn
 Apply labels appropriately for each issues when created:
 
 - `epic`
+- `story`
 - `bug`
 - `feature`
 - `feature-request`
@@ -76,12 +75,19 @@ Components:
 - `comp:node-jsondb`
 - `comp:server`
 
-Labels for maintainers
+Labels for maintainers:
 
 - `wontfix`
 - `invalid`
 - `good first issue`
 - `duplicate`
+- `lock`
+
+Priorities:
+
+- `priority:high`
+- `priority:medium`
+- `priority:low`
 
 ### FAQ
 
