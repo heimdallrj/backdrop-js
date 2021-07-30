@@ -31,6 +31,7 @@ export const Main = styled.div`
   padding: 15px;
   background: #fff;
   flex: 1;
+  overflow-y: scroll;
 `;
 
 export const Left = styled.div`
