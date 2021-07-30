@@ -10,7 +10,8 @@
           "utils": "./src/utils",
           "config": "./src/config",
           "middlewares": "./src/middlewares",
-          "handlers": "./src/handlers"
+          "handlers": "./src/handlers",
+          "database": "./src/database"
         }
       }
     ]

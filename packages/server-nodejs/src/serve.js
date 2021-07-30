@@ -3,6 +3,7 @@ import * as config from 'config';
 
 import { ensureDirSync } from 'utils/fs';
 import { connect as connectJsonDb } from 'utils/database/jsondb';
+import { connect as connectMongo } from 'database/mongodb';
 
 async function ensureDbConn({ dbConnection }) {
   if (dbConnection === 'jsondb') {
@@ -26,6 +27,12 @@ async function ensureDbConn({ dbConnection }) {
     });
     return true;
   }
+
+  if (dbConnection === 'mongodb') {
+    connectMongo();
+    return true;
+  }
+
   throw new Error('not implemented');
 }
 
