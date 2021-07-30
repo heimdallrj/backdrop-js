@@ -89,6 +89,10 @@ Priorities:
 - `priority:medium`
 - `priority:low`
 
+#### API Docs
+
+Check [postman collection](https://documenter.getpostman.com/view/16889203/TzseK6ym)
+
 ### FAQ
 
 #### Error: Cannot find module '<path>/backdrop-js/node_modules/@backdropjs/jsondb/dist/index.js'. Please verify that the package.json has a valid "main" entry
