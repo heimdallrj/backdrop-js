@@ -3,8 +3,6 @@ const fs = require('fs');
 const fse = require('fs-extra');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
-const spawn = require('cross-spawn');
-const copyfiles = require('copyfiles');
 
 // Utils
 function isFileOrDirExists(fp) {
