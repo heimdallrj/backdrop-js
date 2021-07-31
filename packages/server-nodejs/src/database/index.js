@@ -1,57 +1,51 @@
-// // db()
-// // db().users
-// // db().users.find().get();
-// // db().users.find().sort().get();
+import path from 'path';
+import { ensureDirSync } from 'utils/fs';
 
-// // cursor
-// const cursor = () => {
-//   insert = () => ({}),
-// };
+import { connect as connectJsonDb } from 'database/jsondb';
+import { dbConnection, jsonDbPath } from 'config';
 
-// // collection
-// export const aggregate = () => ({});
+import userRoles from './initialData/user_roles.json';
+import userStatus from './initialData/user_status.json';
 
-// export const count = () => ({});
+export const connect = (cb) => {
+  try {
+    switch (dbConnection) {
+      case 'jsondb':
+        ensureDirSync(path.join(jsonDbPath, '.jsondb'));
+        connectJsonDb({
+          initialData: [
+            {
+              coll: 'users',
+              data: [],
+            },
+            {
+              coll: 'config',
+              data: [],
+            },
+            {
+              coll: 'resources',
+              data: [],
+            },
+            {
+              coll: 'user_status',
+              data: userStatus,
+            },
+            {
+              coll: 'user_roles',
+              data: userRoles,
+            },
+          ],
+        });
+        cb(null, true);
+        break;
 
-// export const drop = () => ({});
-
-// export const insert = () => ({});
-
-// export const find = () => ({});
-
-// export const findOne = () => ({});
-
-// export const insertOne = () => ({});
-
-// export const remove = () => ({});
-
-// export const update = () => ({});
-
-// export const updateOne = () => ({});
-
-// // db
-// export const getCollections = () => {
-//   const collections = {};
-//   // Fetch all collections
-//   // and set them to collections object
-//   collections['users'] = {
-//     find: () => {
-//       return {
-//         get: () => {
-//           return {};
-//         },
-//         sort: () => {
-//           return {
-//             get: () => {
-//               return {};
-//             }
-//           };
-//         }
-//       };
-//     }
-//   };
-
-//   return collections;
-// };
-
-// export const db = () => getCollections();
+      case 'mongodb':
+        break;
+      default:
+        cb('not implemented', null);
+        break;
+    }
+  } catch (e) {
+    cb('Database connection failed.', null);
+  }
+};

@@ -1,0 +1,18 @@
+[
+  {
+    "role": 0,
+    "description": "administrator"
+  },
+  {
+    "role": 1,
+    "description": "manager"
+  },
+  {
+    "role": 2,
+    "description": "editor"
+  },
+  {
+    "role": 3,
+    "description": "subscriber"
+  }
+]

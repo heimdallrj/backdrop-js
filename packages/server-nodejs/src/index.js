@@ -8,6 +8,8 @@ import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import hpp from 'hpp';
 
+import { connect } from 'database';
+
 import * as pingHandler from 'handlers/ping';
 import * as bootstrapHandler from 'handlers/bootstrap';
 
@@ -19,7 +21,6 @@ import oauthRoutes from 'routes/oauth';
 import logger from 'utils/logger';
 
 import { port } from 'config';
-import serve from './serve';
 
 const app = express();
 
@@ -41,7 +42,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('dev'));
 
-serve(async () => {
+connect(async (err) => {
+  if (err) throw new Error(err);
+
   app.get('/ping', pingHandler.get);
   app.post('/bootstrap', bootstrapHandler.post);
 
