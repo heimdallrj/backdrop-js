@@ -17,8 +17,9 @@ export function get() {
   return _db;
 }
 
-export function db() {
-  return getCollections();
+export function db(coll = null) {
+  if (!coll) return getCollections();
+  return getCollections()[coll];
 }
 
 export function connect(config = {}) {

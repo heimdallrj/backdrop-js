@@ -12,7 +12,7 @@ export function auth(req, res, next) {
 
     const user = jwt.verify(token, jwtSecret);
 
-    const _user = db().users.findOne({ _id: user._id });
+    const _user = db('users').findOne({ _id: user._id });
 
     if (!_user || _user.role !== user.role || _user.status !== user.status) {
       return response.forbidden(res);

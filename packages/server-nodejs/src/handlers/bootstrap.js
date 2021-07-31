@@ -18,7 +18,7 @@ const defaultUserConfig = {
 
 export function post(req, res) {
   try {
-    const config = db().config.findOne({ type: 'app' });
+    const config = db('config').findOne({ type: 'app' });
     // Already bootstrapped
     if (config) {
       return response.unauthorized(res);
@@ -37,7 +37,7 @@ export function post(req, res) {
       ...defaultConfig,
       adminUser: { screenName, userName, email },
     };
-    configCreated = db().config.insert(_config);
+    configCreated = db('config').insert(_config);
 
     // @user
     const user = {
@@ -47,7 +47,7 @@ export function post(req, res) {
       password: bcrypt.hashSync(password, salt),
       ...defaultUserConfig,
     };
-    db().users.insert(user);
+    db('users').insert(user);
 
     return response.ok(res, configCreated);
   } catch (err) {

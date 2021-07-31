@@ -21,7 +21,7 @@ export default function get(req, res) {
     let docs = [];
 
     const collName = `_${resourceConfig.name}`;
-    docs = db()[collName].find();
+    docs = db(collName).find();
 
     // search
     // TODO: Move this logic to JsonDB

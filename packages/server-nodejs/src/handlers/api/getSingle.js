@@ -14,7 +14,7 @@ export default function getSingle(req, res) {
 
     const collName = `_${resourceConfig.name}`;
 
-    const doc = db()[collName].findOne({ _id: req.params.id });
+    const doc = db(collName).findOne({ _id: req.params.id });
     if (!doc) return response.notFound(res);
 
     // Process relationship configs
@@ -27,7 +27,7 @@ export default function getSingle(req, res) {
         val.relationship.forEach(({ selector }) => {
           const query = {};
           query[selector] = req.params.id;
-          docs = db()[`_${key}`].find(query);
+          docs = db(`_${key}`).find(query);
           doc[key] = docs || [];
         });
       }

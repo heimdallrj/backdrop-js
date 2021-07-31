@@ -13,8 +13,9 @@ export function get() {
   return _db && _db.db('backdropjs');
 }
 
-export function db() {
-  return _db.db('backdropjs');
+export function db(coll = null) {
+  if (!coll) return _db.db('backdropjs');
+  return _db.db('backdropjs').collection(coll);
 }
 
 export function close() {

@@ -13,7 +13,7 @@ export default function post(req, res) {
     const newDoc = req.body;
     const collName = `_${resourceConfig.name}`;
 
-    const doc = db()[collName].insert(newDoc);
+    const doc = db(collName).insert(newDoc);
     return response.ok(res, doc);
   } catch (err) {
     return response.internalError(res);

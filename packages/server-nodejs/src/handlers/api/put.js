@@ -12,7 +12,7 @@ export default function put(req, res) {
   const collName = `_${resourceConfig.name}`;
   const { id: _id } = req.params;
 
-  const doc = db()[collName].findOne({ _id });
+  const doc = db(collName).findOne({ _id });
   if (!doc) return response.notFound(res);
 
   const newDoc = {
@@ -20,7 +20,7 @@ export default function put(req, res) {
     _id,
   };
 
-  const updatedDoc = db()[collName].updateOne({ _id }, newDoc);
+  const updatedDoc = db(collName).updateOne({ _id }, newDoc);
   if (!updatedDoc) return response.internalError(res);
   return response.ok(res, updatedDoc);
 }

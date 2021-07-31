@@ -23,7 +23,7 @@ export default function postByType(req, res) {
         email,
       };
       const config = { type, appName, appDesc, baseUrl, database, admin };
-      configCreated = db().config.insert(config);
+      configCreated = db('config').insert(config);
 
       // user
       const user = {
@@ -34,7 +34,7 @@ export default function postByType(req, res) {
         role: 0,
         status: 1,
       };
-      db().users.insert(user);
+      db('users').insert(user);
       return response.ok(res, configCreated);
     }
 

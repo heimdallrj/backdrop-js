@@ -6,7 +6,7 @@ import { baseUrl } from 'config';
 export function get(req, res) {
   try {
     let toResponse = null;
-    const config = db().config.findOne({ type: 'app' });
+    const config = db('config').findOne({ type: 'app' });
     if (config) {
       toResponse = {
         name: config.appName,
