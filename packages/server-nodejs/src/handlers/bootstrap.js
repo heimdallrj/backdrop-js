@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { db } from 'utils/database/jsondb';
+import { db } from 'database/jsondb';
 import { response } from 'utils/http';
 import uniqid from 'uniqid';
 

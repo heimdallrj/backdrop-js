@@ -1,6 +1,6 @@
 import forEach from 'lodash/forEach';
 
-import { db } from 'utils/database/jsondb';
+import { db } from 'database/jsondb';
 import { response } from 'utils/http';
 import * as customHanlders from 'handlers/custom';
 

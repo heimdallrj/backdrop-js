@@ -1,5 +1,5 @@
 import { response } from 'utils/http';
-import { db } from 'utils/database/jsondb';
+import { db } from 'database/jsondb';
 
 export default function getSingle(req, res) {
   const { id } = req.params;

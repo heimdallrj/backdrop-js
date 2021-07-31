@@ -1,4 +1,4 @@
-import { db } from 'utils/database/jsondb';
+import { db } from 'database/jsondb';
 import { response } from 'utils/http';
 
 export default function getSingle(req, res) {

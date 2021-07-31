@@ -1,4 +1,4 @@
-import { db } from 'utils/database/jsondb';
+import { db } from 'database/jsondb';
 import { baseUrl } from 'config';
 
 const namespace = 'core';
