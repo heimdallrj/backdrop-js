@@ -1,7 +1,7 @@
 import path from 'path';
 import bcrypt from 'bcrypt';
 
-require('dotenv').config();
+// require('dotenv').config();
 
 export const baseUrl = process.env.BASE_URL;
 export const port = process.env.PORT || 5000;
@@ -12,7 +12,7 @@ export const filesToBeIgnored = ['.DS_Store'];
 export const reservedResourceNames = ['config', 'resources', 'users'];
 
 export const dbConnection = process.env.DB_CONNECTION || 'jsondb';
-export const dbConfig = null;
+export const dbMongoUrl = process.env.DB_MONGO_URL;
 export const jsonDbPath = path.join(__dirname, '..');
 
 export const oAuthGitHubClientId = process.env.OAUTH_GITHUB_CLIENT_ID;

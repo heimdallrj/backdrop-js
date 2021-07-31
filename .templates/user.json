@@ -5,5 +5,7 @@
   "password": "pa$$word",
   "role": 0,
   "status": 1,
-  "token": ""
+  "token": "",
+  "createdAt": "",
+  "updatedAt": ""
 }

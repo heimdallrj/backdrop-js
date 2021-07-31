@@ -1,4 +1,4 @@
-import { db } from 'utils/database/jsondb';
+import { db } from 'database';
 import { response } from 'utils/http';
 
 const sanatize = (users = []) =>
@@ -9,6 +9,6 @@ const sanatize = (users = []) =>
   });
 
 export default function get(req, res) {
-  const users = db().users.find();
+  const users = db('users').find();
   return response.ok(res, sanatize(users));
 }

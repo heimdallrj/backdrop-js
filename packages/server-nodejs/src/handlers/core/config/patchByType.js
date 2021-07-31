@@ -1,4 +1,4 @@
-import { db } from 'utils/database/jsondb';
+import { db } from 'database';
 import { response } from 'utils/http';
 
 const defaultConfigs = {
@@ -19,7 +19,7 @@ export default function getByType(req, res) {
     const { type } = req.params;
     const { admin, config } = req.body;
 
-    const _config = db().config.findOne({ type });
+    const _config = db('config').findOne({ type });
 
     let _admin = _config.admin;
     if (admin && typeof admin === 'object') {
@@ -33,7 +33,7 @@ export default function getByType(req, res) {
       admin: _admin,
     };
 
-    const doc = db().config.updateOne({ type }, configToSave);
+    const doc = db('config').updateOne({ type }, configToSave);
     response.ok(res, doc);
   } catch (err) {
     response.internalError(res);

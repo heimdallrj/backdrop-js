@@ -1,10 +1,10 @@
-import { db } from 'utils/database/jsondb';
+import { db } from 'database';
 import { baseUrl } from 'config';
 
 const namespace = 'core';
 
 export default function core(req, res) {
-  const appConfig = db().config.findOne({ type: 'app' });
+  const appConfig = db('config').findOne({ type: 'app' });
   const { appName, appDesc } = appConfig;
 
   res.json({

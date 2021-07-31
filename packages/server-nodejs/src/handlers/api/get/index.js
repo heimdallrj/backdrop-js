@@ -1,6 +1,6 @@
 /* eslint no-param-reassign: 0 */
 
-import { db } from 'utils/database/jsondb';
+import { db } from 'database';
 import { response } from 'utils/http';
 import * as customHanlders from 'handlers/custom';
 import proxy from './proxy';
@@ -21,7 +21,7 @@ export default function get(req, res) {
     let docs = [];
 
     const collName = `_${resourceConfig.name}`;
-    docs = db()[collName].find();
+    docs = db(collName).find();
 
     // search
     // TODO: Move this logic to JsonDB
