@@ -1,4 +1,4 @@
-import { db } from 'database/jsondb';
+import { db } from 'database';
 import { response } from 'utils/http';
 
 export default function getByType(req, res) {

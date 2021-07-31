@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { db } from 'database/jsondb';
+import { db } from 'database';
 import { response } from 'utils/http';
 import { jwtSecret } from 'config';
 

@@ -2,17 +2,21 @@ import { dbMongoUrl } from 'config';
 
 const mongoClient = require('mongodb').MongoClient;
 
-let mongodb;
+let _db;
 
 export async function connect() {
-  await mongoClient.connect(dbMongoUrl);
+  _db = await mongoClient.connect(dbMongoUrl);
   return true;
 }
 
 export function get() {
-  return mongodb;
+  return _db && _db.db('backdropjs');
+}
+
+export function db() {
+  return _db.db('backdropjs');
 }
 
 export function close() {
-  mongodb.close();
+  _db.close();
 }

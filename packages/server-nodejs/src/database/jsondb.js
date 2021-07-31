@@ -13,8 +13,17 @@ const getCollections = () => {
   return _collection;
 };
 
-export const connect = (config = {}) => new JsonDB(jsonDbPath, config);
+export function get() {
+  return _db;
+}
 
 export function db() {
   return getCollections();
+}
+
+export function connect(config = {}) {
+  if (!_db) {
+    _db = new JsonDB(jsonDbPath, config);
+  }
+  return _db;
 }

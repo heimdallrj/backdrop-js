@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import uniqid from 'uniqid';
 
-import { db } from 'database/jsondb';
+import { db } from 'database';
 import { response } from 'utils/http';
 import Mailer from 'utils/email';
 

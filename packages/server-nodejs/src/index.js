@@ -8,8 +8,6 @@ import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import hpp from 'hpp';
 
-import { connect } from 'database';
-
 import * as pingHandler from 'handlers/ping';
 import * as bootstrapHandler from 'handlers/bootstrap';
 
@@ -42,24 +40,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('dev'));
 
-connect(async (err) => {
-  if (err) throw new Error(err);
+app.get('/ping', pingHandler.get);
+app.post('/bootstrap', bootstrapHandler.post);
 
-  app.get('/ping', pingHandler.get);
-  app.post('/bootstrap', bootstrapHandler.post);
+app.use('/auth', authRoutes);
+app.use('/core', coreRoutes);
+app.use('/api', apiRoutes);
+app.use('/oauth', oauthRoutes);
 
-  app.use('/auth', authRoutes);
-  app.use('/core', coreRoutes);
-  app.use('/api', apiRoutes);
-  app.use('/oauth', oauthRoutes);
+app.use(express.static(path.join(path.join(__dirname, '..', 'public'))));
 
-  app.use(express.static(path.join(path.join(__dirname, '..', 'public'))));
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
 
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
-  });
-
-  app.listen(port, () => {
-    logger.log(`Server is running on ${port}`);
-  });
+app.listen(port, () => {
+  logger.log(`Server is running on ${port}`);
 });

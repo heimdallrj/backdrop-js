@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { db } from 'database/jsondb';
+import { db } from 'database';
 import { response } from 'utils/http';
 import uniqid from 'uniqid';
 

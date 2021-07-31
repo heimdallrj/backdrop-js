@@ -1,5 +1,5 @@
 import { response } from 'utils/http';
-import JsonDB, { db } from 'database/jsondb';
+import JsonDB, { db } from 'database';
 
 export default function post(req, res) {
   // TODO Validate request body

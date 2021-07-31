@@ -1,7 +1,7 @@
 import path from 'path';
 import bcrypt from 'bcrypt';
 
-require('dotenv').config();
+// require('dotenv').config();
 
 export const baseUrl = process.env.BASE_URL;
 export const port = process.env.PORT || 5000;

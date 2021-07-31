@@ -1,6 +1,6 @@
 /* eslint no-param-reassign: 0 */
 
-import { db } from 'database/jsondb';
+import { db } from 'database';
 import { response } from 'utils/http';
 import * as customHanlders from 'handlers/custom';
 import proxy from './proxy';
