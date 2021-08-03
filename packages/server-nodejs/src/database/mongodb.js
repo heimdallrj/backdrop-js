@@ -18,6 +18,10 @@ export function db(coll = null) {
   return _db.db('backdropjs').collection(coll);
 }
 
+export async function createCollection(collName) {
+  await _db.db.createCollection(collName);
+}
+
 export function close() {
   _db.close();
 }
