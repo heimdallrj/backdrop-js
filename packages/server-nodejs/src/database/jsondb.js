@@ -22,6 +22,10 @@ export function db(coll = null) {
   return getCollections()[coll];
 }
 
+export function createCollection(collName) {
+  _db.createCollection(collName);
+}
+
 export function connect(config = {}) {
   if (!_db) {
     _db = new JsonDB(jsonDbPath, config);

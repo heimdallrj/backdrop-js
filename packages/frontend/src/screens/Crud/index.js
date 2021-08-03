@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 
 import { fetchAll as apiFetchAll, remove as apiDelete } from 'api';
+
+import { fetchAll as acFetchAllResources } from 'store/reducers/resourceSlice';
 
 import Layout from 'components/Layout';
 import Table from 'components/Table';
@@ -35,6 +37,7 @@ const columns = [
 
 export default function Crud() {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
   const { resources: resourcesOriginal } = useSelector(
@@ -44,6 +47,8 @@ export default function Crud() {
   const [resources, setResources] = useState([]);
   const [resource, setResource] = useState(null);
   const [rows, setRows] = useState([]);
+
+  const fetchAllResources = () => dispatch(acFetchAllResources());
 
   const onSelectResource = (name) => {
     const selected = resources.find((r) => r.name === name);
@@ -111,7 +116,8 @@ export default function Crud() {
   };
 
   useEffect(() => {
-    // TODO Fetch all the resources (no need now since we fetch already)
+    fetchAllResources();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
