@@ -1,13 +1,31 @@
 import styled from 'styled-components';
 
-import DocumentIconSource from 'assets/icons/Document/Outline';
-import DeleteIconSource from 'assets/icons/Delete/Outline';
-import KeyIconSource from 'assets/icons/Key/Solid';
+export const Wrapper = styled.section`
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+`;
 
-export const Wrapper = styled.section``;
+export const Selector = styled.div`
+  width: 300px;
+`;
 
-export const Button = styled.button`
-  font-size: 0.8rem;
+export const Menu = styled.ul`
+  font-size: 15px;
+`;
+
+export const MenuItem = styled.li`
+  // background-color: #f1eaea;
+  margin: 2px 0;
+  padding: 5px 15px;
+  cursor: pointer;
+  background-color: ${(props) => (props.active ? '#2c3039' : '#f1eaea')};
+  color: ${(props) => (props.active ? 'white' : '#000')};
+`;
+
+export const Container = styled.div`
+  flex: 1;
+  padding: 0 10px;
 `;
 
 export const FormWrap = styled.div`
@@ -17,41 +35,4 @@ export const FormWrap = styled.div`
 export const FormFooter = styled.div`
   text-align: left;
   margin: 20px 0;
-`;
-
-export const DocIcon = styled(DocumentIconSource)`
-  color: gray;
-  width: 16px;
-  align-self: center;
-  cursor: pointer;
-`;
-
-export const DeleteIcon = styled(DeleteIconSource)`
-  color: gray;
-  width: 16px;
-  align-self: center;
-  cursor: pointer;
-`;
-
-export const KeyIcon = styled(KeyIconSource)`
-  color: gray;
-  width: 12px;
-  align-self: center;
-  cursor: pointer;
-`;
-
-export const FlexIcons = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-`;
-
-export const Status = styled.span`
-  font-size: 0.5rem;
-  text-transform: uppercase;
-  background: #e4d9d9;
-  padding: 5px;
-  border-radius: 20px;
-  letter-spacing: 1px;
 `;

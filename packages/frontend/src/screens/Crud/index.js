@@ -5,12 +5,15 @@ import { useHistory, Link } from 'react-router-dom';
 import { fetchAll as apiFetchAll, remove as apiDelete } from 'api';
 
 import Layout from 'components/Layout';
+
 import Table from 'components/Table';
+
+import Selector from './Selector';
 
 import {
   Wrapper,
   Button,
-  Selector,
+  Selector as SelectorWrap,
   Menu,
   ResourceItem,
   CrudWrapper,
@@ -41,12 +44,17 @@ export default function Crud() {
     (state) => state.resources
   );
 
+  const [showSelector, setShowSelector] = useState(true);
+  const [selector, setSelector] = useState(null);
+
   const [resources, setResources] = useState([]);
   const [resource, setResource] = useState(null);
   const [rows, setRows] = useState([]);
 
-  const onSelectResource = (name) => {
-    const selected = resources.find((r) => r.name === name);
+  const onSelectResource = (selected) => {
+    // const selected = resources.find((r) => r.name === name);
+    // setResource(selected);
+    setShowSelector(false);
     setResource(selected);
   };
 
@@ -147,9 +155,13 @@ export default function Crud() {
   };
 
   return (
-    <Layout title="CRUD">
+    <Layout
+      title="CRUD"
+      showSelector={showSelector}
+      renderSidebar={() => (<Selector onSelect={onSelectResource} />)}
+    >
       <Wrapper>
-        <Selector>
+        {/* <SelectorWrap>
           <Menu>
             {resources.map(({ _id, name }) => (
               <ResourceItem
@@ -161,7 +173,7 @@ export default function Crud() {
               </ResourceItem>
             ))}
           </Menu>
-        </Selector>
+        </SelectorWrap> */}
         <CrudWrapper>
           {resource && (
             <>

@@ -9,7 +9,7 @@ import LockClosedIconSource from 'assets/icons/Lock/Closed/Solid';
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 5px;
+  // padding: 5px;
 `;
 
 export const Button = styled.button`

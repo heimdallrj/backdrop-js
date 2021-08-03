@@ -7,3 +7,5 @@ export const createAppConfig = (config) =>
   post(`/${namespace}/config/app`, config);
 export const updateConfig = (type, config) =>
   patch(`/${namespace}/config/${type}`, config);
+
+export const fetchConfigByType = (type) => get(`/${namespace}/config/${type}`);
