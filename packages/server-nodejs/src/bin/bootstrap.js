@@ -37,7 +37,7 @@ export default async function bootstrap() {
           db.connect({
             initialData: [
               {
-                coll: 'users',
+                coll: 'config',
                 data: [
                   {
                     type: 'user',
@@ -47,7 +47,7 @@ export default async function bootstrap() {
                 ],
               },
               {
-                coll: 'config',
+                coll: 'users',
                 data: [],
               },
               {

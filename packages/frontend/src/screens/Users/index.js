@@ -50,6 +50,8 @@ export default function Users() {
 
   const { users } = useSelector((state) => state.users);
 
+  console.log('$users', users);
+
   const [rows, setRows] = useState([]);
 
   const fetchAllUsers = () => dispatch(acFetchAllUsers());

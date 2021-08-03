@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ping as apiPing } from 'api';
 
-import { fetchAppConfig as acFetchAppConfig } from 'store/reducers/configSlice';
-import { fetchAll as acFetchAllResources } from 'store/reducers/resourceSlice';
-import { fetchAll as acFetchAllMedia } from 'store/reducers/mediaSlice';
-
-import { FullPageLoading as Loading } from 'components/Loading';
-import Bootstrap from 'components/Bootstrap';
+import Loading from 'components/Loading/FullPage';
 import ProtectedRoute from 'components/ProtectedRoute';
 import Route from 'components/Route';
 
+import Bootstrap from 'screens/Bootstrap';
 import Login from 'screens/Login';
 import Register from 'screens/Register';
 import Home from 'screens/Home';
@@ -38,29 +33,19 @@ const Wrapper = styled.div`
 `;
 
 function App() {
-  const dispatch = useDispatch();
-
+  const [isLoading, setIsLoading] = useState(true);
   const [bootstrap, setBootstrap] = useState(null);
-  const { isLoading } = useSelector((state) => state.config);
 
   const ping = async () => {
     const heartbeat = await apiPing();
     if (heartbeat === null) {
       setBootstrap(!!!heartbeat);
     }
+    setIsLoading(false);
   };
-
-  const fetchAppConfig = () => dispatch(acFetchAppConfig());
-
-  const fetchAllResources = () => dispatch(acFetchAllResources());
-
-  const fetchAllMedia = () => dispatch(acFetchAllMedia());
 
   useEffect(() => {
     ping();
-    fetchAppConfig();
-    fetchAllResources();
-    fetchAllMedia();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
