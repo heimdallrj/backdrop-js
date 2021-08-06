@@ -6,18 +6,11 @@ import Selector from './Selector';
 import AppSettings from './App';
 import UserSettings from './User';
 
+import { getSettings } from 'config/settings';
+
 import { Wrapper } from './styled';
 
-const options = [
-  {
-    name: 'app',
-    label: 'App',
-  },
-  {
-    name: 'user',
-    label: 'User',
-  },
-];
+const options = getSettings();
 
 export default function Settings() {
   const [selector, setSelector] = useState('app');

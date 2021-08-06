@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
+import * as yup from 'yup';
 
 import {
   updateAppConfig as acUpdateAppConfig,
@@ -14,6 +15,11 @@ import Preloader from 'components/Preloader';
 
 import { Form } from 'providers/ThemeProvider/styled';
 import { Wrapper, FormFooter, FormWrap, Title } from './styled';
+
+const validationSchema = yup.object().shape({
+  appName: yup.string().required('* required'),
+  appDesc: yup.string().required('* required'),
+});
 
 export default function AppSettings() {
   const dispatch = useDispatch();
@@ -51,13 +57,7 @@ export default function AppSettings() {
       {!isLoading && (
         <Formik
           initialValues={initialValues}
-          validate={(values) => {
-            const errors = {};
-            // if (!values.name) {
-            //   errors.name = 'Required';
-            // }
-            return errors;
-          }}
+          validationSchema={validationSchema}
           onSubmit={({ appName, appDesc }, { setSubmitting, resetForm }) => {
             const configToSave = {
               appName,
