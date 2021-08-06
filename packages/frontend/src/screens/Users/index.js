@@ -31,6 +31,11 @@ export default function Users() {
 
   const fetchUserConfig = () => dispatch(apiFetchUserConfig());
 
+  const onSelectHandler = (nextSelector) => {
+    setSelector(nextSelector);
+    setEditSingleUser(null);
+  };
+
   useEffect(() => {
     fetchUserConfig();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,7 +47,7 @@ export default function Users() {
         <Selector
           options={options}
           selected={selector}
-          onSelect={setSelector}
+          onSelect={onSelectHandler}
         />
         {selector === 'allUsers' && !editSingleUser && (
           <UsersList toUpdateSingle={setEditSingleUser} />
