@@ -4,13 +4,14 @@ import {
   fetchAppConfig as apiFetchAppConfig,
   createAppConfig as apiCreateAppConfig,
   updateConfig as apiUpdateConfig,
+  fetchConfigByType as apiFetchConfigByType,
 } from 'api/config';
 
 const configSlice = createSlice({
   name: 'config',
   initialState: {
     isLoading: true,
-    config: null,
+    config: {},
     bootstrap: null,
     errors: null,
   },
@@ -35,7 +36,11 @@ const configSlice = createSlice({
         bootstrap = true;
 
       state.errors = null;
-      state.config = payload;
+
+      const _config = state.config;
+      _config[payload.type] = payload;
+      state.config = _config;
+
       state.bootstrap = bootstrap;
       state.isLoading = false;
     },
@@ -64,6 +69,21 @@ export const fetchAppConfig =
       dispatch(configFetched(config));
     } catch (err) {
       dispatch(setError(err));
+    }
+  };
+
+export const fetchUserConfig =
+  (cb = () => {}) =>
+  async (dispatch) => {
+    dispatch(setIsLoading(true));
+
+    try {
+      const config = await apiFetchConfigByType('user');
+      dispatch(configFetched(config));
+      cb(null, config);
+    } catch (err) {
+      dispatch(setError(err));
+      cb(err, null);
     }
   };
 

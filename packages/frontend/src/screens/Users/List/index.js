@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import {
   fetchAll as acFetchAllUsers,
@@ -11,7 +11,7 @@ import Table from 'components/Table';
 
 import {
   Wrapper,
-  Button,
+  Title,
   FlexIcons,
   KeyIcon,
   Status,
@@ -30,30 +30,25 @@ const columns = [
   { label: 'actions', size: 5, visible: false },
 ];
 
-const USER_ROLES = {
-  0: 'administrator',
-  1: 'manager',
-  2: 'editor',
-  3: 'subscriber',
-};
-
-const USER_STATUS = {
-  0: 'inactive',
-  1: 'active',
-};
-
-export default function UsersList() {
+export default function UsersList({ toUpdateSingle }) {
   const history = useHistory();
   const dispatch = useDispatch();
 
   const [rows, setRows] = useState([]);
+  const [, setUserRoles] = useState({});
+  const [, setUserStatus] = useState({});
 
   const { users } = useSelector((state) => state.users);
+  const {
+    config: { user },
+    isLoading,
+  } = useSelector((state) => state.config);
 
   const fetchAllUsers = () => dispatch(acFetchAllUsers());
 
   const onClickEditHandler = (id) => {
-    history.push(`/users/update/${id}`);
+    toUpdateSingle(id);
+    // history.push(`/users/update/${id}`);
   };
 
   const onDeleteHandler = (id) => {
@@ -63,50 +58,75 @@ export default function UsersList() {
     }
   };
 
+  const compileRows = (users, userRoles, userStatus) => {
+    if (users && userRoles && userStatus) {
+      const rowsFiltered = users.map(
+        ({ _id, screenName, userName, email, role, status }, index) => {
+          return {
+            id: _id,
+            data: [
+              {
+                value: <FlexIcons>{role === 0 && <KeyIcon />}</FlexIcons>,
+                align: 'center',
+              },
+              { value: index + 1, align: 'center' },
+              { value: screenName },
+              { value: userName },
+              { value: email },
+              { value: userRoles[role] },
+              {
+                value: <Status>{userStatus[status]}</Status>,
+                align: 'center',
+              },
+              {
+                value: (
+                  <FlexIcons>
+                    <DocIcon onClick={onClickEditHandler.bind(null, _id)} />
+                    <DeleteIcon onClick={() => onDeleteHandler(_id)} />
+                  </FlexIcons>
+                ),
+              },
+            ],
+          };
+        }
+      );
+      setRows(rowsFiltered);
+    }
+  };
+
   useEffect(() => {
     fetchAllUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    const rowsFiltered = users.map(
-      ({ _id, screenName, userName, email, role, status }, index) => {
-        return {
-          id: _id,
-          data: [
-            {
-              value: <FlexIcons>{role === 0 && <KeyIcon />}</FlexIcons>,
-              align: 'center',
-            },
-            { value: index + 1, align: 'center' },
-            { value: screenName },
-            { value: userName },
-            { value: email },
-            { value: USER_ROLES[role] },
-            { value: <Status>{USER_STATUS[status]}</Status>, align: 'center' },
-            {
-              value: (
-                <FlexIcons>
-                  <DocIcon onClick={onClickEditHandler.bind(null, _id)} />
-                  <DeleteIcon onClick={() => onDeleteHandler(_id)} />
-                </FlexIcons>
-              ),
-            },
-          ],
-        };
-      }
-    );
-    setRows(rowsFiltered);
+    if (users && user) {
+      // userRoles
+      const _roles = (user && user.roles) || [];
+      const _userRoles = {};
+      _roles.forEach(({ role, description }) => {
+        _userRoles[role] = description;
+      });
+      setUserRoles(_userRoles);
+
+      // userStatus
+      const _status = (user && user.status) || [];
+      const _userStatus = {};
+      _status.forEach(({ status, description }) => {
+        _userStatus[status] = description;
+      });
+      setUserStatus(_userStatus);
+
+      compileRows(users, _userRoles, _userStatus);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [users]);
+  }, [users, user]);
 
   return (
     <Wrapper>
-      <Link to={`/users/create`}>
-        <Button>Create a new user</Button>
-      </Link>
-
-      <Table columns={columns} rows={rows} />
+      <Title>All Users</Title>
+      {/* TODO: Add loading spinner */}
+      {isLoading ? <p>loading..</p> : <Table columns={columns} rows={rows} />}
     </Wrapper>
   );
 }

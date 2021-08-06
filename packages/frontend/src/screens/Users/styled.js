@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.section``;
+export const Wrapper = styled.section`
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  // width: 70%;
+`;
 
 export const FormWrap = styled.div`
   margin: 15px 0 0;

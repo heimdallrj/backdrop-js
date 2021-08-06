@@ -4,10 +4,16 @@ import DocumentIconSource from 'assets/icons/Document/Outline';
 import DeleteIconSource from 'assets/icons/Delete/Outline';
 import KeyIconSource from 'assets/icons/Key/Solid';
 
-export const Wrapper = styled.section``;
+export const Wrapper = styled.section`
+  flex: 1;
+  padding: 0 15px;
+`;
 
-export const Button = styled.button`
-  font-size: 0.8rem;
+export const Title = styled.h5`
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 export const DocIcon = styled(DocumentIconSource)`

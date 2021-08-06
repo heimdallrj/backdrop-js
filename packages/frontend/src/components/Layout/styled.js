@@ -28,7 +28,7 @@ export const HeaderWrap = styled.div`
 export const Main = styled.div`
   height: 100vh;
   flex: 14;
-  padding: 15px;
+  padding: 10px;
   background: #fff;
   flex: 1;
   overflow-y: scroll;

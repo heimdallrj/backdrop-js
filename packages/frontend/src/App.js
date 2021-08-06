@@ -115,18 +115,6 @@ function App() {
           path="/users"
           component={Users}
         />
-        <ProtectedRoute
-          featureId="users"
-          exact
-          path="/users/create"
-          component={CreateUser}
-        />
-        <ProtectedRoute
-          featureId="users"
-          exact
-          path="/users/update/:id"
-          component={UpdateUser}
-        />
       </Router>
     </Wrapper>
   );
