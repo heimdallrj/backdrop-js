@@ -21,8 +21,6 @@ import CrudUpdate from 'screens/Crud/Update';
 import Media from 'screens/Media';
 import Settings from 'screens/Settings';
 import Users from 'screens/Users';
-import CreateUser from 'screens/Users/Create';
-import UpdateUser from 'screens/Users/Update';
 import Logout from 'screens/Logout';
 
 const Wrapper = styled.div`

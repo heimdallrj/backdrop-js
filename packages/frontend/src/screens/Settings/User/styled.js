@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.section`
-  display: flex;
-  justify-content: space-between;
-  padding: 5px 0;
+  flex: 1;
+  padding: 0 15px;
+`;
+
+export const Title = styled.h5`
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 export const FormFooter = styled.div`

@@ -59,6 +59,21 @@ const configSlice = createSlice({
 export const { setIsLoading, configFetched, configUpdated, setError } =
   configSlice.actions;
 
+export const fetchConfigByType =
+  (type, cb = () => {}) =>
+  async (dispatch) => {
+    dispatch(setIsLoading(true));
+
+    try {
+      const config = await apiFetchConfigByType(type);
+      dispatch(configFetched(config));
+      cb(null, config);
+    } catch (err) {
+      dispatch(setError(err));
+      cb(err, null);
+    }
+  };
+
 export const fetchAppConfig =
   (cb = () => {}) =>
   async (dispatch) => {
