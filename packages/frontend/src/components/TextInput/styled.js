@@ -4,13 +4,14 @@ import { Input as InputSource } from '@jetpack/Input';
 export const Input = styled(InputSource)`
   color: rgba(55, 65, 81, 1);
   line-height: 1.25;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.7rem;
   border-color: rgba(229, 231, 235, 1);
   border-width: 1px;
   border-radius: 0.25rem;
   width: 100%;
   appearance: none;
   display: block;
+  font-size: 13px;
 
   &:read-only {
     background-color: #ddd;
@@ -26,7 +27,7 @@ export const Label = styled.label`
   letter-spacing: 0.025em;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   line-height: 1.8rem;
 `;
 

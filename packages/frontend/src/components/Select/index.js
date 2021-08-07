@@ -1,7 +1,5 @@
-import SelectSource from 'react-select';
-
 import { FormField, FormFieldError } from 'providers/ThemeProvider/styled';
-import { LabelWrap, Label, SelectWrap } from './styled';
+import { LabelWrap, Label, SelectWrap, SelectExtended } from './styled';
 
 export default function Select({
   label,
@@ -17,7 +15,7 @@ export default function Select({
     <FormField>
       <LabelWrap>{label && <Label htmlFor={name}>{label}</Label>}</LabelWrap>
       <SelectWrap>
-        <SelectSource
+        <SelectExtended
           {...restProps}
           options={options}
           name={name}

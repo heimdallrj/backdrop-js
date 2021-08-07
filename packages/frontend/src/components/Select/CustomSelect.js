@@ -1,5 +1,6 @@
 import React from 'react';
-import Select from 'react-select';
+
+import { SelectExtended } from './styled';
 
 export const CustomSelect = ({
   className,
@@ -27,7 +28,7 @@ export const CustomSelect = ({
   };
 
   return (
-    <Select
+    <SelectExtended
       className={className}
       name={field.name}
       value={getValue()}

@@ -14,7 +14,7 @@ export const Label = styled.label`
   letter-spacing: 0.025em;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 0.75rem;
+  font-size: 0.6rem;
   line-height: 1.8rem;
   margin: auto 8px;
 `;
