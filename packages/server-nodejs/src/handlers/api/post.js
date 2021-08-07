@@ -1,5 +1,6 @@
 import { db } from 'database';
 import { response } from 'utils/http';
+import logger from 'utils/logger';
 import * as customHanlders from 'handlers/custom';
 
 export default function post(req, res) {
@@ -16,6 +17,7 @@ export default function post(req, res) {
     const doc = db(collName).insert(newDoc);
     return response.ok(res, doc);
   } catch (err) {
+    logger.error(err);
     return response.internalError(res);
   }
 }

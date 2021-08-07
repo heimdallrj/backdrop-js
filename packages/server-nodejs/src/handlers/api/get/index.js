@@ -2,6 +2,7 @@
 
 import { db } from 'database';
 import { response } from 'utils/http';
+import logger from 'utils/logger';
 import * as customHanlders from 'handlers/custom';
 import proxy from './proxy';
 
@@ -43,6 +44,7 @@ export default function get(req, res) {
 
     return response.ok(res, docs);
   } catch (err) {
+    logger.error(err);
     return response.internalError(res);
   }
 }

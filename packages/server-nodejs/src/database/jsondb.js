@@ -6,9 +6,7 @@ let _db = null;
 let _collection = null;
 
 const getCollections = () => {
-  if (!_db) {
-    _db = new JsonDB(jsonDbPath, {});
-  }
+  _db = new JsonDB(jsonDbPath, {});
   _collection = _db.collections;
   return _collection;
 };
