@@ -1,6 +1,6 @@
 {
   "name": "@backdropjs/server-nodejs",
-  "version": "1.0.0-alpha.7",
+  "version": "1.0.0-alpha.8",
   "main": "./dist/bin/bootstrap.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/bin/bootstrap.js",
