@@ -4,7 +4,7 @@ import Layout from 'components/Layout';
 
 import Selector from './Selector';
 import AppSettings from './App';
-import UserSettings from './User';
+// import UserSettings from './User';
 
 import { getSettings } from 'config/settings';
 
@@ -28,7 +28,7 @@ export default function Settings() {
           onSelect={onSelectHandler}
         />
         {selector === 'app' && <AppSettings />}
-        {selector === 'user' && <UserSettings />}
+        {/* {selector === 'user' && <UserSettings />} */}
       </Wrapper>
     </Layout>
   );

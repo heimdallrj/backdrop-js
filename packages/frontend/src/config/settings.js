@@ -4,9 +4,9 @@ export function getSettings() {
       name: 'app',
       label: 'App',
     },
-    {
-      name: 'user',
-      label: 'User',
-    },
+    // {
+    //   name: 'user',
+    //   label: 'User',
+    // },
   ];
 }
