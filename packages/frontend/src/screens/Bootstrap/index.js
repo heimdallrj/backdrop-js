@@ -1,10 +1,10 @@
 import { Formik } from 'formik';
+import * as yup from 'yup';
 
 import { bootstrap as apiBootstrap } from 'api';
 
 import Button from 'components/Button';
 import TextInput from 'components/TextInput';
-import Preloader from 'components/Preloader';
 
 import { Form } from 'providers/ThemeProvider/styled';
 import {
@@ -17,13 +17,25 @@ import {
   FormFooter,
 } from './styled';
 
+const validationSchema = yup.object().shape({
+  appName: yup.string().required('* required'),
+  screenName: yup.string().required('* required'),
+  userName: yup.string().required('* required'),
+  email: yup.string().email('* invalid email address').required('* required'),
+  password: yup.string().required('* required'),
+  password_re: yup
+    .string()
+    .required('* required')
+    .oneOf([yup.ref('password'), null], '* passwords must match'),
+});
+
 const initialValues = {
-  appName: 'Backdrop-js',
-  screenName: 'John Doe',
-  email: 'john@example.com',
-  userName: 'admin',
-  password: 'pa$$word',
-  password_re: 'pa$$word',
+  appName: '',
+  screenName: '',
+  email: '',
+  userName: '',
+  password: '',
+  password_re: '',
 };
 
 const getInitialConfig = (values) => {
@@ -57,14 +69,7 @@ export default function Bootstrap() {
 
         <Formik
           initialValues={initialValues}
-          validate={(values) => {
-            // TODO Do the validation here
-            const errors = {};
-            if (!values.appName) {
-              errors.appName = 'Required';
-            }
-            return errors;
-          }}
+          validationSchema={validationSchema}
           onSubmit={(values, formikProps) => {
             postBootstrap(getInitialConfig(values), formikProps);
           }}
@@ -89,6 +94,7 @@ export default function Bootstrap() {
                 touched={touched.appName}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                placeholder="eg. Backdrop-js API"
               />
 
               <TextInput
@@ -99,6 +105,7 @@ export default function Bootstrap() {
                 touched={touched.screenName}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                placeholder="eg. John Doe"
               />
 
               <TextInput
@@ -110,6 +117,7 @@ export default function Bootstrap() {
                 touched={touched.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                placeholder="eg. john@example.com"
               />
 
               <TextInput
@@ -120,6 +128,7 @@ export default function Bootstrap() {
                 touched={touched.userName}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                placeholder="eg. john"
               />
 
               <TextInput
@@ -131,6 +140,7 @@ export default function Bootstrap() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 masked
+                placeholder="eg. pa$$word"
               />
 
               <TextInput
@@ -142,18 +152,12 @@ export default function Bootstrap() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 masked
+                placeholder="eg. pa$$word"
               />
 
               <FormFooter>
                 <Button type="submit" disabled={isSubmitting}>
-                  <div style={{ display: 'flex' }}>
-                    {isSubmitting && (
-                      <Preloader
-                        style={{ width: '20px', margin: '0 8px 0 0' }}
-                      />
-                    )}
-                    <p>Proceed</p>
-                  </div>
+                  Start
                 </Button>
               </FormFooter>
             </Form>
