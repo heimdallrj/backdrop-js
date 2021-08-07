@@ -29,6 +29,7 @@ export default function FormFields({
   handleSubmit,
   submitText,
   isUpdate = false,
+  own = false,
 }) {
   return (
     <FormWrap>
@@ -94,20 +95,22 @@ export default function FormFields({
           </>
         )}
 
-        <Select
-          label="role"
-          options={userRoleOptions}
-          name="role"
-          value={
-            userRoleOptions
-              ? userRoleOptions.find((option) => option.value === values.role)
-              : 3
-          }
-          onChange={(option) => setFieldValue('role', Number(option.value))}
-          onBlur={handleBlur}
-        />
+        {!own && (
+          <Select
+            label="role"
+            options={userRoleOptions}
+            name="role"
+            value={
+              userRoleOptions
+                ? userRoleOptions.find((option) => option.value === values.role)
+                : 3
+            }
+            onChange={(option) => setFieldValue('role', Number(option.value))}
+            onBlur={handleBlur}
+          />
+        )}
 
-        {isUpdate && (
+        {!own && isUpdate && (
           <Select
             label="Status"
             options={userStatusOptions}

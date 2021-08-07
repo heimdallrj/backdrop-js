@@ -21,7 +21,6 @@ const validationSchema = yup.object().shape({
   screenName: yup.string().required('* required'),
   userName: yup.string().required('* required'),
   email: yup.string().email('* invalid email address').required('* required'),
-  role: yup.number().required('* required').integer(),
 });
 
 const passwordValidationSchema = yup.object().shape({
@@ -66,7 +65,7 @@ export default function Me() {
               }}
             >
               {(formikProps) => (
-                <FormFields {...formikProps} isUpdate submitText="Update" />
+                <FormFields {...formikProps} own isUpdate submitText="Update" />
               )}
             </Formik>
 

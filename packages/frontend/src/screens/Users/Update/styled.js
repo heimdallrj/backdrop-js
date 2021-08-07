@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.section`
-  flex: 1;
-  padding: 0 15px;
-`;
+export const Wrapper = styled.section``;
 
 export const FormFooter = styled.div`
   text-align: left;
