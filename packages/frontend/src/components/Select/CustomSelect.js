@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { FormFieldError } from 'providers/ThemeProvider/styled';
 import { SelectExtended } from './styled';
 
 export const CustomSelect = ({
@@ -8,6 +9,8 @@ export const CustomSelect = ({
   field,
   form,
   options,
+  touched,
+  errors,
   isMulti = false,
 }) => {
   const onChange = (option) => {
@@ -28,15 +31,18 @@ export const CustomSelect = ({
   };
 
   return (
-    <SelectExtended
-      className={className}
-      name={field.name}
-      value={getValue()}
-      onChange={onChange}
-      placeholder={placeholder}
-      options={options}
-      isMulti={isMulti}
-    />
+    <div>
+      <SelectExtended
+        className={className}
+        name={field.name}
+        value={getValue()}
+        onChange={onChange}
+        placeholder={placeholder}
+        options={options}
+        isMulti={isMulti}
+      />
+      {touched && errors && <FormFieldError>{errors}</FormFieldError>}
+    </div>
   );
 };
 

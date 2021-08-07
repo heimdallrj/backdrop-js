@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Formik, Field } from 'formik';
 import { useHistory } from 'react-router-dom';
+import * as yup from 'yup';
 
 import { create as apiCreateResource } from 'api/resources';
 
@@ -14,6 +15,8 @@ import Preloader from 'components/Preloader';
 import CustomSelect from 'components/Select/CustomSelect';
 import SchemaBuilder from 'components/SchemaBuilder';
 
+import { resourceTypes, resourceStatus, resourceMethods } from 'config/form';
+
 import { Form, FormField } from 'providers/ThemeProvider/styled';
 import {
   Wrapper,
@@ -23,25 +26,11 @@ import {
   CheckboxWrapper,
 } from './styled';
 
-const typeOptions = [
-  { value: 'default', label: 'default' },
-  { value: 'proxy', label: 'proxy' },
-  // { value: 'static', label: 'static' }, // TODO: Enable when ready
-  { value: 'custom', label: 'custom' },
-];
-
-const statusOptions = [
-  { value: 'draft', label: 'draft' },
-  { value: 'published', label: 'published' },
-];
-
-const methodsOptions = [
-  { value: 'get', label: 'get' },
-  { value: 'put', label: 'put' },
-  { value: 'post', label: 'post' },
-  { value: 'patch', label: 'patch' },
-  { value: 'delete', label: 'delete' },
-];
+const validationSchema = yup.object().shape({
+  namespace: yup.string().required('* required'),
+  name: yup.string().required('* required'),
+  methods: yup.array().required('* required'),
+});
 
 const initialValues = {
   namespace: 'api',
@@ -83,13 +72,7 @@ export default function CreateResource() {
       <Wrapper>
         <Formik
           initialValues={initialValues}
-          validate={(values) => {
-            const errors = {};
-            // if (!values.name) {
-            //   errors.name = 'Required';
-            // }
-            return errors;
-          }}
+          validationSchema={validationSchema}
           onSubmit={(values, { setSubmitting }) => {
             // TODO Submit the form
             const resourceData = {
@@ -163,15 +146,17 @@ export default function CreateResource() {
 
                 <Select
                   label="type"
-                  options={typeOptions}
+                  options={resourceTypes}
                   name="type"
                   value={
-                    typeOptions
-                      ? typeOptions.find(
+                    resourceTypes
+                      ? resourceTypes.find(
                           (option) => option.value === values.type
                         )
                       : ''
                   }
+                  errors={errors.type}
+                  touched={touched.type}
                   onChange={(option) => setFieldValue('type', option.value)}
                   onBlur={handleBlur}
                 />
@@ -180,7 +165,7 @@ export default function CreateResource() {
                   <Label htmlFor="methods">methods</Label>
                   <Field
                     name="methods"
-                    options={methodsOptions.filter((opt) => {
+                    options={resourceMethods.filter((opt) => {
                       if (values.type === 'proxy') {
                         return opt.value === 'get';
                       } else {
@@ -188,6 +173,8 @@ export default function CreateResource() {
                       }
                     })}
                     component={CustomSelect}
+                    errors={errors.methods}
+                    touched={touched.methods}
                     isMulti={true}
                   />
                 </FormField>
@@ -206,11 +193,11 @@ export default function CreateResource() {
 
                 <Select
                   label="status"
-                  options={statusOptions}
+                  options={resourceStatus}
                   name="status"
                   value={
-                    statusOptions
-                      ? statusOptions.find(
+                    resourceStatus
+                      ? resourceStatus.find(
                           (option) => option.value === values.status
                         )
                       : ''
