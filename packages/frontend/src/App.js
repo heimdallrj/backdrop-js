@@ -23,6 +23,7 @@ import Settings from 'screens/Settings';
 import Users from 'screens/Users';
 import UsersCreate from 'screens/Users/Create';
 import UsersUpdate from 'screens/Users/Update';
+import UsersMe from 'screens/Users/Me';
 import Logout from 'screens/Logout';
 
 const Wrapper = styled.div`
@@ -114,6 +115,12 @@ function App() {
           exact
           path="/users"
           component={Users}
+        />
+        <ProtectedRoute
+          featureId="users"
+          exact
+          path="/users/me"
+          component={UsersMe}
         />
         <ProtectedRoute
           featureId="users"

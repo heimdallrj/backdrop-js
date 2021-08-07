@@ -29,9 +29,9 @@ export default function Layout({ title, children }) {
     history.goBack();
   };
 
-  const onClickLogout = () => {
+  const onClickMenuItem = (route) => {
     setIsMenuOpen(false);
-    history.push('/logout');
+    history.push(`/${route}`);
   };
 
   const User = () => {
@@ -42,7 +42,12 @@ export default function Layout({ title, children }) {
         </UserWrap>
         {isMenuOpen && (
           <Menu>
-            <MenuItem onClick={onClickLogout}>Logout</MenuItem>
+            <MenuItem onClick={() => onClickMenuItem('users/me')}>
+              Profile
+            </MenuItem>
+            <MenuItem onClick={() => onClickMenuItem('logout')}>
+              Logout
+            </MenuItem>
           </Menu>
         )}
       </>

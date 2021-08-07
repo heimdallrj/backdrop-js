@@ -63,17 +63,22 @@ export const UserIcon = styled(UserIconSource)`
 
 export const Menu = styled.ul`
   position: absolute;
-  right: 18px;
+  right: 10px;
   top: 45px;
-  padding: 5px 35px;
   font-size: 0.6em;
   text-transform: uppercase;
   letter-spacing: 1px;
-  background: #eae1e1;
   box-shadow: rgb(67 71 85 / 27%) 0px 0px 0.25em,
     rgb(90 125 188 / 5%) 0px 0.25em 1em;
 `;
 
 export const MenuItem = styled.li`
   cursor: pointer;
+  background: #eae1e1;
+  padding: 5px 35px;
+  margin: 1px 0 0;
+
+  &:nth-child(1) {
+    margin: 0;
+  }
 `;
