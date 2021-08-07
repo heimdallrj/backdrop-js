@@ -5,8 +5,8 @@ This project is bootstraped with `Backdrop.js`.
 ### Primary Scripts
 
 - Run `yarn` to install dependencies
-- Run `yarn start:dev` to start development server
-- Run `yarn start` to production server
+- Run `yarn start` to start development server
+- Run `yarn start:prod` to production server
 - Run `yarn build` to generate production build manually.
 - Run `yarn debug` to start debug mode
 
