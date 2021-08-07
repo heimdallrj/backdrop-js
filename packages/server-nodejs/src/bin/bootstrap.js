@@ -7,8 +7,7 @@ import path from 'path';
 import { isFileExists, ensureDirSync } from 'utils/fs';
 import logger from 'utils/logger';
 
-import userRoles from '../data/user_roles.json';
-import userStatus from '../data/user_status.json';
+import config from '../data/config.json';
 
 const jsondbPath = path.join(__dirname, '..', '..', '.jsondb');
 
@@ -38,13 +37,7 @@ export default async function bootstrap() {
             initialData: [
               {
                 coll: 'config',
-                data: [
-                  {
-                    type: 'user',
-                    roles: userRoles,
-                    status: userStatus,
-                  },
-                ],
+                data: [config],
               },
               {
                 coll: 'users',
@@ -72,11 +65,7 @@ export default async function bootstrap() {
             .collection('config')
             .findOne({ type: 'user' });
           if (!userConfig) {
-            await db.get().collection('config').insertOne({
-              type: 'user',
-              roles: userRoles,
-              status: userStatus,
-            });
+            await db.get().collection('config').insertOne(config);
           }
           logger.log(`+ ${dbConn} connected.`);
         }

@@ -1,0 +1,35 @@
+{
+  "type": "user",
+  "roles": [
+    {
+      "id": 0,
+      "name": "administrator"
+    },
+    {
+      "id": 1,
+      "name": "manager"
+    },
+    {
+      "id": 2,
+      "name": "editor"
+    },
+    {
+      "id": 3,
+      "name": "subscriber"
+    }
+  ],
+  "status": [
+    {
+      "id": 0,
+      "name": "inactive"
+    },
+    {
+      "id": 1,
+      "name": "active"
+    },
+    {
+      "id": 2,
+      "name": "deleted"
+    }
+  ]
+}

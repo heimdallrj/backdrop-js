@@ -21,6 +21,8 @@ import CrudUpdate from 'screens/Crud/Update';
 import Media from 'screens/Media';
 import Settings from 'screens/Settings';
 import Users from 'screens/Users';
+import UsersCreate from 'screens/Users/Create';
+import UsersUpdate from 'screens/Users/Update';
 import Logout from 'screens/Logout';
 
 const Wrapper = styled.div`
@@ -112,6 +114,18 @@ function App() {
           exact
           path="/users"
           component={Users}
+        />
+        <ProtectedRoute
+          featureId="users"
+          exact
+          path="/users/create"
+          component={UsersCreate}
+        />
+        <ProtectedRoute
+          featureId="users"
+          exact
+          path="/users/update/:id"
+          component={UsersUpdate}
         />
       </Router>
     </Wrapper>

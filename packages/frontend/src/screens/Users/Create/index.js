@@ -1,10 +1,13 @@
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 
 import { register as acRegister } from 'store/reducers/userSlice';
 
-import { Wrapper, Title, FormWrap } from './styled';
+import Layout from 'components/Layout';
+
+import { Wrapper, FormWrap } from './styled';
 
 import FormFields from '../FormFields';
 
@@ -30,34 +33,38 @@ const initialValues = {
   role: 3,
 };
 
-export default function CreateUser({ done }) {
+export default function CreateUser() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const register = (user, cb) => dispatch(acRegister(user, cb));
 
   return (
-    <Wrapper>
-      <FormWrap>
-        <Title>Create a new user</Title>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={(values, { setSubmitting, resetForm }) => {
-            register(values, (err) => {
-              if (err) {
-                // TODO: Handle error
-              } else {
-                // TODO Trigger and email and send user verification link
-                resetForm();
-                setSubmitting(false);
-                done();
-              }
-            });
-          }}
-        >
-          {(formikProps) => <FormFields {...formikProps} submitText="Create" />}
-        </Formik>
-      </FormWrap>
-    </Wrapper>
+    <Layout title="Users > Create a new user">
+      <Wrapper>
+        <FormWrap>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={(values, { setSubmitting, resetForm }) => {
+              register(values, (err) => {
+                if (err) {
+                  // TODO: Handle error
+                } else {
+                  // TODO Trigger and email and send user verification link
+                  resetForm();
+                  setSubmitting(false);
+                  history.push('/users');
+                }
+              });
+            }}
+          >
+            {(formikProps) => (
+              <FormFields {...formikProps} submitText="Create" />
+            )}
+          </Formik>
+        </FormWrap>
+      </Wrapper>
+    </Layout>
   );
 }
