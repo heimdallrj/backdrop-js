@@ -122,7 +122,7 @@ export default function FormFields({
                   )
                 : 0
             }
-            onChange={(option) => setFieldValue('role', Number(option.value))}
+            onChange={(option) => setFieldValue('status', Number(option.value))}
             onBlur={handleBlur}
           />
         )}
