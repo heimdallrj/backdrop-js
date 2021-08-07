@@ -27,7 +27,7 @@ export const insert = function (cursor, doc) {
       ...doc,
       _id: uniqid(),
       createdAt: new Date(),
-      lastUpdatedAt: new Date(),
+      updatedAt: new Date(),
     };
     this.storage.push(newDoc);
     this.save();

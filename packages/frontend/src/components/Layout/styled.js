@@ -81,4 +81,8 @@ export const MenuItem = styled.li`
   &:nth-child(1) {
     margin: 0;
   }
+
+  &:hover {
+    background-color: #e4d6d6;
+  }
 `;

@@ -7,9 +7,13 @@ import Button from 'components/Button';
 import TextInput from 'components/TextInput';
 import Preloader from 'components/Preloader';
 import Textarea from 'components/Textarea';
+import Checkbox from 'components/Checkbox';
+import Select from 'components/Select';
 
 import RichText from './RichText';
 import Resource from './Resource';
+
+import { resourceStatus } from 'config/form';
 
 import { Form } from 'providers/ThemeProvider/styled';
 
@@ -17,7 +21,11 @@ const Wrapper = styled.div``;
 
 export const FormFooter = styled.div`
   text-align: left;
-  margin: 30px 0;
+  margin: 15px 0;
+`;
+
+export const CheckboxWrapper = styled.div`
+  display: flex;
 `;
 
 export default function FormBuilder({
@@ -43,12 +51,22 @@ export default function FormBuilder({
       }
     });
     setFields(_fields);
-    setInitialValues(_initialValues);
+    setInitialValues({
+      ..._initialValues,
+      status: 'draft',
+      private: false,
+      protected: false,
+    });
   }, [schema]);
 
   useEffect(() => {
     if (initialData) {
-      setInitialValues(initialData);
+      setInitialValues({
+        ...initialData,
+        status: 'draft',
+        private: false,
+        protected: false,
+      });
     }
   }, [initialData]);
 
@@ -151,6 +169,41 @@ export default function FormBuilder({
                   );
                 }
               )}
+
+              <Select
+                label="status"
+                options={resourceStatus}
+                name="status"
+                value={
+                  resourceStatus
+                    ? resourceStatus.find(
+                        (option) => option.value === values.status
+                      )
+                    : ''
+                }
+                onChange={(option) => setFieldValue('status', option.value)}
+                onBlur={handleBlur}
+              />
+
+              <CheckboxWrapper>
+                <Checkbox
+                  label="Private"
+                  name="private"
+                  checked={values.private || false}
+                  errors={errors.private}
+                  touched={touched.private}
+                  onChange={handleChange}
+                />
+
+                <Checkbox
+                  label="Protected"
+                  name="protected"
+                  checked={values.protected || false}
+                  errors={errors.protected}
+                  touched={touched.protected}
+                  onChange={handleChange}
+                />
+              </CheckboxWrapper>
 
               <FormFooter>
                 <Button type="submit" disabled={isSubmitting}>

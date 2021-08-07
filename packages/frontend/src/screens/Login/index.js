@@ -1,19 +1,24 @@
 import { Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
+import * as yup from 'yup';
 
 import { login as acLogin } from 'store/reducers/authSlice';
 
 import Button from 'components/Button';
 import TextInput from 'components/TextInput';
-import Preloader from 'components/Preloader';
 
 import { Form } from 'providers/ThemeProvider/styled';
 import { Wrapper, FormFooter } from './styled';
 
+const validationSchema = yup.object().shape({
+  userName: yup.string().required('* required'),
+  password: yup.string().required('* required'),
+});
+
 const initialValues = {
-  userName: 'admin',
-  password: 'pa$$word',
+  userName: '',
+  password: '',
 };
 
 export default function Login() {
@@ -32,13 +37,7 @@ export default function Login() {
 
       <Formik
         initialValues={initialValues}
-        validate={(values) => {
-          const errors = {};
-          if (!values.userName) {
-            errors.userName = 'Required';
-          }
-          return errors;
-        }}
+        validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
           login(values, () => {
             // setSubmitting(false);
@@ -66,6 +65,7 @@ export default function Login() {
               touched={touched.userName}
               onChange={handleChange}
               onBlur={handleBlur}
+              placeholder="eg. admin"
             />
 
             <TextInput
@@ -77,16 +77,12 @@ export default function Login() {
               onChange={handleChange}
               onBlur={handleBlur}
               masked
+              placeholder="eg. pa$$word"
             />
 
             <FormFooter>
               <Button type="submit" disabled={isSubmitting}>
-                <div style={{ display: 'flex' }}>
-                  {isSubmitting && (
-                    <Preloader style={{ width: '20px', margin: '0 8px 0 0' }} />
-                  )}
-                  <p>Login</p>
-                </div>
+                Login
               </Button>
             </FormFooter>
           </Form>

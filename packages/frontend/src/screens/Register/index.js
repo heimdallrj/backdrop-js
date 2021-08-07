@@ -1,6 +1,7 @@
 import { Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
+import * as yup from 'yup';
 
 import { register as acRegister } from 'store/reducers/userSlice';
 
@@ -10,11 +11,23 @@ import TextInput from 'components/TextInput';
 import { Form } from 'providers/ThemeProvider/styled';
 import { Wrapper, FormFooter } from './styled';
 
+const validationSchema = yup.object().shape({
+  screenName: yup.string().required('* required'),
+  userName: yup.string().required('* required'),
+  email: yup.string().email('* invalid email address').required('* required'),
+  password: yup.string().required('* required'),
+  password_re: yup
+    .string()
+    .required('* required')
+    .oneOf([yup.ref('password'), null], '* passwords must match'),
+});
+
 const initialValues = {
-  screenName: 'Jane',
-  email: 'jane@example.com',
-  userName: 'jane',
-  password: 'pa$$word',
+  screenName: '',
+  email: '',
+  userName: '',
+  password: '',
+  password_re: '',
   role: 2,
   status: 0,
 };
@@ -35,13 +48,7 @@ export default function Register() {
 
       <Formik
         initialValues={initialValues}
-        validate={(values) => {
-          const errors = {};
-          if (!values.userName) {
-            errors.userName = 'Required';
-          }
-          return errors;
-        }}
+        validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           register(values, (err) => {
             if (err) {
@@ -75,6 +82,7 @@ export default function Register() {
               touched={touched.screenName}
               onChange={handleChange}
               onBlur={handleBlur}
+              placeholder="Jane Doe"
             />
 
             <TextInput
@@ -85,6 +93,7 @@ export default function Register() {
               touched={touched.userName}
               onChange={handleChange}
               onBlur={handleBlur}
+              placeholder="jane"
             />
 
             <TextInput
@@ -95,6 +104,7 @@ export default function Register() {
               touched={touched.email}
               onChange={handleChange}
               onBlur={handleBlur}
+              placeholder="jane@example.com"
             />
 
             <TextInput
@@ -106,6 +116,19 @@ export default function Register() {
               onChange={handleChange}
               onBlur={handleBlur}
               masked
+              placeholder="pa$$word"
+            />
+
+            <TextInput
+              name="password_re"
+              label="password (confirm)"
+              value={values.password_re}
+              errors={errors.password_re}
+              touched={touched.password_re}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              masked
+              placeholder="eg. pa$$word"
             />
 
             <FormFooter>

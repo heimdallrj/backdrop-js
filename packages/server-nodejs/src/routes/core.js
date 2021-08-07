@@ -17,7 +17,7 @@ router.get('/', handlers.core);
 // users
 router.get('/users', coreMiddlewares.auth, usersHandler.get);
 router.get('/users/:id', coreMiddlewares.auth, usersHandler.getSingle);
-router.post('/users', coreMiddlewares.auth, usersHandler.post);
+router.post('/users', usersHandler.post);
 router.patch('/users/:id', coreMiddlewares.auth, usersHandler.patch);
 router.delete('/users/:id', coreMiddlewares.auth, usersHandler.delete);
 

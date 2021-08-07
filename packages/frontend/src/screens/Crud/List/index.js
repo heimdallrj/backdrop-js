@@ -6,6 +6,8 @@ import { fetchAll as apiFetchAll, remove as apiDelete } from 'api';
 
 import Table from 'components/Table';
 
+import { formatDate } from 'utils/datetime';
+
 import {
   Wrapper,
   Title,
@@ -13,18 +15,17 @@ import {
   FlexIcons,
   KeyIcon,
   LockClosedIcon,
-  DraftIcon,
   Status,
   EditIcon,
   DeleteIcon,
 } from './styled';
 
 const columns = [
-  { label: 'falgs', size: 3, visible: false },
+  { label: 'falgs', size: 5, visible: false },
   { label: 'ID', size: 5, align: 'center' },
-  { label: 'Author', size: 12 },
-  { label: 'Last Updated', size: 20 },
-  { label: 'Status', size: 10, align: 'center' },
+  { label: 'Author', size: 25 },
+  { label: 'Created At', size: 35 },
+  { label: 'Status', size: 25 },
   { label: 'actions', size: 5, visible: false },
 ];
 
@@ -53,7 +54,14 @@ export default function List({ resource }) {
     if (data && data.length > 0) {
       _rows = data.map(
         (
-          { _id, lastUpdatedAt, author, isProtected, isPrivate, draft },
+          {
+            _id,
+            createdAt,
+            author,
+            protected: isProtected,
+            private: isPrivate,
+            status,
+          },
           index
         ) => {
           return {
@@ -62,8 +70,8 @@ export default function List({ resource }) {
               {
                 value: (
                   <FlexIcons>
-                    {isProtected && <KeyIcon />}{' '}
-                    {isPrivate && <LockClosedIcon />} {draft && <DraftIcon />}
+                    {isProtected && <KeyIcon />}
+                    {isPrivate && <LockClosedIcon />}
                   </FlexIcons>
                 ),
               },
@@ -75,11 +83,10 @@ export default function List({ resource }) {
                 value: author.name,
               },
               {
-                value: lastUpdatedAt,
+                value: formatDate(createdAt),
               },
               {
-                value: <Status>active</Status>,
-                align: 'center',
+                value: <Status>{status}</Status>,
               },
               {
                 value: (

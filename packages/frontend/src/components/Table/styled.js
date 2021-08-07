@@ -59,6 +59,7 @@ export const Col = styled.td`
   padding: 0.5rem 0.6rem;
   font-weight: normal;
   font-size: 0.9rem;
+  width: ${(props) => `${props.width || 'auto'}`};
   text-align: ${(props) => `${props.align || 'left'}`};
 `;
 

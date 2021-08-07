@@ -19,7 +19,7 @@ export default function TableComponent({
       <Table>
         <TableHead>
           <Row>
-            {columns.map(({ label, align, size, visible = true }) => (
+            {columns.map(({ label, align, size = 0, visible = true }) => (
               <ColHead key={label} scope="col" align={align} width={`${size}%`}>
                 <span style={{ visibility: visible ? 'visible' : 'hidden' }}>
                   {label}
@@ -31,7 +31,7 @@ export default function TableComponent({
         <TableBody>
           {rows.map((row, i) => (
             <Row key={row.id} onClick={() => onClickRow(row)}>
-              {row.data.map(({ value, align, size }, j) => (
+              {row.data.map(({ value, align, size = 0 }, j) => (
                 <Col key={String(j)} align={align} width={`${size}%`}>
                   {value}
                 </Col>

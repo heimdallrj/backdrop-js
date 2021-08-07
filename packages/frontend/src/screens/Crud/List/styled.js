@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import DraftIconSource from 'assets/icons/DraftIcon/Solid';
 import EditIconSource from 'assets/icons/Document/Outline';
 import DeleteIconSource from 'assets/icons/Delete/Outline';
 import KeyIconSource from 'assets/icons/Key/Solid';
@@ -20,13 +19,6 @@ export const Title = styled.h5`
 
 export const Button = styled.button`
   font-size: 0.8rem;
-`;
-
-export const DraftIcon = styled(DraftIconSource)`
-  color: gray;
-  width: 16px;
-  align-self: center;
-  cursor: pointer;
 `;
 
 export const EditIcon = styled(EditIconSource)`
