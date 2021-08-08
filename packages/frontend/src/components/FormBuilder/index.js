@@ -34,6 +34,7 @@ export default function FormBuilder({
   submitBtnText,
   onSubmit,
 }) {
+  const [isLoading, setIsLoading] = useState(true);
   const [initialValues, setInitialValues] = useState(null);
   const [fields, setFields] = useState([]);
 
@@ -46,8 +47,16 @@ export default function FormBuilder({
         name: key,
         label: key,
       });
-      if (val.type !== 'Resource') {
+      if (val.ctrl !== 'Resource') {
         _initialValues[key] = '';
+      }
+
+      if (val.ctrl === 'Array') {
+        _initialValues[key] = JSON.stringify(val.defaultValue);
+      }
+
+      if (val.ctrl === 'Object') {
+        _initialValues[key] = JSON.stringify(val.defaultValue);
       }
     });
     setFields(_fields);
@@ -67,6 +76,7 @@ export default function FormBuilder({
         private: false,
         protected: false,
       });
+      setIsLoading(false);
     }
   }, [initialData]);
 
@@ -100,9 +110,10 @@ export default function FormBuilder({
             /* and other goodies */
           }) => (
             <Form onSubmit={handleSubmit}>
-              {fields.map(
-                ({ name, label, type, relationships, placeholder }) => {
-                  if (type === 'Text') {
+              {fields
+                .filter((f) => f.auto !== true)
+                .map(({ name, label, ctrl, placeholder }) => {
+                  if (ctrl === 'Text') {
                     return (
                       <TextInput
                         key={name}
@@ -118,23 +129,76 @@ export default function FormBuilder({
                     );
                   }
 
-                  if (type === 'RichText') {
+                  if (ctrl === 'Number') {
                     return (
-                      <RichText
+                      <TextInput
+                        type="number"
                         key={name}
                         name={name}
                         label={label}
                         value={values[name]}
                         errors={errors[name]}
                         touched={touched[name]}
-                        onChange={(html) => setFieldValue(name, html)}
+                        onChange={handleChange}
                         onBlur={handleBlur}
                         placeholder={placeholder}
                       />
                     );
                   }
 
-                  if (type === 'MultilineText') {
+                  if (ctrl === 'Checkbox') {
+                    return (
+                      <Checkbox
+                        key={name}
+                        name={name}
+                        label={label}
+                        checked={values[name] || false}
+                        errors={errors[name]}
+                        touched={touched[name]}
+                        onChange={handleChange}
+                      />
+                    );
+                  }
+
+                  if (ctrl === 'Radio') {
+                    <p key={name}>Radio : Not supported yet</p>;
+                  }
+
+                  if (ctrl === 'Email') {
+                    return (
+                      <TextInput
+                        type="email"
+                        key={name}
+                        name={name}
+                        label={label}
+                        value={values[name]}
+                        errors={errors[name]}
+                        touched={touched[name]}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        placeholder={placeholder}
+                      />
+                    );
+                  }
+
+                  if (ctrl === 'URL') {
+                    return (
+                      <TextInput
+                        type="url"
+                        key={name}
+                        name={name}
+                        label={label}
+                        value={values[name]}
+                        errors={errors[name]}
+                        touched={touched[name]}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        placeholder={placeholder}
+                      />
+                    );
+                  }
+
+                  if (ctrl === 'Code') {
                     return (
                       <Textarea
                         key={name}
@@ -150,25 +214,127 @@ export default function FormBuilder({
                     );
                   }
 
-                  if (type === 'Resource') {
+                  if (ctrl === 'RichText') {
+                    return (
+                      <RichText
+                        key={name}
+                        name={name}
+                        label={label}
+                        value={values[name]}
+                        errors={errors[name]}
+                        touched={touched[name]}
+                        onChange={(html) => setFieldValue(name, html)}
+                        onBlur={handleBlur}
+                        placeholder={placeholder}
+                      />
+                    );
+                  }
+
+                  if (ctrl === 'MultilineText') {
+                    return (
+                      <Textarea
+                        key={name}
+                        name={name}
+                        label={label}
+                        value={values[name]}
+                        errors={errors[name]}
+                        touched={touched[name]}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        placeholder={placeholder}
+                      />
+                    );
+                  }
+
+                  if (ctrl === 'Array') {
+                    return (
+                      <Textarea
+                        key={name}
+                        name={name}
+                        label={label}
+                        value={values[name]}
+                        errors={errors[name]}
+                        touched={touched[name]}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        placeholder={placeholder}
+                      />
+                    );
+                  }
+
+                  if (ctrl === 'Object') {
+                    return (
+                      <Textarea
+                        key={name}
+                        name={name}
+                        label={label}
+                        value={values[name]}
+                        errors={errors[name]}
+                        touched={touched[name]}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        placeholder={placeholder}
+                      />
+                    );
+                  }
+
+                  if (ctrl === 'Date') {
+                    return (
+                      <TextInput
+                        type="date"
+                        key={name}
+                        name={name}
+                        label={label}
+                        value={values[name]}
+                        errors={errors[name]}
+                        touched={touched[name]}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        placeholder={placeholder}
+                      />
+                    );
+                  }
+
+                  if (ctrl === 'Time') {
+                    return (
+                      <TextInput
+                        type="time"
+                        key={name}
+                        name={name}
+                        label={label}
+                        value={values[name]}
+                        errors={errors[name]}
+                        touched={touched[name]}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        placeholder={placeholder}
+                      />
+                    );
+                  }
+
+                  if (ctrl === 'Timestamp') {
+                    return (
+                      <TextInput
+                        type="datetime"
+                        key={name}
+                        name={name}
+                        label={label}
+                        value={values[name]}
+                        errors={errors[name]}
+                        touched={touched[name]}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        placeholder={placeholder}
+                      />
+                    );
+                  }
+
+                  if (ctrl === 'Resource') {
                     return <Resource key={name} name={name} label={label} />;
                   }
 
-                  return (
-                    <TextInput
-                      key={name}
-                      name={name}
-                      label={label}
-                      value={values[name]}
-                      errors={errors[name]}
-                      touched={touched[name]}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      placeholder={placeholder}
-                    />
-                  );
-                }
-              )}
+                  return <p key={name}>Unsupported</p>;
+                })}
 
               <Select
                 label="status"
