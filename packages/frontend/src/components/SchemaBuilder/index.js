@@ -27,12 +27,30 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
     if (schema.length === 0) {
       _schema.push({
         name: '_id',
-        label: 'ID',
+        label: false,
         type: 'string',
         ctrl: null,
         length: false,
         auto: true,
         unique: true,
+        required: true,
+        readOnly: true,
+      });
+      _schema.push({
+        name: 'createdAt',
+        label: false,
+        type: 'timestamp',
+        ctrl: null,
+        auto: true,
+        required: true,
+        readOnly: true,
+      });
+      _schema.push({
+        name: 'updatedAt',
+        label: false,
+        type: 'timestamp',
+        ctrl: null,
+        auto: true,
         required: true,
         readOnly: true,
       });
@@ -144,6 +162,7 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
           const lengthEnabled =
             length !== false ? ['number', 'string'].includes(type) : false;
           const ctrlEnabled = ctrl !== null;
+          const labelEnabled = label !== false;
 
           const relationshipResource = resourcesOpt
             ? resourcesOpt.find((option) => option.value === relationship.name)
@@ -219,19 +238,21 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
                 placeholder="eg. title"
               />
 
-              <TextInput
-                readOnly={readOnly}
-                name="label[]"
-                label="label"
-                value={label}
-                errors={null}
-                touched={null}
-                onChange={(evt) =>
-                  handleOnChange(index, 'label', evt.target.value)
-                }
-                onBlur={() => {}}
-                placeholder="eg. Title"
-              />
+              {labelEnabled && (
+                <TextInput
+                  readOnly={readOnly}
+                  name="label[]"
+                  label="label"
+                  value={label}
+                  errors={null}
+                  touched={null}
+                  onChange={(evt) =>
+                    handleOnChange(index, 'label', evt.target.value)
+                  }
+                  onBlur={() => {}}
+                  placeholder="eg. Title"
+                />
+              )}
 
               <Select
                 isDisabled={readOnly}
