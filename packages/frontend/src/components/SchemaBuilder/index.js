@@ -152,6 +152,8 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
             relationship && relationship.selector
               ? { label: relationship.selector, value: relationship.selector }
               : '';
+          const relationshipSelectorOptions =
+            (relationshipSelector && relationshipSelector.fields) || [];
 
           return (
             <Column key={String(index)}>
@@ -280,7 +282,7 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
 
                   <Select
                     label="Selector"
-                    options={relationshipResource.fields || []}
+                    options={relationshipSelectorOptions}
                     name="type.resource.selectorId[]"
                     value={relationshipSelector}
                     onChange={(option) => onSelectorHandler(name, option)}
