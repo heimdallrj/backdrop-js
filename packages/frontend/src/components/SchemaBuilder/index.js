@@ -57,6 +57,10 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
       newSchema[index].ctrl = defaultCtrl;
     }
 
+    if (field === 'ctrl' && value === 'Resource') {
+      newSchema[index].type = '@resource';
+    }
+
     if (dataType && dataType.defaultValue) {
       newSchema[index].defaultValue = dataType.defaultValue;
     }
