@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "backdrop-js",
-  "version": "1.0.0-alpha.10",
+  "version": "1.0.0-alpha.11",
   "workspaces": [
     "packages/*"
   ],
