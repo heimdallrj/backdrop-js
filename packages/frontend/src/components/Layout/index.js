@@ -18,7 +18,7 @@ import {
   MenuItem,
 } from './styled';
 
-export default function Layout({ title, children }) {
+export default function Layout({ isLoading, title, children }) {
   const history = useHistory();
 
   const { user } = useSelector((state) => state.auth);
@@ -76,8 +76,13 @@ export default function Layout({ title, children }) {
         <Nav />
       </Sidebar>
       <Main>
-        <Header />
-        {children}
+        {isLoading && <p>Loading...</p>}
+        {!isLoading && (
+          <>
+            <Header />
+            {children}
+          </>
+        )}
       </Main>
     </Container>
   );

@@ -14,7 +14,8 @@ export const Input = styled(InputSource)`
   font-size: 13px;
 
   &:read-only {
-    background-color: #ddd;
+    background-color: hsl(0, 0%, 95%);
+    color: hsl(0, 0%, 60%);
     border: none;
     outline: none;
   }

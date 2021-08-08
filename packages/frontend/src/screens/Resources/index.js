@@ -45,14 +45,14 @@ export default function Resources() {
 
   const fetchAllResources = () => dispatch(acFetchAllResources());
 
-  const onClickResourceHandler = (id) => {
-    history.push(`/resources/update/${id}`);
+  const onEditHandler = (name) => {
+    history.push(`/resources/update/${name}`);
   };
 
-  const onDeleteclick = (id) => {
+  const onDeleteHandler = (name) => {
     // eslint-disable-next-line no-restricted-globals
     if (confirm('Do you want to delete?')) {
-      dispatch(acDeleteResource(id));
+      dispatch(acDeleteResource(name));
     }
   };
 
@@ -77,50 +77,53 @@ export default function Resources() {
   }, []);
 
   useEffect(() => {
-    const rowsFiltered = resources.map(
-      (
-        {
-          _id,
-          namespace,
-          name,
-          private: isPrivate,
-          protected: isProtected,
-          type,
-          methods,
-          status,
-        },
-        index
-      ) => {
-        return {
-          id: _id,
-          data: [
-            {
-              value: (
-                <FlexIcons>
-                  {isProtected && <KeyIcon />} {isPrivate && <LockClosedIcon />}
-                </FlexIcons>
-              ),
-              align: 'center',
-            },
-            { value: index + 1, align: 'center' },
-            { value: namespace, align: 'center' },
-            { value: <Name name={name} methods={methods} /> },
-            { value: type, align: 'center' },
-            { value: <Status>{status}</Status>, align: 'center' },
-            {
-              value: (
-                <FlexIcons>
-                  <AddDocumentIcon onClick={() => onAddNewHandler(name)} />
-                  <EditIcon onClick={onClickResourceHandler.bind(null, _id)} />
-                  <DeleteIcon onClick={() => onDeleteclick(_id)} />
-                </FlexIcons>
-              ),
-            },
-          ],
-        };
-      }
-    );
-    setRows(rowsFiltered);
+    if (resources && resources.length > 0) {
+      const rowsFiltered = resources.map(
+        (
+          {
+            _id,
+            namespace,
+            name,
+            private: isPrivate,
+            protected: isProtected,
+            type,
+            methods,
+            status,
+          },
+          index
+        ) => {
+          return {
+            id: _id,
+            data: [
+              {
+                value: (
+                  <FlexIcons>
+                    {isProtected && <KeyIcon />}{' '}
+                    {isPrivate && <LockClosedIcon />}
+                  </FlexIcons>
+                ),
+                align: 'center',
+              },
+              { value: index + 1, align: 'center' },
+              { value: namespace, align: 'center' },
+              { value: <Name name={name} methods={methods} /> },
+              { value: type, align: 'center' },
+              { value: <Status>{status}</Status>, align: 'center' },
+              {
+                value: (
+                  <FlexIcons>
+                    <AddDocumentIcon onClick={() => onAddNewHandler(name)} />
+                    <EditIcon onClick={onEditHandler.bind(null, name)} />
+                    <DeleteIcon onClick={() => onDeleteHandler(name)} />
+                  </FlexIcons>
+                ),
+              },
+            ],
+          };
+        }
+      );
+      setRows(rowsFiltered);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resources]);
 

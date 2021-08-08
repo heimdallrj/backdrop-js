@@ -23,11 +23,11 @@ router.delete('/users/:id', coreMiddlewares.auth, usersHandler.delete);
 
 // resource
 router.get('/resource', coreMiddlewares.auth, resourceHandler.get);
-router.get('/resource/:id', coreMiddlewares.auth, resourceHandler.getSingle);
+router.get('/resource/:name', coreMiddlewares.auth, resourceHandler.getSingle);
 router.post('/resource', coreMiddlewares.auth, resourceHandler.post);
-router.put('/resource/:id', coreMiddlewares.auth, resourceHandler.put);
-router.patch('/resource/:id', coreMiddlewares.auth, resourceHandler.patch);
-router.delete('/resource/:id', coreMiddlewares.auth, resourceHandler.delete);
+router.put('/resource/:name', coreMiddlewares.auth, resourceHandler.put);
+router.patch('/resource/:name', coreMiddlewares.auth, resourceHandler.patch);
+router.delete('/resource/:name', coreMiddlewares.auth, resourceHandler.delete);
 
 // media
 // TODO: Add coreMiddlewares.auth middleware

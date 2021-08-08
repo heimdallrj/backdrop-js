@@ -24,7 +24,7 @@ const resourceSlice = createSlice({
     },
     resourceDeleted(state, { payload }) {
       state.resources = state.resources.filter(
-        (resource) => resource._id !== payload
+        (resource) => resource.name !== payload
       );
       state.errors = null;
       state.isLoading = false;
@@ -40,7 +40,7 @@ export const { setIsLoading, resourcesFetched, resourceDeleted, setError } =
   resourceSlice.actions;
 
 export const fetchAll =
-  (user, cb = () => {}) =>
+  (cb = () => {}) =>
   async (dispatch) => {
     dispatch(setIsLoading(true));
     try {

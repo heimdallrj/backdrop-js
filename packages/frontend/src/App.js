@@ -78,7 +78,7 @@ function App() {
         <ProtectedRoute
           featureId="resources"
           exact
-          path="/resources/update/:id"
+          path="/resources/update/:name"
           component={UpdateResource}
         />
 
