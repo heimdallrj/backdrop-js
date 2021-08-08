@@ -11,12 +11,18 @@ import config from '../data/config.json';
 
 const jsondbPath = path.join(__dirname, '..', '..', '.jsondb');
 
+const end = (err) => {
+  logger.error(err);
+  process.exit(1);
+};
+
 export default async function bootstrap() {
   try {
     // Check for `.env` and load environment variables from it if it exists.
     const envfilePath = path.join(__dirname, '..', '..', '.env');
     if (!isFileExists(envfilePath)) {
-      throw new Error('Error: `.env` file is missing!.');
+      // throw new Error('Error: `.env` file is missing!.');
+      end('Error: `.env` file is missing!.');
     }
     require('dotenv').config();
 
@@ -72,13 +78,13 @@ export default async function bootstrap() {
         break;
 
       default:
-        throw new Error(`Error: Unsupported database connection: ${dbConn}`);
+        // throw new Error(`Error: Unsupported database connection: ${dbConn}`);
+        end(`Error: Unsupported database connection: ${dbConn}`);
     }
 
     require('../index');
   } catch (err) {
-    logger.log(err);
-    process.exit(1);
+    end(err);
   }
 }
 
