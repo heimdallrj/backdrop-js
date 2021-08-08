@@ -29,7 +29,9 @@ import {
 const validationSchema = yup.object().shape({
   namespace: yup.string().required('* required'),
   name: yup.string().required('* required'),
+  type: yup.string().required('* required'),
   methods: yup.array().required('* required'),
+  status: yup.string().required('* required'),
 });
 
 const initialValues = {

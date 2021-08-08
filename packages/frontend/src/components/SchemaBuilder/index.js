@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import forEach from 'lodash/forEach';
 
 import TextInput from 'components/TextInput';
 import Select from 'components/Select';
@@ -21,10 +20,7 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
   const { resources } = useSelector((state) => state.resources);
 
   const [schema, setSchema] = useState([]);
-  const [relationship, setRelationship] = useState({});
-
   const [resourcesOpt, setResourcesOpt] = useState([]);
-  const [selectorsOpt, setSelectorsOpt] = useState([]);
 
   const handleAddNew = () => {
     let _schema = [...schema];
@@ -41,7 +37,14 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
         readOnly: true,
       });
     } else {
-      _schema.push({ name: '', label: '', type: '', ctrl: '', length: '' });
+      _schema.push({
+        name: '',
+        label: '',
+        type: '',
+        ctrl: '',
+        length: '',
+        relationship: {},
+      });
     }
     setSchema(_schema);
   };
@@ -70,35 +73,29 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
     });
   };
 
-  const onResourceRelationshipHandler = (name, resource) => {
-    // Set selectors options
-    const selectors = (resource && resource.fields) || [];
-    setSelectorsOpt(selectors.map((field) => ({ label: field, value: field })));
-
-    const newRelationship = { ...relationship };
-    newRelationship[name] = resource;
-    setRelationship(newRelationship);
+  const handleRelationshipHandler = (name, resource) => {
+    const targetIndex = schema.findIndex((s) => s.name === name);
+    const _schema = [...schema];
+    _schema[targetIndex].relationship = {
+      ..._schema[targetIndex].relationship,
+      type: 'resource',
+      name: resource.value,
+      selector: '',
+    };
+    setSchema(_schema);
   };
 
-  const onResourceRelationshipSelectorHandler = (name, selector) => {
-    const newRelationship = { ...relationship };
-    newRelationship[name] = { ...newRelationship[name] };
-    newRelationship[name]['selector'] = selector;
-    setRelationship(newRelationship);
+  const onSelectorHandler = (name, selector) => {
+    const targetIndex = schema.findIndex((s) => s.name === name);
+    const _schema = [...schema];
+    _schema[targetIndex].relationship = {
+      ..._schema[targetIndex].relationship,
+      selector: selector.value,
+    };
+    setSchema(_schema);
   };
 
   const onUpdateSchemaHandler = () => {
-    forEach(relationship, ({ label, value, defaultValue, selector }, key) => {
-      const schemaIndex = schema.findIndex(({ name }) => name === key);
-      const _relationship = schema[schemaIndex].relationship || [];
-      _relationship.push({
-        type: 'resource',
-        name: label,
-        selector: (selector && selector.value) || null,
-      });
-      schema[schemaIndex]['relationship'] = _relationship;
-    });
-    console.log('*', schema);
     onUpdateSchema(schema);
   };
 
@@ -115,12 +112,12 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
   useEffect(() => {
     if (resources && resources.length > 0) {
       setResourcesOpt(
-        resources.map(({ _id, name, schema }) => ({
+        resources.map(({ name, schema }) => ({
           label: name,
-          value: _id,
-          fields: Object.keys(schema),
-          selector: '',
-          defaultValue: [],
+          value: name,
+          fields: Object.keys(schema)
+            .filter((f) => f !== '_id')
+            .map((f) => ({ label: f, value: f })),
         }))
       );
     }
@@ -130,12 +127,31 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
     <Wrapper>
       {schema.map(
         (
-          { auto, unique, required, readOnly, name, label, type, ctrl, length },
+          {
+            auto,
+            unique,
+            required,
+            readOnly,
+            name,
+            label,
+            type,
+            ctrl,
+            length,
+            relationship = {},
+          },
           index
         ) => {
           const lengthEnabled =
             length !== false ? ['number', 'string'].includes(type) : false;
           const ctrlEnabled = ctrl !== null;
+
+          const relationshipResource = resourcesOpt
+            ? resourcesOpt.find((option) => option.value === relationship.name)
+            : '';
+          const relationshipSelector =
+            relationship && relationship.selector
+              ? { label: relationship.selector, value: relationship.selector }
+              : '';
 
           return (
             <Column key={String(index)}>
@@ -189,20 +205,6 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
 
               <TextInput
                 readOnly={readOnly}
-                name="label[]"
-                label="label"
-                value={label}
-                errors={null}
-                touched={null}
-                onChange={(evt) =>
-                  handleOnChange(index, 'label', evt.target.value)
-                }
-                onBlur={() => {}}
-                placeholder="eg. Title"
-              />
-
-              <TextInput
-                readOnly={readOnly}
                 name="name[]"
                 label="name"
                 value={name}
@@ -213,6 +215,20 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
                 }
                 onBlur={() => {}}
                 placeholder="eg. title"
+              />
+
+              <TextInput
+                readOnly={readOnly}
+                name="label[]"
+                label="label"
+                value={label}
+                errors={null}
+                touched={null}
+                onChange={(evt) =>
+                  handleOnChange(index, 'label', evt.target.value)
+                }
+                onBlur={() => {}}
+                placeholder="eg. Title"
               />
 
               <Select
@@ -255,27 +271,19 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
                     label="Resource"
                     options={resourcesOpt}
                     name="type.resource[]"
-                    value={relationship[name] || ''}
+                    value={relationshipResource}
                     onChange={(option) =>
-                      onResourceRelationshipHandler(name, option)
+                      handleRelationshipHandler(name, option)
                     }
                     onBlur={() => {}}
                   />
 
                   <Select
                     label="Selector"
-                    options={selectorsOpt}
+                    options={relationshipResource.fields || []}
                     name="type.resource.selectorId[]"
-                    value={
-                      (relationship &&
-                        relationship[name] &&
-                        relationship &&
-                        relationship[name].selector) ||
-                      ''
-                    }
-                    onChange={(option) =>
-                      onResourceRelationshipSelectorHandler(name, option)
-                    }
+                    value={relationshipSelector}
+                    onChange={(option) => onSelectorHandler(name, option)}
                     onBlur={() => {}}
                   />
                 </Column>
