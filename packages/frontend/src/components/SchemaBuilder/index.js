@@ -153,7 +153,7 @@ export default function SchemaBuilder({ initialSchema = [], onUpdateSchema }) {
               ? { label: relationship.selector, value: relationship.selector }
               : '';
           const relationshipSelectorOptions =
-            (relationshipSelector && relationshipSelector.fields) || [];
+            (relationshipResource && relationshipResource.fields) || [];
 
           return (
             <Column key={String(index)}>

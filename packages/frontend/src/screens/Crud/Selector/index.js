@@ -27,7 +27,7 @@ export default function Selector({ selected, onSelect }) {
       if (ro.protected) {
         if (user.role !== 0) return false;
       }
-      return ro.type !== 'proxy';
+      return ro.type === 'default';
     });
     setResources(filtered);
   }, [resourcesOriginal, user]);
