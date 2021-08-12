@@ -7,7 +7,7 @@ import path from 'path';
 import { isFileExists, ensureDirSync } from 'utils/fs';
 import logger from 'utils/logger';
 
-import config from '../data/config.json';
+import config from '../data/config.user.json';
 
 const jsondbPath = path.join(__dirname, '..', '..', '.jsondb');
 
