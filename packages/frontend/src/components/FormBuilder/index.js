@@ -34,7 +34,7 @@ export default function FormBuilder({
   submitBtnText,
   onSubmit,
 }) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [, setIsLoading] = useState(true);
   const [initialValues, setInitialValues] = useState(null);
   const [fields, setFields] = useState([]);
 

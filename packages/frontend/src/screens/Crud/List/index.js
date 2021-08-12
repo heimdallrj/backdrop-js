@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import forEach from 'lodash/forEach';
 
 import { fetchAll as apiFetchAll, remove as apiDelete } from 'api';
 
@@ -20,18 +21,11 @@ import {
   DeleteIcon,
 } from './styled';
 
-const columns = [
-  { label: 'falgs', size: 5, visible: false },
-  { label: 'ID', size: 5, align: 'center' },
-  { label: 'Author', size: 25 },
-  { label: 'Created At', size: 35 },
-  { label: 'Status', size: 25 },
-  { label: 'actions', size: 5, visible: false },
-];
-
 export default function List({ resource }) {
   const history = useHistory();
 
+  const [data, setData] = useState([]);
+  const [columns, setColumns] = useState([]);
   const [rows, setRows] = useState([]);
 
   const onClickEditHandler = ({ name }, id) => {
@@ -48,23 +42,59 @@ export default function List({ resource }) {
 
   const fetchAll = async ({ name }) => {
     const data = await apiFetchAll(name);
+    setData(data);
+  };
 
+  useEffect(() => {
+    if (resource) {
+      fetchAll(resource);
+
+      const _columns = [{ label: 'falgs', size: 5, visible: false }];
+      const { schema } = resource;
+      forEach(schema, ({ label, ...rest }) => {
+        _columns.push({ label, size: 5, visible: true });
+      });
+      _columns.push(
+        { label: 'Author', size: 25 },
+        { label: 'Last Updated At', size: 35 },
+        { label: 'Created At', size: 35 },
+        { label: 'Status', size: 25 },
+        { label: 'actions', size: 5, visible: false }
+      );
+      setColumns(_columns);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resource]);
+
+  useEffect(() => {
     let _rows = [];
 
+    const mapDataToFields = (_data) => {
+      const _fields = [];
+      forEach(_data, (val) => {
+        _fields.push({
+          value: val,
+        });
+      });
+      return _fields;
+    };
+
     if (data && data.length > 0) {
-      _rows = data.map(
+      data.forEach(
         (
           {
             _id,
             createdAt,
+            updatedAt,
             author,
             protected: isProtected,
             private: isPrivate,
             status,
+            ...rest
           },
           index
         ) => {
-          return {
+          _rows.push({
             id: _id,
             data: [
               {
@@ -79,11 +109,15 @@ export default function List({ resource }) {
                 value: index + 1,
                 align: 'center',
               },
+              ...mapDataToFields(rest),
               {
                 value: author.name,
               },
               {
                 value: formatDate(createdAt),
+              },
+              {
+                value: formatDate(updatedAt),
               },
               {
                 value: <Status>{status}</Status>,
@@ -101,19 +135,13 @@ export default function List({ resource }) {
                 ),
               },
             ],
-          };
+          });
         }
       );
     }
     setRows(_rows);
-  };
-
-  useEffect(() => {
-    if (resource) {
-      fetchAll(resource);
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resource]);
+  }, [data]);
 
   return (
     <Wrapper>
