@@ -49,10 +49,15 @@ export default function List({ resource }) {
     if (resource) {
       fetchAll(resource);
 
-      const _columns = [{ label: 'falgs', size: 5, visible: false }];
+      const _columns = [
+        { label: 'falgs', size: 5, visible: false },
+        { label: 'ID', size: 5 },
+      ];
       const { schema } = resource;
-      forEach(schema, ({ label }) => {
-        _columns.push({ label, size: 5, visible: true });
+      forEach(schema, ({ label, type }) => {
+        if (label && type !== '@resource') {
+          _columns.push({ label, size: 5, visible: true });
+        }
       });
       _columns.push(
         { label: 'Author', size: 25 },
@@ -71,8 +76,9 @@ export default function List({ resource }) {
 
     const mapDataToFields = (_data) => {
       const _fields = [];
-      forEach(_data, (val) => {
+      forEach(_data, (val, key) => {
         _fields.push({
+          name: key,
           value: val,
         });
       });
@@ -98,6 +104,7 @@ export default function List({ resource }) {
             id: _id,
             data: [
               {
+                name: 'flags',
                 value: (
                   <FlexIcons>
                     {isProtected && <KeyIcon />}
@@ -106,23 +113,29 @@ export default function List({ resource }) {
                 ),
               },
               {
+                name: 'ID',
                 value: index + 1,
                 align: 'center',
               },
               ...mapDataToFields(rest),
               {
+                name: 'author',
                 value: author.name,
               },
               {
+                name: 'createdAt',
                 value: formatDate(createdAt),
               },
               {
+                name: 'updatedAt',
                 value: formatDate(updatedAt),
               },
               {
+                name: 'status',
                 value: <Status>{status}</Status>,
               },
               {
+                name: 'actions',
                 value: (
                   <FlexIcons>
                     <EditIcon

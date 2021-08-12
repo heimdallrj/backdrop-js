@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
 
 export const List = styled.ul`
   font-size: 15px;
+  width: 300px;
 `;
 
 export const ListItem = styled.li`
