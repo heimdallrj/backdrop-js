@@ -6,7 +6,7 @@ import { FormFieldError } from 'providers/ThemeProvider/styled';
 export default function TextInput({
   name,
   label,
-  value,
+  value = '',
   autoComplete = 'off',
   type = 'text',
   masked,

@@ -19,18 +19,25 @@ export default function TableComponent({
       <Table>
         <TableHead>
           <Row>
-            {columns.map(({ label, align, size = 0, visible = true }) => (
-              <ColHead key={label} scope="col" align={align} width={`${size}%`}>
-                <span style={{ visibility: visible ? 'visible' : 'hidden' }}>
-                  {label}
-                </span>
-              </ColHead>
-            ))}
+            {columns.map(
+              ({ label, align, size = 0, visible = true }, index) => (
+                <ColHead
+                  key={`${label}-${index}`}
+                  scope="col"
+                  align={align}
+                  width={`${size}%`}
+                >
+                  <span style={{ visibility: visible ? 'visible' : 'hidden' }}>
+                    {label}
+                  </span>
+                </ColHead>
+              )
+            )}
           </Row>
         </TableHead>
         <TableBody>
           {rows.map((row, i) => (
-            <Row key={row.id} onClick={() => onClickRow(row)}>
+            <Row key={`${row.id}-${i}`} onClick={() => onClickRow(row)}>
               {row.data.map(({ value, align, size = 0 }, j) => (
                 <Col key={String(j)} align={align} width={`${size}%`}>
                   {value}

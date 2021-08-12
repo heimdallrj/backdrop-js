@@ -51,7 +51,7 @@ export default function List({ resource }) {
 
       const _columns = [{ label: 'falgs', size: 5, visible: false }];
       const { schema } = resource;
-      forEach(schema, ({ label, ...rest }) => {
+      forEach(schema, ({ label }) => {
         _columns.push({ label, size: 5, visible: true });
       });
       _columns.push(

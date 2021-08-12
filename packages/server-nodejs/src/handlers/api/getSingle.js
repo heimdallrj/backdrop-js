@@ -21,15 +21,13 @@ export default function getSingle(req, res) {
     const { schema } = resourceConfig;
 
     forEach(schema, (val, key) => {
-      if (val.relationship) {
+      if (val.relationship && Object.keys(val.relationship).length > 0) {
         let docs = [];
 
-        val.relationship.forEach(({ selector }) => {
-          const query = {};
-          query[selector] = req.params.id;
-          docs = db(`_${key}`).find(query);
-          doc[key] = docs || [];
-        });
+        const query = {};
+        query[val.relationship.selector] = req.params.id;
+        docs = db(`_${key}`).find(query);
+        doc[key] = docs || [];
       }
     });
 

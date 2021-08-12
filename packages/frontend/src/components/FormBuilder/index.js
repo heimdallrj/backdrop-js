@@ -34,7 +34,7 @@ export default function FormBuilder({
   submitBtnText,
   onSubmit,
 }) {
-  const [, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [initialValues, setInitialValues] = useState(null);
   const [fields, setFields] = useState([]);
 
@@ -76,9 +76,11 @@ export default function FormBuilder({
         private: false,
         protected: false,
       });
-      setIsLoading(false);
     }
+    setIsLoading(false);
   }, [initialData]);
+
+  if (isLoading) return <p>loading...</p>;
 
   return (
     <Wrapper>
