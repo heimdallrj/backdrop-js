@@ -45,6 +45,8 @@ export const UserWrap = styled.div`
   align-items: center;
   font-size: 0.8rem;
   cursor: pointer;
+  position: fixed;
+  right: 10px;
 `;
 
 export const BackIcon = styled(BackIconSource)`
