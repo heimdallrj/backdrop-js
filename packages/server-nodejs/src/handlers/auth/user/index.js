@@ -4,7 +4,9 @@ import { db } from 'database';
 import { response } from 'utils/http';
 import uniqid from 'uniqid';
 
-import { jwtSecret } from 'config';
+import Mailer from 'utils/email';
+
+import { jwtSecret, baseUrl } from 'config';
 
 export function get(req, res) {
   try {
@@ -38,6 +40,32 @@ export function post(req, res) {
     delete user.token;
     const token = jwt.sign(user, jwtSecret);
     return response.ok(res, { user, token });
+  } catch (err) {
+    return response.internalError(res);
+  }
+}
+
+// eslint-disable-next-line consistent-return
+export function resetPassword(req, res) {
+  try {
+    const { email } = req.body;
+    const user = db('users').findOne({ email });
+    delete user.password;
+    delete user.token;
+
+    const token = jwt.sign(user, jwtSecret);
+
+    // TODO: Send email
+    const mailer = new Mailer();
+    mailer.send(
+      email,
+      'Reset your password',
+      `${baseUrl}/login/reset-password?token=${token}`,
+      (err) => {
+        if (err) return response.internalError(res);
+        return response.ok(res, { token });
+      }
+    );
   } catch (err) {
     return response.internalError(res);
   }

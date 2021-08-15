@@ -10,6 +10,7 @@ import Route from 'components/Route';
 
 import Bootstrap from 'screens/Bootstrap';
 import Login from 'screens/Login';
+import ResetLogin from 'screens/Login/Reset';
 import Register from 'screens/Register';
 import Home from 'screens/Home';
 import Resources from 'screens/Resources';
@@ -58,6 +59,7 @@ function App() {
     <Wrapper>
       <Router>
         <Route exact path="/login" component={Login} />
+        <Route exact path="/login/reset-password" component={ResetLogin} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/logout" component={Logout} />
 
