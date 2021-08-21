@@ -81,7 +81,7 @@ Labels for maintainers:
 - `invalid`
 - `good first issue`
 - `duplicate`
-- `lock`
+- `freez`
 
 Priorities:
 
