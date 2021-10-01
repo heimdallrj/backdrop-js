@@ -2,7 +2,7 @@
 
 This project no longer maintain here in this location.
 
-Moved to [https://github.com/valet-is](https://github.com/valet-is)
+Moved to [valet-central](https://github.com/valet-is/central)
 
 ## Developer Guide
 
