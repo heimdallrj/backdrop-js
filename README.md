@@ -1,6 +1,7 @@
 # Backdrop-js (Monorepo) ![inactive](https://img.shields.io/badge/-inactive-inactive)
 
 This project no longer maintain here in this location.
+
 Moved to [https://github.com/valet-is](https://github.com/valet-is)
 
 ## Developer Guide
