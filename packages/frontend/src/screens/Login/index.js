@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect, useHistory, Link } from 'react-router-dom';
 import * as yup from 'yup';
 
 import { login as acLogin } from 'store/reducers/authSlice';
@@ -9,7 +9,7 @@ import Button from 'components/Button';
 import TextInput from 'components/TextInput';
 
 import { Form } from 'providers/ThemeProvider/styled';
-import { Wrapper, FormFooter } from './styled';
+import { Wrapper, Reset, FormFooter } from './styled';
 
 const validationSchema = yup.object().shape({
   userName: yup.string().required('* required'),
@@ -79,6 +79,10 @@ export default function Login() {
               masked
               placeholder="eg. pa$$word"
             />
+
+            <Reset>
+              <Link to="/login/reset-password">Lost your password?</Link>
+            </Reset>
 
             <FormFooter>
               <Button type="submit" disabled={isSubmitting}>
